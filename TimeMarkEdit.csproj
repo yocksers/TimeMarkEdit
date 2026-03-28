@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<AssemblyName>TimeMarkEdit</AssemblyName>
+		<OutputType>Library</OutputType>
+
+		<LangVersion>10.0</LangVersion>
+		<Nullable>enable</Nullable>
+
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<AssemblyVersion>0.7.2.0</AssemblyVersion>
+		<FileVersion>0.7.2.0</FileVersion>
+		<RootNamespace>TimeMarkEdit</RootNamespace>
+		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Images\logo.jpg" />
+		<EmbeddedResource Include="Configuration\TimeMarkEdit.html">
+			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEdit.html</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Configuration\TimeMarkEditManager.js">
+			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditManager.js</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediaBrowser.Server.Core" Version="4.9.1.90">
+			<PrivateAssets>all</PrivateAssets>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="ServiceStack" Version="8.2.2">
+			<PrivateAssets>all</PrivateAssets>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>
