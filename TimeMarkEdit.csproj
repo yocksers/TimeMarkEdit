@@ -27,6 +27,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Remove="EmbyCredit\**" />
+		<EmbeddedResource Remove="EmbyCredit\**" />
+		<None Remove="EmbyCredit\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="MediaBrowser.Server.Core" Version="4.9.1.90">
 			<PrivateAssets>all</PrivateAssets>
 			<ExcludeAssets>runtime</ExcludeAssets>

@@ -1,0 +1,569 @@
+2026-03-28 23.10.29.863 Info Main: Application path: C:\Users\yock1\AppData\Roaming\Emby-Server\system\EmbyServer.dll
+2026-03-28 23.10.29.883 Info NetworkManager: Adding event handler for NetworkChange.NetworkAddressChanged
+2026-03-28 23.10.29.886 Info NetworkManager: Adding event handler for NetworkChange.NetworkAvailabilityChanged
+2026-03-28 23.10.30.077 Info App: Setting default culture to en-US
+2026-03-28 23:10:30.078 Info Main: Emby Server 4.10.0.6
+	Command line: C:\Users\yock1\AppData\Roaming\Emby-Server\system\EmbyServer.dll
+	Operating system: Microsoft Windows 10.0.26200
+	OS/Process: x64/x64
+	Framework: .NET 8.0.22
+	Runtime: C:/Users/yock1/AppData/Roaming/Emby-Server/system/System.Private.CoreLib.dll
+	Processor count: 32
+	Data path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata
+	Application path: C:\Users\yock1\AppData\Roaming\Emby-Server\system
+2026-03-28 23:10:30.078 Info Main: Logs path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\logs
+2026-03-28 23:10:30.078 Info Main: Cache path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\cache
+2026-03-28 23:10:30.078 Info Main: Internal metadata path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\metadata
+2026-03-28 23:10:30.078 Info Main: DefaultThreadCurrentCulture: en-US
+2026-03-28 23:10:30.078 Info Main: DefaultThreadCurrentUICulture: en-US
+2026-03-28 23:10:30.078 Info Main: DefaultThreadCurrentUICulture: en-US
+2026-03-28 23:10:30.080 Info Main: Server Friendly Name: x_secret1_x
+2026-03-28 23:10:30.080 Info Main: Local time: 03/28/2026 23:10:30 +01:00
+2026-03-28 23:10:30.080 Info Main: Tray icon path: C:\Users\yock1\AppData\Roaming\Emby-Server\system\embytray
+2026-03-28 23:10:30.363 Info App: Emby Server Version: 4.10.0.6
+2026-03-28 23:10:30.364 Info App: Loading assemblies
+2026-03-28 23:10:30.569 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\AudioDb.dll has version 1.0.20.0
+2026-03-28 23:10:30.608 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\AudioDb.dll has version 1.0.20.0
+2026-03-28 23:10:30.756 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\BlurayMounter.dll has version 1.0.5.0
+2026-03-28 23:10:30.912 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\BlurayMounter.dll has version 1.0.5.0
+2026-03-28 23:10:30.943 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\DvdMounter.dll has version 1.0.2.0
+2026-03-28 23:10:30.974 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\DvdMounter.dll has version 1.0.2.0
+2026-03-28 23:10:31.277 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Dlna.dll has version 1.5.5.0
+2026-03-28 23:10:31.684 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Emby.Dlna.dll has version 1.5.5.0
+2026-03-28 23:10:31.765 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.M3UTuner.dll has version 1.0.42.0
+2026-03-28 23:10:31.849 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Emby.M3UTuner.dll has version 1.0.42.0
+2026-03-28 23:10:31.899 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.PortMapper.dll has version 1.3.0.0
+2026-03-28 23:10:31.952 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Emby.PortMapper.dll has version 1.3.0.0
+2026-03-28 23:10:31.999 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Server.CinemaMode.dll has version 1.0.50.0
+2026-03-28 23:10:32.050 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Emby.Server.CinemaMode.dll has version 1.0.50.0
+2026-03-28 23:10:32.085 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Webhooks.dll has version 1.0.38.0
+2026-03-28 23:10:32.121 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Emby.Webhooks.dll has version 1.0.38.0
+2026-03-28 23:10:32.181 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.XmlTV.dll has version 1.2.2.0
+2026-03-28 23:10:32.243 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Emby.XmlTV.dll has version 1.2.2.0
+2026-03-28 23:10:32.305 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\EmbyGuideData.dll has version 1.0.20.0
+2026-03-28 23:10:32.362 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\EmbyGuideData.dll has version 1.0.20.0
+2026-03-28 23:10:32.411 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Fanart.dll has version 1.0.18.0
+2026-03-28 23:10:32.459 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Fanart.dll has version 1.0.18.0
+2026-03-28 23:10:32.549 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MBBackup.dll has version 1.8.3.0
+2026-03-28 23:10:32.637 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\MBBackup.dll has version 1.8.3.0
+2026-03-28 23:10:32.691 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MovieDb.dll has version 1.9.0.0
+2026-03-28 23:10:32.744 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\MovieDb.dll has version 1.9.0.0
+2026-03-28 23:10:32.792 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MusicBrainz.dll has version 1.0.28.0
+2026-03-28 23:10:32.839 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\MusicBrainz.dll has version 1.0.28.0
+2026-03-28 23:10:32.946 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\NfoMetadata.dll has version 1.0.86.0
+2026-03-28 23:10:33.049 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\NfoMetadata.dll has version 1.0.86.0
+2026-03-28 23:10:33.092 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\OMDb.dll has version 1.0.22.0
+2026-03-28 23:10:33.134 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\OMDb.dll has version 1.0.22.0
+2026-03-28 23:10:33.174 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\OpenSubtitles.dll has version 1.0.68.0
+2026-03-28 23:10:33.218 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\OpenSubtitles.dll has version 1.0.68.0
+2026-03-28 23:10:33.240 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\StudioImages.dll has version 1.0.3.0
+2026-03-28 23:10:33.263 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\StudioImages.dll has version 1.0.3.0
+2026-03-28 23:10:33.286 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Tvdb.dll has version 1.6.3.0
+2026-03-28 23:10:33.310 Info App: File C:\Users\yock1\AppData\Roaming\Emby-Server\system\plugins\Tvdb.dll has version 1.6.3.0
+2026-03-28 23:10:36.458 Info App: Loading Emby.Api, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Web, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Model, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Common, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Controller, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Providers, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Photos, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Server.Implementations, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.LiveTV, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.ActivityLog, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Server.MediaEncoding, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.LocalMetadata, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Notifications, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Web.GenericUI, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Codecs.Dxva, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Codecs, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Server.Connect, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading Emby.Server.Sync, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading EmbyServer, Version=4.10.0.6, Culture=neutral, PublicKeyToken=null
+2026-03-28 23:10:36.458 Info App: Loading AudioDb, Version=1.0.20.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\AudioDb.dll
+2026-03-28 23:10:36.458 Info App: Loading BlurayMounter, Version=1.0.5.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\BlurayMounter.dll
+2026-03-28 23:10:36.458 Info App: Loading DvdMounter, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\DvdMounter.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.DiagnosticsPlugin, Version=4.8.0.81, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.DiagnosticsPlugin.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Dlna, Version=1.5.5.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Dlna.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.M3UTuner, Version=1.0.42.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.M3UTuner.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Media.Model, Version=4.9.1.90, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Media.Model.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Naming, Version=4.9.1.90, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Naming.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Notifications.Discord, Version=1.2.3.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Notifications.Discord.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Plugins.AniList, Version=1.0.7.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Plugins.AniList.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.PortMapper, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.PortMapper.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Server.CinemaMode, Version=1.0.50.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Server.CinemaMode.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Web.GenericEdit, Version=4.9.1.90, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Web.GenericEdit.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.Webhooks, Version=1.0.38.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.Webhooks.dll
+2026-03-28 23:10:36.458 Info App: Loading Emby.XmlTV, Version=1.2.2.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Emby.XmlTV.dll
+2026-03-28 23:10:36.458 Info App: Loading EmbyCredits, Version=2.4.1.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\EmbyCredits.dll
+2026-03-28 23:10:36.458 Info App: Loading EmbyGuideData, Version=1.0.20.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\EmbyGuideData.dll
+2026-03-28 23:10:36.458 Info App: Loading EmbyIcons, Version=5.51.5.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\EmbyIcons.dll
+2026-03-28 23:10:36.458 Info App: Loading EmbyReporter, Version=0.5.3.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\EmbyReporter.dll
+2026-03-28 23:10:36.458 Info App: Loading Fanart, Version=1.0.18.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Fanart.dll
+2026-03-28 23:10:36.458 Info App: Loading MBBackup, Version=1.8.3.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MBBackup.dll
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Common, Version=4.9.1.90, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MediaBrowser.Common.dll
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Controller, Version=4.9.1.90, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MediaBrowser.Controller.dll
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Model, Version=4.9.1.90, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MediaBrowser.Model.dll
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Plugins.Anime, Version=1.6.1.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MediaBrowser.Plugins.Anime.dll
+2026-03-28 23:10:36.458 Info App: Loading MediaBrowser.Plugins.PushOverNotifications, Version=3.1.7.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MediaBrowser.Plugins.PushOverNotifications.dll
+2026-03-28 23:10:36.458 Info App: Loading MovieDb, Version=1.9.0.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MovieDb.dll
+2026-03-28 23:10:36.458 Info App: Loading MusicBrainz, Version=1.0.28.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\MusicBrainz.dll
+2026-03-28 23:10:36.458 Info App: Loading NfoMetadata, Version=1.0.86.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\NfoMetadata.dll
+2026-03-28 23:10:36.458 Info App: Loading OMDb, Version=1.0.22.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\OMDb.dll
+2026-03-28 23:10:36.458 Info App: Loading OpenSubtitles, Version=1.0.68.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\OpenSubtitles.dll
+2026-03-28 23:10:36.458 Info App: Loading StudioImages, Version=1.0.3.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\StudioImages.dll
+2026-03-28 23:10:36.458 Info App: Loading System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51 from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\System.Buffers.dll
+2026-03-28 23:10:36.458 Info App: Loading System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51 from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\System.Memory.dll
+2026-03-28 23:10:36.458 Info App: Loading System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\System.Numerics.Vectors.dll
+2026-03-28 23:10:36.458 Info App: Loading System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\System.Runtime.CompilerServices.Unsafe.dll
+2026-03-28 23:10:36.458 Info App: Loading TimeMarkEdit, Version=0.7.1.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\TimeMarkEdit.dll
+2026-03-28 23:10:36.458 Info App: Loading Tvdb, Version=1.6.3.0, Culture=neutral, PublicKeyToken=null from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\plugins\Tvdb.dll
+2026-03-28 23:10:36.765 Info SqliteUserRepository: Initializing PooledDatabaseConnectionManager with pool size: 3
+2026-03-28 23:10:36.765 Info SqliteUserRepository: Sqlite version: 3.51.3
+2026-03-28 23:10:36.765 Info SqliteUserRepository: Sqlite compiler options: ATOMIC_INTRINSICS=1,COMPILER=clang-22.1.0,DEFAULT_AUTOVACUUM,DEFAULT_CACHE_SIZE=-2000,DEFAULT_FILE_FORMAT=4,DEFAULT_JOURNAL_SIZE_LIMIT=-1,DEFAULT_MMAP_SIZE=0,DEFAULT_PAGE_SIZE=4096,DEFAULT_PCACHE_INITSZ=20,DEFAULT_RECURSIVE_TRIGGERS,DEFAULT_SECTOR_SIZE=4096,DEFAULT_SYNCHRONOUS=2,DEFAULT_WAL_AUTOCHECKPOINT=1000,DEFAULT_WAL_SYNCHRONOUS=2,DEFAULT_WORKER_THREADS=0,DIRECT_OVERFLOW_READ,ENABLE_COLUMN_METADATA,ENABLE_FTS3_PARENTHESIS,ENABLE_FTS3_TOKENIZER,ENABLE_FTS5,ENABLE_MATH_FUNCTIONS,ENABLE_PERCENTILE,ENABLE_UPDATE_DELETE_LIMIT,LIKE_DOESNT_MATCH_BLOBS,MALLOC_SOFT_LIMIT=1024,MAX_ATTACHED=10,MAX_COLUMN=2000,MAX_COMPOUND_SELECT=500,MAX_DEFAULT_PAGE_SIZE=8192,MAX_EXPR_DEPTH=1000,MAX_FUNCTION_ARG=1000,MAX_LENGTH=1000000000,MAX_LIKE_PATTERN_LENGTH=50000,MAX_MMAP_SIZE=0x7fff0000,MAX_PAGE_COUNT=0xfffffffe,MAX_PAGE_SIZE=65536,MAX_SCHEMA_RETRY=25,MAX_SQL_LENGTH=1000000000,MAX_TRIGGER_DEPTH=1000,MAX_VARIABLE_NUMBER=250000,MAX_VDBE_OP=250000000,MAX_WORKER_THREADS=8,MUTEX_W32,OMIT_LOOKASIDE,OMIT_SHARED_CACHE,SYSTEM_MALLOC,TEMP_STORE=1,THREADSAFE=1
+2026-03-28 23:10:36.765 Info SqliteUserRepository: Sqlite ThreadSafe: 1
+2026-03-28 23:10:36.765 Info SqliteUserRepository: Sqlite ThreadingMode: MultiThreaded
+2026-03-28 23:10:36.765 Info SqliteUserRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\users.db. isReadOnly: False
+2026-03-28 23:10:36.775 Info SqliteUserRepository: Default journal_mode for C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\users.db is wal
+2026-03-28 23:10:36.776 Info SqliteUserRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:36.776 Info SqliteUserRepository: PRAGMA page_size=4096
+2026-03-28 23:10:36.776 Info SqliteUserRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:36.776 Info SqliteUserRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:36.776 Info SqliteUserRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:36.776 Info SqliteUserRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:36.789 Info SqliteItemRepository: Initializing PooledDatabaseConnectionManager with pool size: 5
+2026-03-28 23:10:36.790 Info AuthenticationRepository: Initializing PooledDatabaseConnectionManager with pool size: 5
+2026-03-28 23:10:36.846 Info ActivityRepository: Initializing PooledDatabaseConnectionManager with pool size: 3
+2026-03-28 23:10:36.846 Info ActivityRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\activitylog.db. isReadOnly: False
+2026-03-28 23:10:36.859 Info ActivityRepository: Default journal_mode for C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\activitylog.db is wal
+2026-03-28 23:10:36.859 Info ActivityRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:36.859 Info ActivityRepository: PRAGMA page_size=4096
+2026-03-28 23:10:36.859 Info ActivityRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:36.859 Info ActivityRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:36.859 Info ActivityRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:36.859 Info ActivityRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:36.875 Info NetworkManager: Detecting local network addresses
+2026-03-28 23:10:36.875 Info NetworkManager: networkInterface: Ethernet vEthernet (Default Switch), Speed: 10000000000, Description: Hyper-V Virtual Ethernet Adapter
+2026-03-28 23:10:36.875 Info NetworkManager: GatewayAddresses: 
+2026-03-28 23:10:36.878 Info NetworkManager: UnicastAddresses: fe80::c6fa:6292:3187:1236%23,172.26.192.1
+2026-03-28 23:10:36.878 Info NetworkManager: networkInterface: Ethernet Ethernet, Speed: 2500000000, Description: Intel(R) Ethernet Controller (3) I225-V
+2026-03-28 23:10:36.878 Info NetworkManager: GatewayAddresses: 10.0.0.1
+2026-03-28 23:10:36.879 Info NetworkManager: UnicastAddresses: fdb7:f721:82e5:d5da:cd79:bbd1:6ce8:fdbd,fdb7:f721:82e5:d5da:c08e:1e94:6f19:98b3,fe80::3b2:8b64:c907:232d%3,10.0.0.160
+2026-03-28 23:10:36.879 Info NetworkManager: networkInterface: 53 Tailscale, Speed: 100000000000, Description: Tailscale Tunnel
+2026-03-28 23:10:36.879 Info NetworkManager: GatewayAddresses: 
+2026-03-28 23:10:36.879 Info NetworkManager: UnicastAddresses: fe80::4854:6488:987f:f1a5%27,169.254.83.107
+2026-03-28 23:10:36.879 Info NetworkManager: networkInterface: Loopback Loopback Pseudo-Interface 1, Speed: 1073741824, Description: Software Loopback Interface 1
+2026-03-28 23:10:36.879 Info NetworkManager: GatewayAddresses: 
+2026-03-28 23:10:36.879 Info NetworkManager: UnicastAddresses: ::1,127.0.0.1
+2026-03-28 23:10:36.885 Info NetworkManager: Detected local ip addresses: [{"IPAddress":"10.0.0.160","HasGateWayAddress":true,"PrefixLength":24,"IPv4Mask":"255.255.255.0"},{"IPAddress":"fdb7:f721:82e5:d5da:cd79:bbd1:6ce8:fdbd","HasGateWayAddress":true,"PrefixLength":64},{"IPAddress":"fdb7:f721:82e5:d5da:c08e:1e94:6f19:98b3","HasGateWayAddress":true,"PrefixLength":128},{"IPAddress":"fe80::3b2:8b64:c907:232d%3","HasGateWayAddress":true,"PrefixLength":64},{"IPAddress":"172.26.192.1","HasGateWayAddress":false,"PrefixLength":20,"IPv4Mask":"255.255.240.0"},{"IPAddress":"127.0.0.1","HasGateWayAddress":false,"PrefixLength":8,"IPv4Mask":"255.0.0.0"},{"IPAddress":"169.254.83.107","HasGateWayAddress":false,"PrefixLength":16,"IPv4Mask":"255.255.0.0"},{"IPAddress":"fe80::c6fa:6292:3187:1236%23","HasGateWayAddress":false,"PrefixLength":64},{"IPAddress":"fe80::4854:6488:987f:f1a5%27","HasGateWayAddress":false,"PrefixLength":64},{"IPAddress":"::1","HasGateWayAddress":false,"PrefixLength":128}]
+2026-03-28 23:10:36.886 Info App: Adding HttpListener prefix http://+:8096/
+2026-03-28 23:10:36.905 Info AuthenticationRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\authentication.db. isReadOnly: False
+2026-03-28 23:10:36.915 Info AuthenticationRepository: Default journal_mode for C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\authentication.db is wal
+2026-03-28 23:10:36.915 Info AuthenticationRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:36.915 Info AuthenticationRepository: PRAGMA page_size=4096
+2026-03-28 23:10:36.915 Info AuthenticationRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:36.915 Info AuthenticationRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:36.915 Info AuthenticationRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:36.915 Info AuthenticationRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:36.915 Info SqliteItemRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\library.db. isReadOnly: False
+2026-03-28 23:10:36.927 Info SqliteItemRepository: Default journal_mode for C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\library.db is wal
+2026-03-28 23:10:36.927 Info SqliteItemRepository: PRAGMA cache_size=-131072
+2026-03-28 23:10:36.927 Info SqliteItemRepository: PRAGMA page_size=4096
+2026-03-28 23:10:36.927 Info SqliteItemRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:36.927 Info SqliteItemRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:36.927 Info SqliteItemRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:36.927 Info SqliteItemRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:36.929 Info SqliteItemRepository: Init Complete
+2026-03-28 23:10:36.929 Info SqliteItemRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\library.db. isReadOnly: True
+2026-03-28 23:10:36.933 Info SqliteItemRepository: PRAGMA cache_size=-131072
+2026-03-28 23:10:36.933 Info SqliteItemRepository: PRAGMA page_size=4096
+2026-03-28 23:10:36.933 Info SqliteItemRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:36.933 Info SqliteItemRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:36.933 Info SqliteItemRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:36.933 Info SqliteItemRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:36.943 Info SqliteUserRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\users.db. isReadOnly: True
+2026-03-28 23:10:36.947 Info SqliteUserRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:36.947 Info SqliteUserRepository: PRAGMA page_size=4096
+2026-03-28 23:10:36.947 Info SqliteUserRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:36.947 Info SqliteUserRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:36.947 Info SqliteUserRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:36.947 Info SqliteUserRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:37.003 Info App: Emby Server 4.10.0.6
+	Command line: C:\Users\yock1\AppData\Roaming\Emby-Server\system\EmbyServer.dll
+	Operating system: Microsoft Windows 10.0.26200
+	OS/Process: x64/x64
+	Framework: .NET 8.0.22
+	Runtime: C:/Users/yock1/AppData/Roaming/Emby-Server/system/System.Private.CoreLib.dll
+	Processor count: 32
+	Data path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata
+	Application path: C:\Users\yock1\AppData\Roaming\Emby-Server\system
+2026-03-28 23:10:37.003 Info App: Logs path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\logs
+2026-03-28 23:10:37.003 Info App: Cache path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\cache
+2026-03-28 23:10:37.003 Info App: Internal metadata path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\metadata
+2026-03-28 23:10:37.003 Info App: Transcoding temporary files path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\transcoding-temp
+2026-03-28 23:10:37.003 Info App: DefaultThreadCurrentCulture: en-US
+2026-03-28 23:10:37.003 Info App: DefaultThreadCurrentUICulture: en-US
+2026-03-28 23:10:37.003 Info App: DefaultThreadCurrentUICulture: en-US
+2026-03-28 23:10:37.003 Info App: Server Friendly Name: x_secret1_x
+2026-03-28 23:10:37.003 Info App: Local time: 03/28/2026 23:10:37 +01:00
+2026-03-28 23:10:37.075 Info EmbyIconsEnhancer: [EmbyIcons] Session started.
+2026-03-28 23:10:37.117 Info EmbyIconsEnhancer: [EmbyIcons] SkiaSharp is available and functional.
+2026-03-28 23:10:37.117 Info EmbyIconsEnhancer: [EmbyIcons] SkiaSharp is available. Icon overlays will be applied.
+2026-03-28 23:10:37.379 Info FfmpegManager: FFMpeg: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffmpeg.exe
+2026-03-28 23:10:37.379 Info FfmpegManager: FFProbe: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffprobe.exe
+2026-03-28 23:10:37.379 Info FfmpegManager: FFDetect: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffdetect.exe
+2026-03-28 23:10:37.379 Info Main: Installed C++ Build Number: 35211
+2026-03-28 23:10:37.379 Info Main: Installed C++ Build Number: 35211
+2026-03-28 23:10:37.417 Info Skia: SkiaSharp version: 2.88.0.0
+2026-03-28 23:10:37.693 Info libvips: NetVips version: 3.0.0.0
+2026-03-28 23:10:37.693 Info ImageProcessor: Adding image processor Skia
+2026-03-28 23:10:37.693 Info ImageProcessor: Adding image processor libvips
+2026-03-28 23:10:37.709 Info TaskManager: Daily trigger for Video preview thumbnail extraction set to fire at 03/29/2026 02:00:00, which is 169.37151489333334 minutes from now.
+2026-03-28 23:10:37.719 Info TaskManager: Daily trigger for Rotate log file set to fire at 03/29/2026 00:00:00, which is 49.37133686666667 minutes from now.
+2026-03-28 23:10:37.720 Info TaskManager: Queueing task HardwareDetectionScheduledTask
+2026-03-28 23:10:37.720 Info TaskManager: Executing Hardware Detection
+2026-03-28 23:10:37.725 Info TaskManager: Daily trigger for Emby Server Backup set to fire at 03/29/2026 00:10:00, which is 59.37124776666667 minutes from now.
+2026-03-28 23:10:37.730 Info App: ServerId: 44783c8ef13946b78bbaabaa653ccec9
+2026-03-28 23:10:37.731 Info FfmpegManager: ProcessRun 'ffmpeg -hide_banner -version' Execute: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffmpeg.exe -hide_banner -version
+2026-03-28 23:10:37.744 Info App: Starting entry point Emby.Server.Implementations.Networking.RemoteAddressEntryPoint
+2026-03-28 23:10:37.744 Info App: Loading data from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\wan.dat
+2026-03-28 23:10:37.749 Info App: Entry point completed: Emby.Server.Implementations.Networking.RemoteAddressEntryPoint. Duration: 0.0053427 seconds
+2026-03-28 23:10:37.749 Info App: Starting entry point Emby.Server.Connect.ConnectEntryPoint
+2026-03-28 23:10:37.749 Info App: Loading data from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\connect.txt
+2026-03-28 23:10:37.749 Info App: Entry point completed: Emby.Server.Connect.ConnectEntryPoint. Duration: 0.0002873 seconds
+2026-03-28 23:10:37.749 Info App: Starting entry point Emby.Dlna.Main.DlnaEntryPoint
+2026-03-28 23:10:37.767 Info App: Entry point completed: Emby.Dlna.Main.DlnaEntryPoint. Duration: 0.0180918 seconds
+2026-03-28 23:10:37.767 Info App: Core startup complete
+2026-03-28 23:10:37.767 Info App: Starting entry point EmbyCredits.Plugin
+2026-03-28 23:10:37.822 Info App: Init BeginReceive on 0.0.0.0
+2026-03-28 23:10:37.822 Info App: Init BeginReceive on 0.0.0.0
+2026-03-28 23:10:37.822 Info App: Init BeginReceive on 10.0.0.160
+2026-03-28 23:10:37.822 Info App: Init BeginReceive on 127.0.0.1
+2026-03-28 23:10:37.848 Info Plugin: Credits Detection Service started
+2026-03-28 23:10:37.848 Info Plugin: ItemAdded event handler registered (auto-detection, tracer, or OnlyProcessNewEpisodes enabled)
+2026-03-28 23:10:37.848 Info Plugin: Auto-restore enabled: ItemUpdated event handler registered
+2026-03-28 23:10:37.848 Info App: Entry point completed: EmbyCredits.Plugin. Duration: 0.0806739 seconds
+2026-03-28 23:10:37.848 Info App: Starting entry point EmbyReporter.Plugin
+2026-03-28 23:10:37.850 Info Plugin: [LogManager] Loaded 0 log entries from file.
+2026-03-28 23:10:37.850 Info Plugin: [LogManager] Started. Log file: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\EmbyReporter\PlaybackReporter.Logging.json
+2026-03-28 23:10:37.850 Info Plugin: [NotificationService] Started.
+2026-03-28 23:10:37.850 Info App: Entry point completed: EmbyReporter.Plugin. Duration: 0.0018885 seconds
+2026-03-28 23:10:37.850 Info App: Starting entry point TimeMarkEdit.Plugin
+2026-03-28 23:10:37.850 Info Plugin: TimeMarkEdit plugin started
+2026-03-28 23:10:37.850 Info App: Entry point completed: TimeMarkEdit.Plugin. Duration: 7.03E-05 seconds
+2026-03-28 23:10:37.850 Info App: Starting entry point Emby.Server.Implementations.Udp.UdpServerEntryPoint
+2026-03-28 23:10:37.850 Info App: Entry point completed: Emby.Server.Implementations.Udp.UdpServerEntryPoint. Duration: 0.0002536 seconds
+2026-03-28 23:10:37.850 Info App: Starting entry point Emby.Server.Implementations.Session.PartyEventNotifier
+2026-03-28 23:10:37.850 Info App: Entry point completed: Emby.Server.Implementations.Session.PartyEventNotifier. Duration: 2.87E-05 seconds
+2026-03-28 23:10:37.850 Info App: Starting entry point Emby.Server.Implementations.Playlists.PlaylistUpgradeEntryPoint
+2026-03-28 23:10:37.851 Info App: Entry point completed: Emby.Server.Implementations.Playlists.PlaylistUpgradeEntryPoint. Duration: 9.9E-05 seconds
+2026-03-28 23:10:37.851 Info App: Starting entry point Emby.Server.Implementations.Library.DeviceAccessEntryPoint
+2026-03-28 23:10:37.851 Info App: Entry point completed: Emby.Server.Implementations.Library.DeviceAccessEntryPoint. Duration: 2.45E-05 seconds
+2026-03-28 23:10:37.851 Info App: Starting entry point Emby.Server.Implementations.IO.LibraryMonitorStartup
+2026-03-28 23:10:37.856 Info App: Entry point completed: Emby.Server.Implementations.IO.LibraryMonitorStartup. Duration: 0.0057801 seconds
+2026-03-28 23:10:37.856 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.AutomaticRestartEntryPoint
+2026-03-28 23:10:37.856 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.AutomaticRestartEntryPoint. Duration: 2.12E-05 seconds
+2026-03-28 23:10:37.856 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.KeepServerAwake
+2026-03-28 23:10:37.856 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.KeepServerAwake. Duration: 1.2E-05 seconds
+2026-03-28 23:10:37.856 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.LibraryChangedNotifier
+2026-03-28 23:10:37.856 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.LibraryChangedNotifier. Duration: 3.58E-05 seconds
+2026-03-28 23:10:37.856 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.LogLibrariesEntryPoint
+2026-03-28 23:10:37.857 Info LibraryMonitor: Watching directory with new FileSystemWatcher for D:\3 for item 128102
+2026-03-28 23:10:37.857 Info App: Libraries
+	Server Configuration: CollapseVideoFolders: False
+	Library:  Movies, id: 3, CollectionType: movies, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: D:\test\film
+	Library Folder: film, id: 126369: path: D:\test\film
+	Library:  TV shows, id: 5, CollectionType: tvshows, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: D:\test\Series
+	Library Folder: Series, id: 126370: path: D:\test\Series
+	Library:  Home videos & photos, id: 37027, CollectionType: homevideos, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: D:\test\Øffel\Video
+	Library Folder: Video, id: 126371: path: D:\test\Øffel\Video
+	Library:  Collections, id: 37860, CollectionType: boxsets, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: 
+	Library:  Watch Party, id: 128101, CollectionType: movies, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: D:\3
+	Library Folder: 3, id: 128102: path: D:\3
+	Library:  Playlists, id: 128496, CollectionType: playlists, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\playlists,C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\userplaylists
+	Library Folder: playlists, id: 128497: path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\playlists
+	Library Folder: userplaylists, id: 128498: path: C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\userplaylists
+	Library:  LAN, id: 129170, CollectionType: movies, CollapseSingleItemFolders: False, ForceCollapseSingleItemFolders: False
+	Configured paths: \\10.0.0.2\Media\Movies
+	Library Folder: Movies, id: 129171: path: \\10.0.0.2\Media\Movies
+2026-03-28 23:10:37.857 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.LogLibrariesEntryPoint. Duration: 0.0006321 seconds
+2026-03-28 23:10:37.857 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.ServerEventNotifier
+2026-03-28 23:10:37.857 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.ServerEventNotifier. Duration: 6.22E-05 seconds
+2026-03-28 23:10:37.857 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.StartupWizard
+2026-03-28 23:10:37.857 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.StartupWizard. Duration: 2.14E-05 seconds
+2026-03-28 23:10:37.857 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.SystemEvents
+2026-03-28 23:10:37.857 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.SystemEvents. Duration: 6.2E-06 seconds
+2026-03-28 23:10:37.857 Info App: Starting entry point Emby.Server.Implementations.EntryPoints.UserDataChangeNotifier
+2026-03-28 23:10:37.857 Info App: Entry point completed: Emby.Server.Implementations.EntryPoints.UserDataChangeNotifier. Duration: 1.16E-05 seconds
+2026-03-28 23:10:37.857 Info App: Starting entry point Emby.Server.Implementations.Channels.ChannelsEntryPoint
+2026-03-28 23:10:37.857 Info App: Entry point completed: Emby.Server.Implementations.Channels.ChannelsEntryPoint. Duration: 0.0002726 seconds
+2026-03-28 23:10:37.857 Info App: Starting entry point Emby.LiveTV.EntryPoint
+2026-03-28 23:10:37.858 Info LiveTV: Loading live tv data from C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\livetv\timers
+2026-03-28 23:10:37.858 Info App: Entry point completed: Emby.LiveTV.EntryPoint. Duration: 0.0002177 seconds
+2026-03-28 23:10:37.858 Info App: Starting entry point Emby.LiveTV.RecordingNotifier
+2026-03-28 23:10:37.858 Info App: Entry point completed: Emby.LiveTV.RecordingNotifier. Duration: 3.38E-05 seconds
+2026-03-28 23:10:37.858 Info App: Starting entry point Emby.Server.MediaEncoding.Api.EncodingManagerEntryPoint
+2026-03-28 23:10:37.865 Info LibraryMonitor: Watching directory with new FileSystemWatcher for D:\test\film for item 126369
+2026-03-28 23:10:37.865 Info LibraryMonitor: Watching directory with new FileSystemWatcher for D:\test\Øffel\Video for item 126371
+2026-03-28 23:10:37.865 Info LibraryMonitor: Watching directory with new FileSystemWatcher for D:\test\Series for item 126370
+2026-03-28 23:10:37.932 Info App: Entry point completed: Emby.Server.MediaEncoding.Api.EncodingManagerEntryPoint. Duration: 0.0740683 seconds
+2026-03-28 23:10:37.932 Info App: Starting entry point Emby.Notifications.NotificationManagerEntryPoint
+2026-03-28 23:10:37.934 Info Notifications: Registering event nofitier Activity Log
+2026-03-28 23:10:37.935 Info Notifications: Registering event nofitier Emby Server User Notifications
+2026-03-28 23:10:37.935 Info Notifications: Registering event factory CoreNotificationTypeFactory
+2026-03-28 23:10:37.935 Info Notifications: Registering event factory BackupNotificationTypeFactory
+2026-03-28 23:10:37.939 Info App: Entry point completed: Emby.Notifications.NotificationManagerEntryPoint. Duration: 0.0069677 seconds
+2026-03-28 23:10:37.939 Info App: Starting entry point Emby.Server.Sync.SyncNotificationEntryPoint
+2026-03-28 23:10:37.939 Info App: Entry point completed: Emby.Server.Sync.SyncNotificationEntryPoint. Duration: 8.23E-05 seconds
+2026-03-28 23:10:37.939 Info App: Starting entry point EmbyServer.Windows.LoopUtilEntryPoint
+2026-03-28 23:10:37.947 Info App: Entry point completed: EmbyServer.Windows.LoopUtilEntryPoint. Duration: 0.0085938 seconds
+2026-03-28 23:10:37.947 Info App: Starting entry point Emby.PortMapper.ExternalPortForwarding
+2026-03-28 23:10:37.948 Info App: Entry point completed: Emby.PortMapper.ExternalPortForwarding. Duration: 0.0004145 seconds
+2026-03-28 23:10:37.948 Info App: Starting entry point Emby.Security.PluginSecurityManager
+2026-03-28 23:10:37.948 Info App: Entry point completed: Emby.Security.PluginSecurityManager. Duration: 8.1E-06 seconds
+2026-03-28 23:10:37.948 Info App: Starting entry point Emby.Server.CinemaMode.IntrosEntryPoint
+2026-03-28 23:10:37.948 Info App: Entry point completed: Emby.Server.CinemaMode.IntrosEntryPoint. Duration: 3.56E-05 seconds
+2026-03-28 23:10:37.948 Info App: Starting entry point MBBackup.ServerEntryPoint
+2026-03-28 23:10:37.948 Info App: Entry point completed: MBBackup.ServerEntryPoint. Duration: 7.8E-06 seconds
+2026-03-28 23:10:37.948 Info App: Starting entry point NfoMetadata.EntryPoint
+2026-03-28 23:10:37.948 Info App: Entry point completed: NfoMetadata.EntryPoint. Duration: 2.67E-05 seconds
+2026-03-28 23:10:37.948 Info App: Starting entry point Tvdb.EntryPoint
+2026-03-28 23:10:37.948 Info App: Entry point completed: Tvdb.EntryPoint. Duration: 6.6E-06 seconds
+2026-03-28 23:10:37.948 Info App: All entry points have started
+2026-03-28 23:10:38.142 Info FfmpegManager: ProcessRun 'ffmpeg -hide_banner -version' Process exited with code 0
+2026-03-28 23:10:38.172 Info FfmpegManager: FfmpegValidator.Validate complete
+2026-03-28 23:10:38.196 Info SoftwareCodecProvider: h264, libx264, x264, V-E-libx264
+2026-03-28 23:10:38.196 Info SoftwareCodecProvider: hevc, libx265, x265, V-E-libx265
+2026-03-28 23:10:38.196 Info SoftwareCodecProvider: mpeg4, mpeg4, MPEG-4 part 2, V-E-mpeg4
+2026-03-28 23:10:38.196 Info SoftwareCodecProvider: msmpeg4v3, msmpeg4, MPEG-4 part 2 (MS Variant 3), V-E-msmpeg4
+2026-03-28 23:10:38.196 Info SoftwareCodecProvider: vp8, libvpx, libvpx VP8, V-E-libvpx
+2026-03-28 23:10:38.196 Info SoftwareCodecProvider: av1, libaom-av1, libaom-av1, V-E-libaom_av1
+2026-03-28 23:10:38.197 Info SoftwareCodecProvider: h264, libx264, x264, V-E-libx264
+2026-03-28 23:10:38.197 Info SoftwareCodecProvider: hevc, libx265, x265, V-E-libx265
+2026-03-28 23:10:38.197 Info SoftwareCodecProvider: mpeg4, mpeg4, MPEG-4 part 2, V-E-mpeg4
+2026-03-28 23:10:38.197 Info SoftwareCodecProvider: msmpeg4v3, msmpeg4, MPEG-4 part 2 (MS Variant 3), V-E-msmpeg4
+2026-03-28 23:10:38.197 Info SoftwareCodecProvider: vp8, libvpx, libvpx VP8, V-E-libvpx
+2026-03-28 23:10:38.197 Info SoftwareCodecProvider: av1, libaom-av1, libaom-av1, V-E-libaom_av1
+2026-03-28 23:10:38.197 Info Dx11VaCodecProvider: Start GetCodecList()
+2026-03-28 23:10:39.087 Info Dx11VaCodecProvider: End GetCodecList()
+2026-03-28 23:10:39.088 Info QuickSyncDx11CodecProvider: ProcessRun 'ffdetect_qsvencdec' Execute: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffdetect.exe -hide_banner -show_program_version -loglevel 48 -show_error -show_log 40 qsvencdec -print_format json 
+2026-03-28 23:10:39.476 Info QuickSyncDx11CodecProvider: ProcessRun 'ffdetect_qsvencdec' Process exited with code 0
+2026-03-28 23:10:39.533 Info NvidiaCodecProvider: ProcessRun 'ffdetect_nvencdec' Execute: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffdetect.exe -hide_banner -show_program_version -loglevel 48 -show_error -show_log 40 nvencdec -print_format json -disable_dx11
+2026-03-28 23:10:39.858 Info NvidiaCodecProvider: ProcessRun 'ffdetect_nvencdec' Process exited with code 0
+2026-03-28 23:10:39.924 Info NvidiaCodecProvider: Adapter #0: 'NVIDIA GeForce RTX 4090' ComputeCapability: 8.9
+2026-03-28 23:10:39.935 Info AmfCodecProvider: ProcessRun 'ffdetect_amfenc' Execute: C:\Users\yock1\AppData\Roaming\Emby-Server\system\ffdetect.exe -hide_banner -show_program_version -loglevel 48 -show_error -show_log 40 amfenc -print_format json 
+2026-03-28 23:10:39.950 Info AmfCodecProvider: ProcessRun 'ffdetect_amfenc' Process exited with code 0
+2026-03-28 23:10:40.720 Info TaskManager: Queueing task SubtitleOcrDataTask
+2026-03-28 23:10:40.720 Info TaskManager: Queueing task PluginUpdateTask
+2026-03-28 23:10:40.720 Info TaskManager: Queueing task SystemUpdateTask
+2026-03-28 23:10:40.721 Info TaskManager: Executing Check for plugin updates
+2026-03-28 23:10:40.721 Info TaskManager: Executing Check for application updates
+2026-03-28 23:10:40.721 Info TaskManager: Executing Download OCR Data
+2026-03-28 23:10:40.723 Info HttpClient: GET https://www.mb3admin.com/admin/service/EmbyPackages.json
+2026-03-28 23:10:40.723 Info HttpClient: GET https://api.github.com/repos/MediaBrowser/Emby.Releases/releases
+2026-03-28 23:10:40.730 Info TaskManager: Download OCR Data Completed after 0 minute(s) and 0 seconds
+2026-03-28 23:10:40.823 Info HttpClient: Http response 200 from https://api.github.com/repos/MediaBrowser/Emby.Releases/releases after 100ms
+2026-03-28 23:10:41.054 Info App: Update Revision 4.10.0.7 available.  Updating...
+2026-03-28 23:10:41.056 Info HttpClient: GetTempFileResponse url: https://github.com/MediaBrowser/Emby.Releases/releases/download/4.10.0.7/embyserver-win-x64-4.10.0.7.7z
+2026-03-28 23:10:41.056 Info HttpClient: GET https://github.com/MediaBrowser/Emby.Releases/releases/download/4.10.0.7/embyserver-win-x64-4.10.0.7.7z
+2026-03-28 23:10:41.186 Info HttpClient: Http response 200 from https://www.mb3admin.com/admin/service/EmbyPackages.json after 463ms
+2026-03-28 23:10:41.236 Info CodecManager: CodecList:
+	Decoders
+	   mpeg2video
+	         CUVID NVIDIA GeForce RTX 4090 - MPEG-2
+	         DX11VA NVIDIA GeForce RTX 4090 - MPEG-2
+	         NVDEC NVIDIA GeForce RTX 4090 - MPEG-2
+	   vc1
+	         DX11VA NVIDIA GeForce RTX 4090 - VC-1
+	         NVDEC NVIDIA GeForce RTX 4090 - VC-1
+	   h264
+	         CUVID NVIDIA GeForce RTX 4090 - H.264 (AVC)
+	         DX11VA NVIDIA GeForce RTX 4090 - H.264 (AVC)
+	         NVDEC NVIDIA GeForce RTX 4090 - H.264 (AVC)
+	   hevc
+	         CUVID NVIDIA GeForce RTX 4090 - H.265 (HEVC)
+	         DX11VA NVIDIA GeForce RTX 4090 - H.265 (HEVC)
+	         NVDEC NVIDIA GeForce RTX 4090 - H.265 (HEVC)
+	   vp9
+	         NVDEC NVIDIA GeForce RTX 4090 - VP9
+	         DX11VA NVIDIA GeForce RTX 4090 - VP9
+	   av1
+	         CUVID NVIDIA GeForce RTX 4090 - AV1
+	         DX11VA NVIDIA GeForce RTX 4090 - AV1
+	         NVDEC NVIDIA GeForce RTX 4090 - AV1
+	   vp8
+	         NVDEC NVIDIA GeForce RTX 4090 - VP8
+	Encoders
+	   h264
+	         NVENC NVIDIA GeForce RTX 4090 - H.264 (AVC)
+	   hevc
+	         NVENC NVIDIA GeForce RTX 4090 - H.265 (HEVC)
+2026-03-28 23:10:41.236 Info TaskManager: Hardware Detection Completed after 0 minute(s) and 3 seconds
+2026-03-28 23:10:41.534 Info HttpClient: Http response 200 from https://github.com/MediaBrowser/Emby.Releases/releases/download/4.10.0.7/embyserver-win-x64-4.10.0.7.7z after 478ms
+2026-03-28 23:10:41.887 Info TaskManager: Check for plugin updates Completed after 0 minute(s) and 1 seconds
+2026-03-28 23:10:42.789 Info App: Application has been updated to version 4.10.0.7
+2026-03-28 23:10:42.789 Info App: Emby Server needs to be restarted.
+2026-03-28 23:10:42.789 Info TaskManager: Check for application updates Completed after 0 minute(s) and 2 seconds
+2026-03-28 23:10:42.821 Info DLNA: DLNA Session created for WiiM Amp køkken - WiiM Amp. Description url: http://10.0.0.157:49152/description.xml
+2026-03-28 23:10:42.966 Info DLNA: DLNA Session created for Home Theater - Denon AVC-X3800H. Description url: http://10.0.0.139:60006/upnp/desc/aios_device/aios_device.xml
+2026-03-28 23:10:43.325 Info HttpClient: GET http://10.0.0.157:49152/upnp/rendertransportSCPD.xml
+2026-03-28 23:10:43.333 Info HttpClient: Http response 200 from http://10.0.0.157:49152/upnp/rendertransportSCPD.xml after 7ms
+2026-03-28 23:10:43.481 Info HttpClient: GET http://10.0.0.139:60006/upnp/scpd/renderer_dvc/AVTransport.xml
+2026-03-28 23:10:43.482 Info HttpClient: Http response 200 from http://10.0.0.139:60006/upnp/scpd/renderer_dvc/AVTransport.xml after 2ms
+2026-03-28 23:10:43.577 Info DLNA: DLNA Session created for TV - MediaRenderer. Description url: http://10.0.0.237:52323/MediaRenderer.xml
+2026-03-28 23:10:44.083 Info HttpClient: GET http://10.0.0.237:52323/AVTransportSCPD.xml
+2026-03-28 23:10:44.087 Info HttpClient: Http response 200 from http://10.0.0.237:52323/AVTransportSCPD.xml after 3ms
+2026-03-28 23:10:48.186 Info AuthenticationRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\authentication.db. isReadOnly: True
+2026-03-28 23:10:48.194 Info AuthenticationRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:48.194 Info AuthenticationRepository: PRAGMA page_size=4096
+2026-03-28 23:10:48.194 Info AuthenticationRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:48.194 Info AuthenticationRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:48.194 Info AuthenticationRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:48.194 Info AuthenticationRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:49.662 Info UserService-0HNKD2RBO6Q0F:00000037: http/1.1 POST http://localhost:8096/emby/Users/authenticatebyname?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Language=en-us. Source Ip: 127.0.0.1, Accept=application/json, Connection=keep-alive, Host=localhost:8096, User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0, Accept-Encoding=gzip, deflate, br, zstd, Accept-Language=en-US,en;q=0.9, Content-Type=application/x-www-form-urlencoded; charset=UTF-8, Origin=http://localhost:8096, Referer=http://localhost:8096/web/index.html, Content-Length=27, Sec-Fetch-Dest=empty, Sec-Fetch-Mode=cors, Sec-Fetch-Site=same-origin, Priority=u=0
+2026-03-28 23:10:49.771 Info UserManager: Authentication request for yock1 has succeeded.
+2026-03-28 23:10:49.773 Info SessionManager: Creating new access token for user 1 yock1
+2026-03-28 23:10:49.811 Info UserService-0HNKD2RBO6Q0F:00000037: http/1.1 Response 200 to 127.0.0.1. Time: 150ms. POST http://localhost:8096/emby/Users/authenticatebyname?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Language=en-us. Headers: Content-Type=application/json; charset=utf-8, Date=Sat, 28 Mar 2026 22:10:49 GMT, Server=UPnP/1.0 DLNADOC/1.50, Content-Encoding=br, Expires=-1, Vary=Accept-Encoding, Content-Length=1309, Cross-Origin-Resource-Policy=cross-origin, Private-Network-Access-Name=YOCKD, Private-Network-Access-Id=44783c8ef13946b78bbaabaa653ccec9
+2026-03-28 23:10:49.814 Info SessionsService-0HNKD2RBO6Q0E:00000033: http/1.1 POST http://localhost:8096/emby/Sessions/Capabilities/Full?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us&reqformat=json. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:10:49.824 Info SessionsService-0HNKD2RBO6Q0E:00000033: http/1.1 Response 204 to 127.0.0.1. Time: 9ms. POST http://localhost:8096/emby/Sessions/Capabilities/Full?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us&reqformat=json. 
+2026-03-28 23:10:49.892 Info SqliteItemRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\library.db. isReadOnly: True
+2026-03-28 23:10:49.898 Info SqliteItemRepository: PRAGMA cache_size=-131072
+2026-03-28 23:10:49.898 Info SqliteItemRepository: PRAGMA page_size=4096
+2026-03-28 23:10:49.898 Info SqliteItemRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:49.898 Info SqliteItemRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:49.898 Info SqliteItemRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:49.898 Info SqliteItemRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:50.959 Info AuthenticationRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\authentication.db. isReadOnly: True
+2026-03-28 23:10:50.960 Info ActivityRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\activitylog.db. isReadOnly: True
+2026-03-28 23:10:50.961 Info ActivityRepository: Opening sqlite connection to C:\Users\yock1\AppData\Roaming\Emby-Server\programdata\data\activitylog.db. isReadOnly: True
+2026-03-28 23:10:50.965 Info AuthenticationRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:50.965 Info AuthenticationRepository: PRAGMA page_size=4096
+2026-03-28 23:10:50.965 Info AuthenticationRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:50.965 Info AuthenticationRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:50.965 Info AuthenticationRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:50.965 Info AuthenticationRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA cache_size=-65536
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA page_size=4096
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA page_size=4096
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA foreign_keys=1
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:50.969 Info ActivityRepository: PRAGMA SECURE_DELETE=0
+2026-03-28 23:10:50.969 Info ActivityRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:50.969 Info ActivityRepository: Result of setting SQLITE_DBCONFIG_DQS_DDL to 0 is 0
+2026-03-28 23:10:50.969 Info ActivityRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:10:50.969 Info ActivityRepository: Result of setting SQLITE_DBCONFIG_DQS_DML to 0 is 0
+2026-03-28 23:11:11.700 Info TimeMarkApiService-0HNKD2RBO6Q0F:00000056: http/1.1 POST http://localhost:8096/emby/TimeMarkEdit/SaveEpisodeChapters?EpisodeId=126409. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:11.703 Info TimeMarkApiService-0HNKD2RBO6Q0F:00000056: http/1.1 Response 200 to 127.0.0.1. Time: 3ms. POST http://localhost:8096/emby/TimeMarkEdit/SaveEpisodeChapters?EpisodeId=126409. 
+2026-03-28 23:11:22.383 Info ConfigurationService-0HNKD2RBO6Q0F:00000065: http/1.1 POST http://localhost:8096/emby/System/Configuration?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us&reqformat=json. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:22.394 Info ServerConfigurationManager: Saving system configuration
+2026-03-28 23:11:22.395 Info ConfigurationService-0HNKD2RBO6Q0F:00000065: http/1.1 Response 204 to 127.0.0.1. Time: 11ms. POST http://localhost:8096/emby/System/Configuration?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us&reqformat=json. 
+2026-03-28 23:11:22.395 Info App: Setting default culture to en-US
+2026-03-28 23:11:25.227 Debug App: ActivityLogWebSocketListener stop transmitting over websocket to 127.0.0.1
+2026-03-28 23:11:25.227 Debug App: ActivityLogWebSocketListener stop transmitting over websocket to 127.0.0.1
+2026-03-28 23:11:25.267 Debug PluginService-0HNKD2RBO6Q0F:00000069: http/1.1 GET http://localhost:8096/emby/Plugins?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.269 Debug PluginService-0HNKD2RBO6Q0F:00000069: http/1.1 Response 200 to 127.0.0.1. Time: 3ms. GET http://localhost:8096/emby/Plugins?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:25.271 Debug WebAppService-0HNKD2RBO6Q0F:0000006A: http/1.1 GET http://localhost:8096/emby/web/configurationpages?PageType=PluginConfiguration&UserId=x_secret3_x&EnableInUserMenu=false&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.272 Debug WebAppService-0HNKD2RBO6Q0F:0000006A: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/web/configurationpages?PageType=PluginConfiguration&UserId=x_secret3_x&EnableInUserMenu=false&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:25.291 Debug PluginService-0HNKD2RBO6Q0E:00000042: http/1.1 GET http://localhost:8096/emby/Plugins/1d0dddf7-1877-4473-8d7b-03f7dac1e559/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.291 Debug PluginService-0HNKD2RBO6Q0I:0000001E: http/1.1 GET http://localhost:8096/emby/Plugins/e711475e-efad-431b-8527-033ba9873a34/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.291 Debug PluginService-0HNKD2RBO6Q0F:0000006B: http/1.1 GET http://localhost:8096/emby/Plugins/043b75cd-fc2c-49cc-accc-4d1d60a297c5/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.291 Debug PluginService-0HNKD2RBO6Q0H:00000024: http/1.1 GET http://localhost:8096/emby/Plugins/b1a65a73-a620-432a-9f5b-285038031c26/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.291 Debug PluginService-0HNKD2RBO6Q0J:00000022: http/1.1 GET http://localhost:8096/emby/Plugins/ed4b9001-e4a1-4760-9592-d127188ef178/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.291 Debug PluginService-0HNKD2RBO6Q0G:00000020: http/1.1 GET http://localhost:8096/emby/Plugins/02528c96-f727-44d7-be87-9eef040758c3/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0I:0000001E: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Plugins/e711475e-efad-431b-8527-033ba9873a34/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0F:0000006B: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Plugins/043b75cd-fc2c-49cc-accc-4d1d60a297c5/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0E:00000042: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Plugins/1d0dddf7-1877-4473-8d7b-03f7dac1e559/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0J:00000022: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Plugins/ed4b9001-e4a1-4760-9592-d127188ef178/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0H:00000024: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Plugins/b1a65a73-a620-432a-9f5b-285038031c26/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0G:00000020: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Plugins/02528c96-f727-44d7-be87-9eef040758c3/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0F:0000006C: http/1.1 GET http://localhost:8096/emby/Plugins/8c6ddb20-18b1-4131-9285-796179a71c0f/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0E:00000043: http/1.1 GET http://localhost:8096/emby/Plugins/2ea04f4b-a776-428e-9869-58e8e5b149c2/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0J:00000023: http/1.1 GET http://localhost:8096/emby/Plugins/05c9ed79-5645-4aa2-a161-d4f29e63535c/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0I:0000001F: http/1.1 GET http://localhost:8096/emby/Plugins/4c7a45d6-f859-4242-9cda-aea1977969de/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0F:0000006C: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/8c6ddb20-18b1-4131-9285-796179a71c0f/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0E:00000043: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/2ea04f4b-a776-428e-9869-58e8e5b149c2/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0I:0000001F: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/4c7a45d6-f859-4242-9cda-aea1977969de/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0J:00000023: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/05c9ed79-5645-4aa2-a161-d4f29e63535c/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0G:00000021: http/1.1 GET http://localhost:8096/emby/Plugins/c8165d38-ec3d-46e8-b9eb-74fe79dfbadb/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0H:00000025: http/1.1 GET http://localhost:8096/emby/Plugins/decab536-f5ca-4810-88c2-0e60f652b921/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0G:00000021: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/c8165d38-ec3d-46e8-b9eb-74fe79dfbadb/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0F:0000006D: http/1.1 GET http://localhost:8096/emby/Plugins/b8d0f5a4-3e96-4c0f-a6e2-9f0c2ecb5c5f/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0E:00000044: http/1.1 GET http://localhost:8096/emby/Plugins/8d7d93b2-01dc-48dc-8c5d-4e7abbd9f9eb/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0J:00000024: http/1.1 GET http://localhost:8096/emby/Plugins/7caf8bfd-5b06-4dae-97c9-11bedb1c013e/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0H:00000025: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/decab536-f5ca-4810-88c2-0e60f652b921/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.292 Debug PluginService-0HNKD2RBO6Q0I:00000020: http/1.1 GET http://localhost:8096/emby/Plugins/341944af-4959-47e5-8ace-398520208a71/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0E:00000044: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/8d7d93b2-01dc-48dc-8c5d-4e7abbd9f9eb/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0J:00000024: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/7caf8bfd-5b06-4dae-97c9-11bedb1c013e/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0I:00000020: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/341944af-4959-47e5-8ace-398520208a71/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0G:00000022: http/1.1 GET http://localhost:8096/emby/Plugins/e610ba80-9750-47bc-979d-3f0fc86e0081/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0H:00000026: http/1.1 GET http://localhost:8096/emby/Plugins/c25b3c85-1880-4827-9c72-0fa74314f428/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0G:00000022: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/e610ba80-9750-47bc-979d-3f0fc86e0081/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0H:00000026: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/c25b3c85-1880-4827-9c72-0fa74314f428/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0E:00000045: http/1.1 GET http://localhost:8096/emby/Plugins/4dcb591c-0fa2-4c5d-a7e5-dabe37164c8b/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0J:00000025: http/1.1 GET http://localhost:8096/emby/Plugins/96fa50a4-69ce-42ac-b6a3-ef6b3388ccb7/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0I:00000021: http/1.1 GET http://localhost:8096/emby/Plugins/6c3b6965-c257-47c2-aa02-64457ae21d91/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0E:00000045: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/4dcb591c-0fa2-4c5d-a7e5-dabe37164c8b/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0J:00000025: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/96fa50a4-69ce-42ac-b6a3-ef6b3388ccb7/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0I:00000021: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/6c3b6965-c257-47c2-aa02-64457ae21d91/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0G:00000023: http/1.1 GET http://localhost:8096/emby/Plugins/c68856b8-6031-480d-b08e-43b9114addb2/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0H:00000027: http/1.1 GET http://localhost:8096/emby/Plugins/18cffd2c-74f5-4ede-8dad-be339443afe4/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0G:00000023: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/c68856b8-6031-480d-b08e-43b9114addb2/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0H:00000027: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/18cffd2c-74f5-4ede-8dad-be339443afe4/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0E:00000046: http/1.1 GET http://localhost:8096/emby/Plugins/3a63a9f3-810e-44f6-910a-14d6ad1255ec/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0J:00000026: http/1.1 GET http://localhost:8096/emby/Plugins/7fb7ff5e-5407-4f74-8990-b7aa643085d2/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.293 Debug PluginService-0HNKD2RBO6Q0I:00000022: http/1.1 GET http://localhost:8096/emby/Plugins/c4f7b3a8-2e5d-4f1a-8b6c-9d0e3a7f2c51/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0J:00000026: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/7fb7ff5e-5407-4f74-8990-b7aa643085d2/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0E:00000046: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/3a63a9f3-810e-44f6-910a-14d6ad1255ec/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0G:00000024: http/1.1 GET http://localhost:8096/emby/Plugins/85a7b1d4-fbda-4e85-a0a2-ac303c9946a4/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0H:00000028: http/1.1 GET http://localhost:8096/emby/Plugins/4fc3243f-31fe-45f2-a617-deceeb51b383/Thumb?maxWidth=350&tag=1. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0I:00000022: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/c4f7b3a8-2e5d-4f1a-8b6c-9d0e3a7f2c51/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0H:00000028: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/4fc3243f-31fe-45f2-a617-deceeb51b383/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.294 Debug PluginService-0HNKD2RBO6Q0G:00000024: http/1.1 Response 200 to 127.0.0.1. Time: 0ms. GET http://localhost:8096/emby/Plugins/85a7b1d4-fbda-4e85-a0a2-ac303c9946a4/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:25.299 Debug PluginService-0HNKD2RBO6Q0F:0000006D: http/1.1 Response 200 to 127.0.0.1. Time: 7ms. GET http://localhost:8096/emby/Plugins/b8d0f5a4-3e96-4c0f-a6e2-9f0c2ecb5c5f/Thumb?maxWidth=350&tag=1. 
+2026-03-28 23:11:30.737 Debug LibraryService-0HNKD2RBO6Q0F:0000006E: http/1.1 GET http://localhost:8096/emby/Library/MediaFolders?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:30.738 Debug LibraryService-0HNKD2RBO6Q0F:0000006E: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Library/MediaFolders?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:32.040 Debug LibraryService-0HNKD2RBO6Q0F:0000006F: http/1.1 GET http://localhost:8096/emby/Library/MediaFolders?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:32.041 Debug LibraryService-0HNKD2RBO6Q0F:0000006F: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Library/MediaFolders?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:34.826 Debug ItemsService-0HNKD2RBO6Q0F:00000070: http/1.1 GET http://localhost:8096/emby/Items?SearchTerm=barbie&IncludeItemTypes=Series,Movie&Recursive=true&SortBy=SortName&SortOrder=Ascending&Fields=SortName&Limit=100&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:34.827 Debug ItemsService-0HNKD2RBO6Q0F:00000070: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Items?SearchTerm=barbie&IncludeItemTypes=Series,Movie&Recursive=true&SortBy=SortName&SortOrder=Ascending&Fields=SortName&Limit=100&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:36.223 Debug UserLibraryService-0HNKD2RBO6Q0F:00000071: http/1.1 GET http://localhost:8096/emby/Users/4d9151b22adb4135a0d6c677e888a125/Items/126409?Fields=Chapters&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:36.224 Debug SqliteItemRepository: GetitemById Movie 126409 D:\test\film\Barbie (2023)\Barbie (2023) WEBDL-2160p DV HDR10 h265 5.1.mkv
+2026-03-28 23:11:36.226 Debug UserLibraryService-0HNKD2RBO6Q0F:00000071: http/1.1 Response 200 to 127.0.0.1. Time: 3ms. GET http://localhost:8096/emby/Users/4d9151b22adb4135a0d6c677e888a125/Items/126409?Fields=Chapters&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:36.228 Debug LibraryService-0HNKD2RBO6Q0F:00000072: http/1.1 GET http://localhost:8096/emby/Items/126409/Ancestors?UserId=x_secret3_x&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:36.229 Debug SqliteItemRepository: GetitemById Movie 126409 D:\test\film\Barbie (2023)\Barbie (2023) WEBDL-2160p DV HDR10 h265 5.1.mkv
+2026-03-28 23:11:36.229 Debug LibraryService-0HNKD2RBO6Q0F:00000072: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Items/126409/Ancestors?UserId=x_secret3_x&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:37.732 Debug TaskManager: IntervalTrigger fired for task: Check for plugin updates
+2026-03-28 23:11:37.732 Debug TaskManager: IntervalTrigger fired for task: Check for application updates
+2026-03-28 23:11:37.732 Debug TaskManager: Queueing task PluginUpdateTask
+2026-03-28 23:11:37.732 Debug TaskManager: Queueing task SystemUpdateTask
+2026-03-28 23:11:37.732 Debug TaskManager: Executing Check for application updates
+2026-03-28 23:11:37.732 Debug TaskManager: Executing Check for plugin updates
+2026-03-28 23:11:37.732 Debug HttpClient: GET https://www.mb3admin.com/admin/service/EmbyPackages.json
+2026-03-28 23:11:37.732 Debug App: No application update available.
+2026-03-28 23:11:37.732 Debug TaskManager: Check for application updates Completed after 0 minute(s) and 0 seconds
+2026-03-28 23:11:38.162 Debug HttpClient: Http response 200 from https://www.mb3admin.com/admin/service/EmbyPackages.json after 430ms
+2026-03-28 23:11:38.703 Debug TaskManager: Check for plugin updates Completed after 0 minute(s) and 0 seconds
+2026-03-28 23:11:43.523 Info TimeMarkApiService-0HNKD2RBO6Q0F:00000073: http/1.1 POST http://localhost:8096/emby/TimeMarkEdit/SaveEpisodeChapters?EpisodeId=126409. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:43.523 Info TimeMarkApiService-0HNKD2RBO6Q0F:00000073: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. POST http://localhost:8096/emby/TimeMarkEdit/SaveEpisodeChapters?EpisodeId=126409. 
+2026-03-28 23:11:51.728 Debug UserService-0HNKD2RBO6Q0F:00000074: http/1.1 GET http://localhost:8096/emby/Users/4d9151b22adb4135a0d6c677e888a125?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:51.729 Debug SystemService-0HNKD2RBO6Q0E:00000047: http/1.1 GET http://localhost:8096/emby/System/Logs/Query?IncludeItemTypes=Log&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,DateModified,Size&StartIndex=0&Recursive=true&Limit=30&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:51.729 Debug UserService-0HNKD2RBO6Q0F:00000074: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/Users/4d9151b22adb4135a0d6c677e888a125?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:51.730 Debug SystemService-0HNKD2RBO6Q0E:00000047: http/1.1 Response 200 to 127.0.0.1. Time: 1ms. GET http://localhost:8096/emby/System/Logs/Query?IncludeItemTypes=Log&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,DateModified,Size&StartIndex=0&Recursive=true&Limit=30&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:52.750 Debug SystemService-0HNKD2RBO6Q0E:00000048: http/1.1 GET http://localhost:8096/emby/System/Logs/Query?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:52.752 Debug SystemService-0HNKD2RBO6Q0E:00000048: http/1.1 Response 200 to 127.0.0.1. Time: 2ms. GET http://localhost:8096/emby/System/Logs/Query?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:52.754 Debug SystemService-0HNKD2RBO6Q0F:00000077: http/1.1 GET http://localhost:8096/emby/System/Logs/embyserver.txt/Lines?IncludeItemTypes=LogLine&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,CommunityRating,OfficialRating,CriticRating&StartIndex=0&SortBy=SortName&SortOrder=Ascending&EnableImageTypes=Primary,Backdrop,Thumb&ImageTypeLimit=1&Sanitize=true&Limit=100&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:52.765 Debug SystemService-0HNKD2RBO6Q0F:00000077: http/1.1 Response 200 to 127.0.0.1. Time: 11ms. GET http://localhost:8096/emby/System/Logs/embyserver.txt/Lines?IncludeItemTypes=LogLine&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,CommunityRating,OfficialRating,CriticRating&StartIndex=0&SortBy=SortName&SortOrder=Ascending&EnableImageTypes=Primary,Backdrop,Thumb&ImageTypeLimit=1&Sanitize=true&Limit=100&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:11:54.854 Debug SystemService-0HNKD2RBO6Q0F:00000078: http/1.1 GET http://localhost:8096/emby/System/Logs/embyserver.txt/Lines?IncludeItemTypes=LogLine&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,CommunityRating,OfficialRating,CriticRating&StartIndex=500&SortBy=SortName&SortOrder=Ascending&EnableImageTypes=Primary,Backdrop,Thumb&ImageTypeLimit=1&Sanitize=true&Limit=100&EnableTotalRecordCount=false&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:11:54.863 Debug SystemService-0HNKD2RBO6Q0F:00000078: http/1.1 Response 200 to 127.0.0.1. Time: 9ms. GET http://localhost:8096/emby/System/Logs/embyserver.txt/Lines?IncludeItemTypes=LogLine&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,CommunityRating,OfficialRating,CriticRating&StartIndex=500&SortBy=SortName&SortOrder=Ascending&EnableImageTypes=Primary,Backdrop,Thumb&ImageTypeLimit=1&Sanitize=true&Limit=100&EnableTotalRecordCount=false&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:12:15.312 Debug SystemService-0HNKD2RBO6Q0F:00000079: http/1.1 GET http://localhost:8096/emby/System/Logs/Query?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:12:15.313 Debug SystemService-0HNKD2RBO6Q0F:00000079: http/1.1 Response 200 to 127.0.0.1. Time: 2ms. GET http://localhost:8096/emby/System/Logs/Query?X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:12:15.317 Debug SystemService-0HNKD2RBO6Q0F:0000007A: http/1.1 GET http://localhost:8096/emby/System/Logs/embyserver.txt/Lines?IncludeItemTypes=LogLine&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,CommunityRating,OfficialRating,CriticRating&StartIndex=0&SortBy=SortName&SortOrder=Ascending&EnableImageTypes=Primary,Backdrop,Thumb&ImageTypeLimit=1&Sanitize=true&Limit=100&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0
+2026-03-28 23:12:15.329 Debug SystemService-0HNKD2RBO6Q0F:0000007A: http/1.1 Response 200 to 127.0.0.1. Time: 12ms. GET http://localhost:8096/emby/System/Logs/embyserver.txt/Lines?IncludeItemTypes=LogLine&Fields=BasicSyncInfo,CanDelete,CanDownload,PrimaryImageAspectRatio,ProductionYear,Status,EndDate,CommunityRating,OfficialRating,CriticRating&StartIndex=0&SortBy=SortName&SortOrder=Ascending&EnableImageTypes=Primary,Backdrop,Thumb&ImageTypeLimit=1&Sanitize=true&Limit=100&X-Emby-Client=Emby Web&X-Emby-Device-Name=Firefox Windows&X-Emby-Device-Id=53fc7816-4631-4644-9a68-94dc507706f9&X-Emby-Client-Version=4.10.0.6&X-Emby-Token=x_secret2_x&X-Emby-Language=en-us. 
+2026-03-28 23:12:16.129 Debug SystemService-0HNKD2RBO6Q0F:0000007C: http/1.1 GET http://localhost:8096/emby/System/Logs/embyserver.txt?Sanitize=true&api_key=x_secret2_x&SetFilename=true. Source Ip: 127.0.0.1, UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0

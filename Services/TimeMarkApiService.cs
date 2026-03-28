@@ -20,6 +20,17 @@ namespace TimeMarkEdit.Services
             _logger = logManager.GetLogger(GetType().Name);
         }
 
+        private BaseItem? ResolveItem(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId))
+                return null;
+            if (Guid.TryParse(itemId, out var guid))
+                return _libraryManager.GetItemById(guid);
+            if (long.TryParse(itemId, out var internalId))
+                return _libraryManager.GetItemById(internalId);
+            return null;
+        }
+
         public object Get(GetEpisodeChaptersRequest request)
         {
             try
@@ -27,10 +38,7 @@ namespace TimeMarkEdit.Services
                 if (string.IsNullOrEmpty(request.EpisodeId))
                     return new { Success = false, Message = "EpisodeId is required" };
 
-                if (!Guid.TryParse(request.EpisodeId, out var guid))
-                    return new { Success = false, Message = "Invalid EpisodeId format" };
-
-                var item = _libraryManager.GetItemById(guid);
+                var item = ResolveItem(request.EpisodeId);
                 if (item == null)
                     return new { Success = false, Message = "Item not found" };
 
@@ -76,10 +84,7 @@ namespace TimeMarkEdit.Services
                 if (string.IsNullOrEmpty(request.EpisodeId))
                     return new { Success = false, Message = "EpisodeId is required" };
 
-                if (!Guid.TryParse(request.EpisodeId, out var guid))
-                    return new { Success = false, Message = "Invalid EpisodeId format" };
-
-                var item = _libraryManager.GetItemById(guid);
+                var item = ResolveItem(request.EpisodeId);
                 if (item == null)
                     return new { Success = false, Message = "Item not found" };
 
