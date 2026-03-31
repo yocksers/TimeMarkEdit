@@ -13,8 +13,9 @@ define(['loading', 'toast'], function (loading, toast) {
     let _isSearchMode = false;
     let _searchTimeout = null;
     let _allEpisodeItems = null;
-    let _episodeCache = null;  // { parentId, allLibraries, items }
     let _fetchGeneration = 0;
+    let _dragSrcRow = null;
+    let _currentItemIsEpisode = false;
 
     function q(id) { return _view.querySelector('#' + id); }
 
@@ -247,67 +248,40 @@ define(['loading', 'toast'], function (loading, toast) {
     }
 
     function fetchAllEpisodesAndFilter(parentId) {
-        var wantAllLibs = isAllLibraries();
-        var cacheKey = parentId || null;
-
-        if (_episodeCache &&
-            _episodeCache.parentId === cacheKey &&
-            _episodeCache.allLibraries === wantAllLibs) {
-            _allEpisodeItems = _episodeCache.items;
-            applyBrowserFilter();
-            return;
-        }
-
+        _allEpisodeItems = null;
         var listEl = q('chapterBrowserList');
         listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Filtering…</div>';
 
         _fetchGeneration++;
         var myGeneration = _fetchGeneration;
-        var includeTypes = wantAllLibs ? 'Episode,Movie' : 'Episode';
-        var userId = ApiClient.getCurrentUserId();
-        var pageSize = 1000;
+
+        var noChaptersOnly = q('chapterFilterNoChapters').checked;
+        var maxCountRaw = q('chapterFilterMaxCount').value.trim();
+        var minGapRaw = q('chapterFilterMinGap').value.trim();
+        var introFilter = q('chapterFilterIntro').value;
+        var creditsFilter = q('chapterFilterCredits').value;
+        var hasMaxCount = maxCountRaw !== '' && !isNaN(parseInt(maxCountRaw, 10));
+        var hasMinGap = minGapRaw !== '' && !isNaN(parseInt(minGapRaw, 10));
 
         var params = {
-            UserId: userId,
-            IncludeItemTypes: includeTypes,
-            Recursive: true,
-            SortBy: 'SeriesName,ParentIndexNumber,IndexNumber',
-            SortOrder: 'Ascending',
-            Fields: 'ParentIndexNumber,IndexNumber,SeriesName,Chapters'
+            AllLibraries: isAllLibraries(),
+            NoChaptersOnly: noChaptersOnly,
+            MaxChapterCount: hasMaxCount ? parseInt(maxCountRaw, 10) : -1,
+            MinGapSeconds: hasMinGap ? parseInt(minGapRaw, 10) : -1,
+            IntroFilter: introFilter || '',
+            CreditsFilter: creditsFilter || ''
         };
         if (parentId) params.ParentId = parentId;
 
-        var accumulated = [];
-
-        function fetchPage(startIndex) {
-            if (_fetchGeneration !== myGeneration) return;
-            var pageParams = Object.assign({}, params, { StartIndex: startIndex, Limit: pageSize });
-            ApiClient.getJSON(ApiClient.getUrl('Items', pageParams))
-                .then(function (response) {
-                    if (_fetchGeneration !== myGeneration) return;
-                    var items = (response.Items || []).filter(function (e) {
-                        return e.Type === 'Movie' || e.Type === 'Episode';
-                    });
-                    accumulated = accumulated.concat(items);
-                    var total = response.TotalRecordCount || 0;
-                    var fetched = startIndex + (response.Items || []).length;
-                    if (total > 1000) {
-                        listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Filtering… ' + accumulated.length + ' / ' + total + '</div>';
-                    }
-                    if ((response.Items || []).length === pageSize && fetched < total) {
-                        fetchPage(fetched);
-                    } else {
-                        _allEpisodeItems = accumulated;
-                        _episodeCache = { parentId: cacheKey, allLibraries: wantAllLibs, items: accumulated };
-                        applyBrowserFilter();
-                    }
-                })
-                .catch(function () {
-                    if (_fetchGeneration !== myGeneration) return;
-                    renderBrowserList([]);
-                });
-        }
-        fetchPage(0);
+        ApiClient.getJSON(ApiClient.getUrl('TimeMarkEdit/FilterEpisodes', params))
+            .then(function (response) {
+                if (_fetchGeneration !== myGeneration) return;
+                renderBrowserList(response && response.Success ? (response.Items || []) : []);
+            })
+            .catch(function () {
+                if (_fetchGeneration !== myGeneration) return;
+                renderBrowserList([]);
+            });
     }
 
     function applyBrowserFilter(prependItems) {
@@ -364,6 +338,39 @@ define(['loading', 'toast'], function (loading, toast) {
         var ep1 = a.IndexNumber != null ? a.IndexNumber : 9999;
         var ep2 = b.IndexNumber != null ? b.IndexNumber : 9999;
         return ep1 - ep2;
+    }
+
+    function renderTimeline(chapters) {
+        var timelineEl = q('chapterTimeline');
+        if (!timelineEl) return;
+
+        if (!_currentEpisodeRuntimeTicks || _currentEpisodeRuntimeTicks <= 0 || !chapters || chapters.length === 0) {
+            timelineEl.style.display = 'none';
+            return;
+        }
+
+        var duration = _currentEpisodeRuntimeTicks;
+        var barHtml = '';
+
+        chapters.forEach(function (c) {
+            var pct = Math.min(99.5, Math.max(0.5, c.StartPositionTicks / duration * 100));
+            var typeLower = (c.MarkerType || 'chapter').toLowerCase();
+            var labelTitle = escapeAttr((c.Name || c.MarkerType) + ' \u2014 ' + ticksToTime(c.StartPositionTicks));
+            barHtml += '<div class="chapter-timeline-pin chapter-timeline-pin-' + typeLower +
+                        '" style="left:' + pct.toFixed(2) + '%;" title="' + labelTitle + '"></div>';
+        });
+
+        timelineEl.innerHTML =
+            '<div class="chapter-timeline-bar">' + barHtml + '</div>' +
+            '<div class="chapter-timeline-labels">' +
+            '<span>0:00</span>' +
+            '<span>' + formatRuntime(duration) + '</span>' +
+            '</div>';
+        timelineEl.style.display = 'block';
+    }
+
+    function refreshTimeline() {
+        renderTimeline(collectChapters());
     }
 
     function closeSearchDropdown() {
@@ -454,6 +461,7 @@ define(['loading', 'toast'], function (loading, toast) {
 
     function loadEpisodeChapters(episodeId, displayName) {
         _currentEpisodeId = episodeId;
+        _currentItemIsEpisode = false;
         _isDirty = false;
 
         q('chapterEditorEmpty').style.display = 'none';
@@ -464,6 +472,8 @@ define(['loading', 'toast'], function (loading, toast) {
         q('chapterTableBody').innerHTML =
             '<div style="text-align:center;padding:1.5em;opacity:0.4;font-size:0.85em;">Loading chapters...</div>';
         q('chapterUnsavedNote').style.opacity = '0';
+        var applyBtn = q('btnApplyToSeason');
+        if (applyBtn) applyBtn.style.display = 'none';
         _currentEpisodeRuntimeTicks = 0;
 
         var userId = ApiClient.getCurrentUserId();
@@ -477,8 +487,9 @@ define(['loading', 'toast'], function (loading, toast) {
                 var sub = response.SeriesName;
                 if (response.ParentIndexNumber != null) sub += ' · Season ' + response.ParentIndexNumber;
                 if (response.IndexNumber != null) sub += ' · Episode ' + response.IndexNumber;
-                q('chapterEpisodeSubtitle').textContent = sub;
-            } else if (response.Type === 'Movie') {
+                q('chapterEpisodeSubtitle').textContent = sub;                _currentItemIsEpisode = true;
+                var applyBtn2 = q('btnApplyToSeason');
+                if (applyBtn2) applyBtn2.style.display = '';            } else if (response.Type === 'Movie') {
                 q('chapterEpisodeSubtitle').textContent = 'Movie';
                 ApiClient.getJSON(ApiClient.getUrl('Items/' + capturedId + '/Ancestors', { UserId: userId }))
                     .then(function (ancestors) {
@@ -522,12 +533,15 @@ define(['loading', 'toast'], function (loading, toast) {
 
         if (!chapters || chapters.length === 0) {
             body.innerHTML = '<div style="text-align:center;padding:1.5em;opacity:0.38;font-size:0.85em;">No chapters — use the Add form above to create one.</div>';
+            renderTimeline([]);
             return;
         }
 
         chapters.forEach(function (c) {
             body.appendChild(buildChapterRow(c.Name || '', c.MarkerType || 'Chapter', c.StartPositionTicks));
         });
+
+        renderTimeline(chapters);
     }
 
     function buildChapterRow(name, markerType, ticks) {
@@ -546,6 +560,7 @@ define(['loading', 'toast'], function (loading, toast) {
         }).join('');
 
         row.innerHTML =
+            '<div class="chapter-drag-handle" title="Drag to reorder">&#x283F;</div>' +
             '<label style="display:flex;align-items:center;justify-content:center;cursor:pointer;">' +
                 '<input type="checkbox" class="chapter-row-check" style="cursor:pointer;" />' +
             '</label>' +
@@ -586,6 +601,58 @@ define(['loading', 'toast'], function (loading, toast) {
         row.querySelector('.chapter-del-btn').addEventListener('click', function () {
             row.remove();
             refreshEmptyState();
+            markDirty();
+            refreshTimeline();
+        });
+
+        var handle = row.querySelector('.chapter-drag-handle');
+        handle.addEventListener('mousedown', function () { row.setAttribute('draggable', 'true'); });
+        handle.addEventListener('mouseup', function () { row.removeAttribute('draggable'); });
+
+        row.addEventListener('dragstart', function (e) {
+            if (!row.hasAttribute('draggable')) { e.preventDefault(); return; }
+            _dragSrcRow = row;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', '');
+            setTimeout(function () { row.classList.add('dragging'); }, 0);
+        });
+
+        row.addEventListener('dragend', function () {
+            row.removeAttribute('draggable');
+            row.classList.remove('dragging');
+            var body = q('chapterTableBody');
+            if (body) body.querySelectorAll('.chapter-row').forEach(function (r) {
+                r.classList.remove('drag-over-top', 'drag-over-bottom');
+            });
+            _dragSrcRow = null;
+        });
+
+        row.addEventListener('dragover', function (e) {
+            if (!_dragSrcRow || _dragSrcRow === row) return;
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            var bounding = row.getBoundingClientRect();
+            var body = q('chapterTableBody');
+            if (body) body.querySelectorAll('.chapter-row').forEach(function (r) {
+                r.classList.remove('drag-over-top', 'drag-over-bottom');
+            });
+            if (e.clientY > bounding.top + bounding.height / 2) {
+                row.classList.add('drag-over-bottom');
+            } else {
+                row.classList.add('drag-over-top');
+            }
+        });
+
+        row.addEventListener('drop', function (e) {
+            e.preventDefault();
+            row.classList.remove('drag-over-top', 'drag-over-bottom');
+            if (!_dragSrcRow || _dragSrcRow === row) return;
+            var bounding = row.getBoundingClientRect();
+            if (e.clientY > bounding.top + row.offsetHeight / 2) {
+                row.parentNode.insertBefore(_dragSrcRow, row.nextSibling);
+            } else {
+                row.parentNode.insertBefore(_dragSrcRow, row);
+            }
             markDirty();
         });
 
@@ -634,6 +701,7 @@ define(['loading', 'toast'], function (loading, toast) {
 
         markDirty();
         toast({ type: 'success', text: added + ' chapter' + (added === 1 ? '' : 's') + ' generated' });
+        refreshTimeline();
     }
 
     function addChapter() {
@@ -662,6 +730,7 @@ define(['loading', 'toast'], function (loading, toast) {
         q('chapterNewName').focus();
 
         markDirty();
+        refreshTimeline();
     }
 
     function deleteSelected() {
@@ -674,6 +743,7 @@ define(['loading', 'toast'], function (loading, toast) {
         checked.forEach(function (cb) { cb.closest('.chapter-row').remove(); });
         refreshEmptyState();
         markDirty();
+        refreshTimeline();
     }
 
     function collectChapters() {
@@ -720,10 +790,6 @@ define(['loading', 'toast'], function (loading, toast) {
                 _isDirty = false;
                 q('chapterUnsavedNote').style.opacity = '0';
                 toast({ type: 'success', text: 'Saved ' + chapters.length + ' chapter(s)' });
-                if (_episodeCache) {
-                    var cached = _episodeCache.items.find(function (i) { return i.Id === _currentEpisodeId; });
-                    if (cached) cached.Chapters = chapters;
-                }
                 renderChapters(chapters);
             } else {
                 toast({ type: 'error', text: 'Save failed: ' + (result.Message || 'Unknown error') });
@@ -733,6 +799,65 @@ define(['loading', 'toast'], function (loading, toast) {
             loading.hide();
             console.error('Error saving chapters:', err);
             toast({ type: 'error', text: 'Failed to save chapters' });
+        });
+    }
+
+    function applyToSeason() {
+        if (!_currentEpisodeId || !_currentItemIsEpisode) return;
+
+        var chapters = collectChapters();
+        var markers = chapters.filter(function (c) { return c.MarkerType !== 'Chapter'; });
+
+        if (markers.length === 0) {
+            toast({ type: 'warning', text: 'No special markers (IntroStart, IntroEnd, CreditsStart) found — nothing to apply' });
+            return;
+        }
+
+        var markerDesc = markers.map(function (m) {
+            return m.MarkerType + ' @ ' + ticksToTime(m.StartPositionTicks);
+        }).join('\n');
+
+        if (!confirm('Apply to entire season?\n\n' + markerDesc + '\n\nThis will save the current episode and overwrite matching marker types in all other episodes of the same season.')) {
+            return;
+        }
+
+        loading.show();
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/SaveEpisodeChapters', { EpisodeId: _currentEpisodeId }), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ EpisodeId: _currentEpisodeId, Chapters: chapters })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (saveResult) {
+            if (!saveResult.Success) {
+                loading.hide();
+                toast({ type: 'error', text: 'Save failed: ' + (saveResult.Message || 'Unknown error') });
+                return;
+            }
+            _isDirty = false;
+            q('chapterUnsavedNote').style.opacity = '0';
+
+            return fetch(ApiClient.getUrl('TimeMarkEdit/ApplySeasonMarks', {}), {
+                method: 'POST',
+                headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+                body: JSON.stringify({ EpisodeId: _currentEpisodeId })
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (applyResult) {
+                loading.hide();
+                if (applyResult.Success) {
+                    toast({ type: 'success', text: applyResult.Message || 'Applied to season' });
+                    renderChapters(chapters);
+                } else {
+                    toast({ type: 'error', text: applyResult.Message || 'Failed to apply to season' });
+                }
+            });
+        })
+        .catch(function (err) {
+            loading.hide();
+            console.error('Error applying to season:', err);
+            toast({ type: 'error', text: 'Failed to apply to season' });
         });
     }
 
@@ -780,7 +905,6 @@ define(['loading', 'toast'], function (loading, toast) {
 
         var allLibsChk = q('chkAllLibraries');
         if (allLibsChk) allLibsChk.addEventListener('change', function () {
-            _episodeCache = null;
             _navStack = [];
             _isSearchMode = false;
             searchEl.value = '';
@@ -832,6 +956,9 @@ define(['loading', 'toast'], function (loading, toast) {
 
         var btnSave = q('btnSaveChapters');
         if (btnSave) btnSave.addEventListener('click', saveChapters);
+
+        var btnApply = q('btnApplyToSeason');
+        if (btnApply) btnApply.addEventListener('click', applyToSeason);
     }
 
     // Page controller — called by Emby when the page is loaded

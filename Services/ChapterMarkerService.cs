@@ -61,41 +61,15 @@ namespace TimeMarkEdit.Services
 
         private string? GetMarkerType(ChapterInfo chapter)
         {
-            try
-            {
-                if (chapter == null)
-                    return null;
-
-                var markerTypeProp = chapter.GetType().GetProperty("MarkerType");
-                if (markerTypeProp != null && markerTypeProp.CanRead)
-                    return markerTypeProp.GetValue(chapter)?.ToString();
-            }
-            catch (Exception ex)
-            {
-                _logger.Debug($"Error reading MarkerType property: {ex.Message}");
-            }
-            return null;
+            if (chapter == null) return null;
+            return chapter.MarkerType.ToString();
         }
 
         private bool SetMarkerType(ChapterInfo chapter, MarkerType markerType)
         {
-            try
-            {
-                if (chapter == null)
-                    return false;
-
-                var markerTypeProp = chapter.GetType().GetProperty("MarkerType");
-                if (markerTypeProp != null && markerTypeProp.CanWrite)
-                {
-                    markerTypeProp.SetValue(chapter, markerType);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Debug($"Error setting MarkerType property: {ex.Message}");
-            }
-            return false;
+            if (chapter == null) return false;
+            chapter.MarkerType = markerType;
+            return true;
         }
     }
 }

@@ -256,7 +256,7 @@
 
                     .chapter-table-header {
                         display: grid;
-                        grid-template-columns: 28px 1fr 128px 245px 46px;
+                        grid-template-columns: 20px 28px 1fr 128px 245px 46px;
                         gap: 0.4em;
                         padding: 0.3em 0.5em;
                         font-size: 0.78em;
@@ -268,7 +268,7 @@
 
                     .chapter-row {
                         display: grid;
-                        grid-template-columns: 28px 1fr 128px 245px 46px;
+                        grid-template-columns: 20px 28px 1fr 128px 245px 46px;
                         align-items: center;
                         gap: 0.4em;
                         padding: 0.28em 0.5em;
@@ -344,6 +344,88 @@
                         opacity: 0;
                         transition: opacity 0.25s;
                         margin-left: 0.6em;
+                    }
+
+                    /* ── Timeline ── */
+                    .chapter-timeline {
+                        display: none;
+                        margin-bottom: 1.1em;
+                    }
+
+                    .chapter-timeline-bar {
+                        position: relative;
+                        height: 26px;
+                        background: linear-gradient(90deg, rgba(82,181,75,0.10) 0%, rgba(82,181,75,0.03) 100%);
+                        border: 1px solid rgba(255,255,255,0.12);
+                        border-radius: 4px;
+                        margin-bottom: 3px;
+                        overflow: visible;
+                    }
+
+                    .chapter-timeline-pin {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        width: 2px;
+                        transform: translateX(-50%);
+                        cursor: default;
+                        border-radius: 1px;
+                    }
+
+                    .chapter-timeline-pin::before {
+                        content: '';
+                        position: absolute;
+                        top: -3px;
+                        left: -3px;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background: inherit;
+                    }
+
+                    .chapter-timeline-pin-chapter     { background: rgba(82,  181, 75,  0.80); }
+                    .chapter-timeline-pin-introstart  { background: rgba(41,  128, 185, 0.95); }
+                    .chapter-timeline-pin-introend    { background: rgba(142, 68,  173, 0.95); }
+                    .chapter-timeline-pin-creditsstart{ background: rgba(230, 126, 34,  0.95); }
+
+                    .chapter-timeline-labels {
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 0.7em;
+                        opacity: 0.45;
+                        padding: 0 2px;
+                    }
+
+                    /* ── Drag-and-drop ── */
+                    .chapter-drag-handle {
+                        cursor: grab;
+                        opacity: 0.35;
+                        font-size: 1em;
+                        text-align: center;
+                        user-select: none;
+                        line-height: 1;
+                        padding-top: 2px;
+                        transition: opacity 0.12s;
+                    }
+
+                    .chapter-drag-handle:hover {
+                        opacity: 0.75;
+                    }
+
+                    .chapter-drag-handle:active {
+                        cursor: grabbing;
+                    }
+
+                    .chapter-row.dragging {
+                        opacity: 0.35;
+                    }
+
+                    .chapter-row.drag-over-top {
+                        border-top: 2px solid rgba(82,181,75,0.75);
+                    }
+
+                    .chapter-row.drag-over-bottom {
+                        border-bottom: 2px solid rgba(82,181,75,0.75);
                     }
                 </style>
 
@@ -421,7 +503,9 @@
                         <div id="chapterEditorContent" class="chapter-editor-content">
                             <h3 id="chapterEpisodeTitle" style="margin:0 0 0.2em;font-size:1.15em;font-weight:600;"></h3>
                             <div id="chapterEpisodeSubtitle" style="font-size:0.83em;opacity:0.65;margin-bottom:0.2em;">Episode</div>
-                            <div id="chapterEpisodeRuntime" style="font-size:0.8em;opacity:0.5;margin-bottom:1.2em;"></div>
+                            <div id="chapterEpisodeRuntime" style="font-size:0.8em;opacity:0.5;margin-bottom:0.9em;"></div>
+
+                            <div id="chapterTimeline" class="chapter-timeline"></div>
 
                             <h4 style="margin:0 0 0.7em;padding-bottom:0.4em;border-bottom:1px solid rgba(255,255,255,0.14);font-size:1em;font-weight:600;">Chapter List</h4>
 
@@ -472,6 +556,7 @@
                             <!-- Column headers -->
                             <div class="chapter-table-header">
                                 <span></span>
+                                <span></span>
                                 <span>Name</span>
                                 <span>Type</span>
                                 <div style="display:flex;align-items:center;">
@@ -493,7 +578,10 @@
                             <div style="display:flex;align-items:center;gap:0.5em;flex-wrap:wrap;">
                                 <button is="emby-button" type="button" id="btnDeleteSelectedChapters" class="raised" style="background-color:#b71c1c;padding:0.35em 1em;font-size:0.87em;">Delete</button>
                                 <span id="chapterUnsavedNote" class="chapter-unsaved-note">● Unsaved changes</span>
-                                <button is="emby-button" type="button" id="btnSaveChapters" class="raised button-submit" style="margin-left:auto;padding:0.35em 1.2em;font-size:0.87em;">
+                                <button is="emby-button" type="button" id="btnApplyToSeason" class="raised" style="display:none;padding:0.35em 1em;font-size:0.87em;margin-left:auto;">
+                                    <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">filter_none</i>Apply to Season
+                                </button>
+                                <button is="emby-button" type="button" id="btnSaveChapters" class="raised button-submit" style="padding:0.35em 1.2em;font-size:0.87em;">
                                     <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">save</i>Save Changes
                                 </button>
                             </div>

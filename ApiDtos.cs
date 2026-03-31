@@ -23,4 +23,22 @@ namespace TimeMarkEdit
         public string EpisodeId { get; set; } = string.Empty;
         public List<ChapterItemDto>? Chapters { get; set; }
     }
+
+    [Route(Routes.ApplySeasonMarks, "POST", Summary = "Applies special chapter markers from one episode to all other episodes in the same season.")]
+    public class ApplySeasonMarksRequest : IReturn<object>
+    {
+        public string EpisodeId { get; set; } = string.Empty;
+    }
+
+    [Route(Routes.FilterEpisodes, "GET", Summary = "Returns episodes/movies matching the given chapter filter criteria.")]
+    public class FilterEpisodesRequest : IReturn<object>
+    {
+        public string? ParentId { get; set; }
+        public bool AllLibraries { get; set; }
+        public bool NoChaptersOnly { get; set; }
+        public int MaxChapterCount { get; set; } = -1;
+        public int MinGapSeconds { get; set; } = -1;
+        public string? IntroFilter { get; set; }
+        public string? CreditsFilter { get; set; }
+    }
 }
