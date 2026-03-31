@@ -13,6 +13,8 @@ define(['loading', 'toast'], function (loading, toast) {
     let _isSearchMode = false;
     let _searchTimeout = null;
     let _allEpisodeItems = null;
+    let _episodeCache = null;  // { parentId, allLibraries, items }
+    let _fetchGeneration = 0;
 
     function q(id) { return _view.querySelector('#' + id); }
 
@@ -125,8 +127,6 @@ define(['loading', 'toast'], function (loading, toast) {
                 var sn = item.ParentIndexNumber != null ? pad(item.ParentIndexNumber, 2) : null;
                 if (sn && ep) label = 'S' + sn + 'E' + ep + ' - ' + label;
                 else if (ep) label = ep + ' - ' + label;
-            } else if (item.Type === 'Movie') {
-                label = '🎬 ' + label;
             }
 
             var iconSpan = document.createElement('span');
@@ -172,11 +172,11 @@ define(['loading', 'toast'], function (loading, toast) {
             introFilter !== '' || creditsFilter !== '';
 
         if (_navStack.length === 0) {
-            _allEpisodeItems = null;
             if (anyFilterActive) {
                 fetchAllEpisodesAndFilter(null);
                 return;
             }
+            _allEpisodeItems = null;
             ApiClient.getJSON(ApiClient.getUrl('Library/MediaFolders'))
                 .then(function (response) {
                     var libs = (response.Items || []).filter(function (l) {
@@ -211,7 +211,6 @@ define(['loading', 'toast'], function (loading, toast) {
         var isMixedLeafLevel = includeTypes === 'Series,Movie';
 
         if (!isEpisodeLevel && !isMixedLeafLevel && anyFilterActive) {
-            _allEpisodeItems = null;
             fetchAllEpisodesAndFilter(current.id);
             return;
         }
@@ -248,11 +247,25 @@ define(['loading', 'toast'], function (loading, toast) {
     }
 
     function fetchAllEpisodesAndFilter(parentId) {
-        var listEl = q('chapterBrowserList');
-        listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Filtering...</div>';
+        var wantAllLibs = isAllLibraries();
+        var cacheKey = parentId || null;
 
-        var includeTypes = isAllLibraries() ? 'Episode,Movie' : 'Episode';
+        if (_episodeCache &&
+            _episodeCache.parentId === cacheKey &&
+            _episodeCache.allLibraries === wantAllLibs) {
+            _allEpisodeItems = _episodeCache.items;
+            applyBrowserFilter();
+            return;
+        }
+
+        var listEl = q('chapterBrowserList');
+        listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Filtering…</div>';
+
+        _fetchGeneration++;
+        var myGeneration = _fetchGeneration;
+        var includeTypes = wantAllLibs ? 'Episode,Movie' : 'Episode';
         var userId = ApiClient.getCurrentUserId();
+        var pageSize = 1000;
 
         var params = {
             UserId: userId,
@@ -264,14 +277,37 @@ define(['loading', 'toast'], function (loading, toast) {
         };
         if (parentId) params.ParentId = parentId;
 
-        fetchAllItems(params, function (err, allItems) {
-            if (err) { renderBrowserList([]); return; }
-            _allEpisodeItems = allItems.filter(function (e) {
-                if (e.Type === 'Movie') return true;
-                return e.Type === 'Episode';
-            });
-            applyBrowserFilter();
-        });
+        var accumulated = [];
+
+        function fetchPage(startIndex) {
+            if (_fetchGeneration !== myGeneration) return;
+            var pageParams = Object.assign({}, params, { StartIndex: startIndex, Limit: pageSize });
+            ApiClient.getJSON(ApiClient.getUrl('Items', pageParams))
+                .then(function (response) {
+                    if (_fetchGeneration !== myGeneration) return;
+                    var items = (response.Items || []).filter(function (e) {
+                        return e.Type === 'Movie' || e.Type === 'Episode';
+                    });
+                    accumulated = accumulated.concat(items);
+                    var total = response.TotalRecordCount || 0;
+                    var fetched = startIndex + (response.Items || []).length;
+                    if (total > 1000) {
+                        listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Filtering… ' + accumulated.length + ' / ' + total + '</div>';
+                    }
+                    if ((response.Items || []).length === pageSize && fetched < total) {
+                        fetchPage(fetched);
+                    } else {
+                        _allEpisodeItems = accumulated;
+                        _episodeCache = { parentId: cacheKey, allLibraries: wantAllLibs, items: accumulated };
+                        applyBrowserFilter();
+                    }
+                })
+                .catch(function () {
+                    if (_fetchGeneration !== myGeneration) return;
+                    renderBrowserList([]);
+                });
+        }
+        fetchPage(0);
     }
 
     function applyBrowserFilter(prependItems) {
@@ -684,6 +720,10 @@ define(['loading', 'toast'], function (loading, toast) {
                 _isDirty = false;
                 q('chapterUnsavedNote').style.opacity = '0';
                 toast({ type: 'success', text: 'Saved ' + chapters.length + ' chapter(s)' });
+                if (_episodeCache) {
+                    var cached = _episodeCache.items.find(function (i) { return i.Id === _currentEpisodeId; });
+                    if (cached) cached.Chapters = chapters;
+                }
                 renderChapters(chapters);
             } else {
                 toast({ type: 'error', text: 'Save failed: ' + (result.Message || 'Unknown error') });
@@ -740,6 +780,7 @@ define(['loading', 'toast'], function (loading, toast) {
 
         var allLibsChk = q('chkAllLibraries');
         if (allLibsChk) allLibsChk.addEventListener('change', function () {
+            _episodeCache = null;
             _navStack = [];
             _isSearchMode = false;
             searchEl.value = '';
