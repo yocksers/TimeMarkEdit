@@ -26,7 +26,7 @@ namespace TimeMarkEdit.Services
 
         public string GetChapterMarkerType(ChapterInfo chapter)
         {
-            return GetMarkerType(chapter) ?? "Chapter";
+            return chapter?.MarkerType.ToString() ?? "Chapter";
         }
 
         public void SaveChapterList(BaseItem item, IList<(string Name, long StartPositionTicks, string MarkerType)> entries)
@@ -44,7 +44,7 @@ namespace TimeMarkEdit.Services
                     if (!string.IsNullOrEmpty(markerType) && markerType != "Chapter")
                     {
                         if (Enum.TryParse<MarkerType>(markerType, out var mt))
-                            SetMarkerType(chapter, mt);
+                            chapter.MarkerType = mt;
                     }
                     chapters.Add(chapter);
                 }
@@ -59,17 +59,5 @@ namespace TimeMarkEdit.Services
             }
         }
 
-        private string? GetMarkerType(ChapterInfo chapter)
-        {
-            if (chapter == null) return null;
-            return chapter.MarkerType.ToString();
-        }
-
-        private bool SetMarkerType(ChapterInfo chapter, MarkerType markerType)
-        {
-            if (chapter == null) return false;
-            chapter.MarkerType = markerType;
-            return true;
-        }
     }
 }

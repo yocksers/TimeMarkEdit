@@ -157,20 +157,33 @@ define(['loading', 'toast'], function (loading, toast) {
         });
     }
 
-    function loadCurrentLevel() {
-        renderPath();
-        var listEl = q('chapterBrowserList');
-        listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Loading...</div>';
-
+    function readFilterState() {
         var noChaptersOnly = q('chapterFilterNoChapters').checked;
         var maxCountRaw = q('chapterFilterMaxCount').value.trim();
         var minGapRaw = q('chapterFilterMinGap').value.trim();
         var introFilter = q('chapterFilterIntro').value;
         var creditsFilter = q('chapterFilterCredits').value;
-        var anyFilterActive = noChaptersOnly ||
-            (maxCountRaw !== '' && !isNaN(parseInt(maxCountRaw, 10))) ||
-            (minGapRaw !== '' && !isNaN(parseInt(minGapRaw, 10))) ||
-            introFilter !== '' || creditsFilter !== '';
+        var hasMaxCount = maxCountRaw !== '' && !isNaN(parseInt(maxCountRaw, 10));
+        var hasMinGap = minGapRaw !== '' && !isNaN(parseInt(minGapRaw, 10));
+        return {
+            noChaptersOnly: noChaptersOnly,
+            hasMaxCount: hasMaxCount,
+            maxCount: hasMaxCount ? parseInt(maxCountRaw, 10) : -1,
+            hasMinGap: hasMinGap,
+            minGapSeconds: hasMinGap ? parseInt(minGapRaw, 10) : -1,
+            introFilter: introFilter,
+            creditsFilter: creditsFilter,
+            isActive: noChaptersOnly || hasMaxCount || hasMinGap || introFilter !== '' || creditsFilter !== ''
+        };
+    }
+
+    function loadCurrentLevel() {
+        renderPath();
+        var listEl = q('chapterBrowserList');
+        listEl.innerHTML = '<div style="text-align:center;padding:2em 0.5em;opacity:0.38;font-size:0.85em;">Loading...</div>';
+
+        var f = readFilterState();
+        var anyFilterActive = f.isActive;
 
         if (_navStack.length === 0) {
             if (anyFilterActive) {
@@ -255,21 +268,14 @@ define(['loading', 'toast'], function (loading, toast) {
         _fetchGeneration++;
         var myGeneration = _fetchGeneration;
 
-        var noChaptersOnly = q('chapterFilterNoChapters').checked;
-        var maxCountRaw = q('chapterFilterMaxCount').value.trim();
-        var minGapRaw = q('chapterFilterMinGap').value.trim();
-        var introFilter = q('chapterFilterIntro').value;
-        var creditsFilter = q('chapterFilterCredits').value;
-        var hasMaxCount = maxCountRaw !== '' && !isNaN(parseInt(maxCountRaw, 10));
-        var hasMinGap = minGapRaw !== '' && !isNaN(parseInt(minGapRaw, 10));
-
+        var f = readFilterState();
         var params = {
             AllLibraries: isAllLibraries(),
-            NoChaptersOnly: noChaptersOnly,
-            MaxChapterCount: hasMaxCount ? parseInt(maxCountRaw, 10) : -1,
-            MinGapSeconds: hasMinGap ? parseInt(minGapRaw, 10) : -1,
-            IntroFilter: introFilter || '',
-            CreditsFilter: creditsFilter || ''
+            NoChaptersOnly: f.noChaptersOnly,
+            MaxChapterCount: f.maxCount,
+            MinGapSeconds: f.minGapSeconds,
+            IntroFilter: f.introFilter,
+            CreditsFilter: f.creditsFilter
         };
         if (parentId) params.ParentId = parentId;
 
@@ -287,19 +293,11 @@ define(['loading', 'toast'], function (loading, toast) {
     function applyBrowserFilter(prependItems) {
         if (!_allEpisodeItems) return;
 
-        var noChaptersOnly = q('chapterFilterNoChapters').checked;
-        var maxCountRaw = q('chapterFilterMaxCount').value.trim();
-        var minGapRaw = q('chapterFilterMinGap').value.trim();
-        var introFilter = q('chapterFilterIntro').value;
-        var creditsFilter = q('chapterFilterCredits').value;
-        var hasMaxCount = maxCountRaw !== '' && !isNaN(parseInt(maxCountRaw, 10));
-        var hasMinGap = minGapRaw !== '' && !isNaN(parseInt(minGapRaw, 10));
-        var maxCount = hasMaxCount ? parseInt(maxCountRaw, 10) : null;
-        var minGapTicks = hasMinGap ? parseInt(minGapRaw, 10) * 10000000 : null;
+        var f = readFilterState();
+        var maxCount = f.hasMaxCount ? f.maxCount : null;
+        var minGapTicks = f.hasMinGap ? f.minGapSeconds * 10000000 : null;
 
-        var anyFilterActive = noChaptersOnly || hasMaxCount || hasMinGap || introFilter !== '' || creditsFilter !== '';
-
-        if (!anyFilterActive) {
+        if (!f.isActive) {
             renderBrowserList((prependItems || []).concat(_allEpisodeItems.slice().sort(sortEpisodes)));
             return;
         }
@@ -308,13 +306,13 @@ define(['loading', 'toast'], function (loading, toast) {
             var chapters = item.Chapters || [];
             var count = chapters.length;
 
-            if (noChaptersOnly && count !== 0) return false;
-            if (hasMaxCount && count >= maxCount) return false;
-            if (introFilter === 'has' && !chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'IntroStart'; })) return false;
-            if (introFilter === 'missing' && chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'IntroStart'; })) return false;
-            if (creditsFilter === 'has' && !chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'CreditsStart'; })) return false;
-            if (creditsFilter === 'missing' && chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'CreditsStart'; })) return false;
-            if (hasMinGap) {
+            if (f.noChaptersOnly && count !== 0) return false;
+            if (f.hasMaxCount && count >= maxCount) return false;
+            if (f.introFilter === 'has' && !chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'IntroStart'; })) return false;
+            if (f.introFilter === 'missing' && chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'IntroStart'; })) return false;
+            if (f.creditsFilter === 'has' && !chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'CreditsStart'; })) return false;
+            if (f.creditsFilter === 'missing' && chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'CreditsStart'; })) return false;
+            if (f.hasMinGap) {
                 var hasLargeGap = false;
                 for (var i = 1; i < chapters.length; i++) {
                     if ((chapters[i].StartPositionTicks - chapters[i - 1].StartPositionTicks) > minGapTicks) {
@@ -487,9 +485,10 @@ define(['loading', 'toast'], function (loading, toast) {
                 var sub = response.SeriesName;
                 if (response.ParentIndexNumber != null) sub += ' · Season ' + response.ParentIndexNumber;
                 if (response.IndexNumber != null) sub += ' · Episode ' + response.IndexNumber;
-                q('chapterEpisodeSubtitle').textContent = sub;                _currentItemIsEpisode = true;
-                var applyBtn2 = q('btnApplyToSeason');
-                if (applyBtn2) applyBtn2.style.display = '';            } else if (response.Type === 'Movie') {
+                q('chapterEpisodeSubtitle').textContent = sub;
+                _currentItemIsEpisode = true;
+                if (applyBtn) applyBtn.style.display = '';
+            } else if (response.Type === 'Movie') {
                 q('chapterEpisodeSubtitle').textContent = 'Movie';
                 ApiClient.getJSON(ApiClient.getUrl('Items/' + capturedId + '/Ancestors', { UserId: userId }))
                     .then(function (ancestors) {
@@ -861,10 +860,6 @@ define(['loading', 'toast'], function (loading, toast) {
         });
     }
 
-    // ------------------------------------------------------------------ //
-    //  Init
-    // ------------------------------------------------------------------ //
-
     function init(view) {
         _view = view;
         _navStack = [];
@@ -961,7 +956,6 @@ define(['loading', 'toast'], function (loading, toast) {
         if (btnApply) btnApply.addEventListener('click', applyToSeason);
     }
 
-    // Page controller — called by Emby when the page is loaded
     return function (view, params) {
         init(view);
     };

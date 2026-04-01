@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
-using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Persistence;
 using MediaBrowser.Controller.Plugins;
 using MediaBrowser.Model.Drawing;
@@ -18,7 +17,6 @@ namespace TimeMarkEdit
     public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages, IHasThumbImage, IServerEntryPoint, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly ILibraryManager _libraryManager;
         private readonly IItemRepository _itemRepository;
 
         public static Plugin? Instance { get; private set; }
@@ -32,13 +30,11 @@ namespace TimeMarkEdit
             IApplicationPaths appPaths,
             IXmlSerializer xmlSerializer,
             ILogManager logManager,
-            ILibraryManager libraryManager,
             IItemRepository itemRepository)
             : base(appPaths, xmlSerializer)
         {
             Instance = this;
             _logger = logManager.GetLogger(GetType().Name);
-            _libraryManager = libraryManager;
             _itemRepository = itemRepository;
         }
 

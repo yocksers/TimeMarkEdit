@@ -5,6 +5,7 @@ using MediaBrowser.Model.Logging;
 using MediaBrowser.Model.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace TimeMarkEdit.Services
@@ -31,6 +32,8 @@ namespace TimeMarkEdit.Services
             return null;
         }
 
+        private bool TryGetService([NotNullWhen(true)] out ChapterMarkerService? svc) => (svc = Plugin.ChapterMarkerService) != null;
+
         public object Get(GetEpisodeChaptersRequest request)
         {
             try
@@ -42,8 +45,7 @@ namespace TimeMarkEdit.Services
                 if (item == null)
                     return new { Success = false, Message = "Item not found" };
 
-                var chapterService = Plugin.ChapterMarkerService;
-                if (chapterService == null)
+                if (!TryGetService(out var chapterService))
                     return new { Success = false, Message = "Chapter service not available" };
 
                 var chapters = chapterService.GetChapters(item);
@@ -88,8 +90,7 @@ namespace TimeMarkEdit.Services
                 if (item == null)
                     return new { Success = false, Message = "Item not found" };
 
-                var chapterService = Plugin.ChapterMarkerService;
-                if (chapterService == null)
+                if (!TryGetService(out var chapterService))
                     return new { Success = false, Message = "Chapter service not available" };
 
                 var entries = (request.Chapters ?? new List<ChapterItemDto>())
@@ -127,8 +128,7 @@ namespace TimeMarkEdit.Services
                 if (sourceEp == null)
                     return new { Success = false, Message = "Item is not an episode" };
 
-                var chapterService = Plugin.ChapterMarkerService;
-                if (chapterService == null)
+                if (!TryGetService(out var chapterService))
                     return new { Success = false, Message = "Chapter service not available" };
 
                 var sourceChapters = chapterService.GetChapters(sourceItem);
@@ -189,8 +189,7 @@ namespace TimeMarkEdit.Services
         {
             try
             {
-                var chapterService = Plugin.ChapterMarkerService;
-                if (chapterService == null)
+                if (!TryGetService(out var chapterService))
                     return new { Success = false, Message = "Chapter service not available" };
 
                 var includeTypes = request.AllLibraries

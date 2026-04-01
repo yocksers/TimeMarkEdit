@@ -5,7 +5,6 @@
 
             <div>
                 <style>
-                    /* Scoped select styling */
                     #timeMarkEditRoot select {
                         color-scheme: light dark;
                         background-color: Canvas !important;
@@ -396,7 +395,6 @@
                         padding: 0 2px;
                     }
 
-                    /* ── Drag-and-drop ── */
                     .chapter-drag-handle {
                         cursor: grab;
                         opacity: 0.35;
@@ -431,7 +429,6 @@
 
                 <div class="chapter-edit-layout">
 
-                    <!-- ===== LEFT: FILE BROWSER ===== -->
                     <div class="chapter-browser-panel">
                         <div class="chapter-browser-hint">Select an item to view or edit its chapters.</div>
 
@@ -493,7 +490,6 @@
                         </div>
                     </div>
 
-                    <!-- ===== RIGHT: CHAPTER EDITOR ===== -->
                     <div class="chapter-editor-panel">
 
                         <div id="chapterEditorEmpty" class="chapter-editor-empty">
@@ -509,7 +505,6 @@
 
                             <h4 style="margin:0 0 0.7em;padding-bottom:0.4em;border-bottom:1px solid rgba(255,255,255,0.14);font-size:1em;font-weight:600;">Chapter List</h4>
 
-                            <!-- Add chapter form -->
                             <div class="chapter-add-row">
                                 <input type="text" id="chapterNewName" class="chapter-inp" placeholder="Name" style="width:148px;" />
                                 <select id="chapterNewType" class="chapter-type-sel">
@@ -542,7 +537,6 @@
                                 <button is="emby-button" type="button" id="btnAddChapter" class="raised button-submit" style="padding:0.3em 1em;font-size:0.88em;">Add</button>
                             </div>
 
-                            <!-- Auto-generate chapters by interval -->
                             <div class="chapter-add-row" style="margin-top:0.4em;">
                                 <span style="font-size:0.85em;opacity:0.65;white-space:nowrap;">Every</span>
                                 <input type="number" id="chapterIntervalMin" class="chapter-inp" min="1" max="999" value="5" style="width:50px;text-align:center;" title="Interval in minutes" />
@@ -553,7 +547,6 @@
                                 </button>
                             </div>
 
-                            <!-- Column headers -->
                             <div class="chapter-table-header">
                                 <span></span>
                                 <span></span>
@@ -571,10 +564,8 @@
                                 <span></span>
                             </div>
 
-                            <!-- Chapter rows rendered here -->
                             <div id="chapterTableBody" style="margin-bottom:0.9em;"></div>
 
-                            <!-- Footer buttons -->
                             <div style="display:flex;align-items:center;gap:0.5em;flex-wrap:wrap;">
                                 <button is="emby-button" type="button" id="btnDeleteSelectedChapters" class="raised" style="background-color:#b71c1c;padding:0.35em 1em;font-size:0.87em;">Delete</button>
                                 <span id="chapterUnsavedNote" class="chapter-unsaved-note">● Unsaved changes</span>
