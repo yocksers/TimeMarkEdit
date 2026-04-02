@@ -6,5 +6,6 @@ namespace TimeMarkEdit.Api
         public const string SaveEpisodeChapters = "/TimeMarkEdit/SaveEpisodeChapters";
         public const string FilterEpisodes = "/TimeMarkEdit/FilterEpisodes";
         public const string ApplySeasonMarks = "/TimeMarkEdit/ApplySeasonMarks";
+        public const string GetSummary = "/TimeMarkEdit/GetSummary";
     }
 }

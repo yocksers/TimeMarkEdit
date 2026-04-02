@@ -54,6 +54,7 @@ namespace TimeMarkEdit.Services
                     Index = i,
                     Name = c.Name ?? string.Empty,
                     StartPositionTicks = c.StartPositionTicks,
+                    StartTime = TimeSpan.FromTicks(c.StartPositionTicks).ToString(@"hh\:mm\:ss\.fff"),
                     MarkerType = chapterService.GetChapterMarkerType(c)
                 }).ToList();
 
@@ -149,6 +150,7 @@ namespace TimeMarkEdit.Services
                 var query = new InternalItemsQuery
                 {
                     IncludeItemTypes = new[] { "Episode" },
+                    IsVirtualItem = false,
                     AncestorIds = new long[] { parentSeason.InternalId }
                 };
 
@@ -185,6 +187,114 @@ namespace TimeMarkEdit.Services
             }
         }
 
+        public object Get(GetSummaryRequest request)
+        {
+            try
+            {
+                if (!TryGetService(out var chapterService))
+                    return new { Success = false, Message = "Chapter service not available" };
+
+                var seriesQuery = new InternalItemsQuery
+                {
+                    IncludeItemTypes = new[] { "Series" },
+                    IsVirtualItem = false,
+                    Recursive = true
+                };
+
+                var seriesItems = _libraryManager.GetItemsResult(seriesQuery).Items
+                    .OrderBy(s => s.SortName, StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var summaryData = new List<object>();
+
+                foreach (var series in seriesItems)
+                {
+                    var seasonQuery = new InternalItemsQuery
+                    {
+                        IncludeItemTypes = new[] { "Season" },
+                        IsVirtualItem = false,
+                        ParentIds = new long[] { series.InternalId }
+                    };
+
+                    var seasonItems = _libraryManager.GetItemsResult(seasonQuery).Items
+                        .OrderBy(s => s.IndexNumber ?? 9999)
+                        .ToList();
+
+                    var seasonsData = new List<object>();
+                    int totalEpisodes = 0, totalIntro = 0, totalCredits = 0;
+
+                    foreach (var season in seasonItems)
+                    {
+                        var episodeQuery = new InternalItemsQuery
+                        {
+                            IncludeItemTypes = new[] { "Episode" },
+                            IsVirtualItem = false,
+                            ParentIds = new long[] { season.InternalId }
+                        };
+
+                        var episodeItems = _libraryManager.GetItemsResult(episodeQuery).Items;
+                        int epCount = 0, introCount = 0, creditsCount = 0;
+                        long totalIntroDuration = 0;
+
+                        foreach (var episode in episodeItems)
+                        {
+                            epCount++;
+                            var chapters = chapterService.GetChapters(episode);
+                            long introStart = -1, introEnd = -1, credits = -1;
+
+                            foreach (var c in chapters)
+                            {
+                                var mt = chapterService.GetChapterMarkerType(c);
+                                if (introStart == -1 && mt == "IntroStart") introStart = c.StartPositionTicks;
+                                else if (introEnd == -1 && mt == "IntroEnd") introEnd = c.StartPositionTicks;
+                                else if (credits == -1 && mt == "CreditsStart") credits = c.StartPositionTicks;
+                            }
+
+                            if (introStart != -1 && introEnd != -1 && introStart < introEnd)
+                            {
+                                introCount++;
+                                totalIntroDuration += introEnd - introStart;
+                            }
+                            if (credits != -1) creditsCount++;
+                        }
+
+                        var avgIntro = introCount > 0
+                            ? TimeSpan.FromTicks(totalIntroDuration / introCount).ToString(@"mm\:ss")
+                            : "--:--";
+
+                        seasonsData.Add(new
+                        {
+                            Name = season.Name,
+                            EpisodeCount = epCount,
+                            IntroCount = introCount,
+                            CreditsCount = creditsCount,
+                            AvgIntro = avgIntro
+                        });
+
+                        totalEpisodes += epCount;
+                        totalIntro += introCount;
+                        totalCredits += creditsCount;
+                    }
+
+                    summaryData.Add(new
+                    {
+                        Name = series.Name,
+                        EpisodeCount = totalEpisodes,
+                        IntroCount = totalIntro,
+                        CreditsCount = totalCredits,
+                        Seasons = seasonsData
+                    });
+                }
+
+                return new { Success = true, Series = summaryData };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error getting summary", ex);
+                return new { Success = false, Message = ex.Message };
+            }
+        }
+
         public object Get(FilterEpisodesRequest request)
         {
             try
@@ -199,6 +309,7 @@ namespace TimeMarkEdit.Services
                 var query = new InternalItemsQuery
                 {
                     IncludeItemTypes = includeTypes,
+                    IsVirtualItem = false,
                     Recursive = true
                 };
 

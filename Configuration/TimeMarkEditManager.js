@@ -1,7 +1,20 @@
-define(['loading', 'toast'], function (loading, toast) {
+define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTabsManager) {
     'use strict';
 
     const CHAPTER_TYPES = ['Chapter', 'IntroStart', 'IntroEnd', 'CreditsStart'];
+
+    function getTabList() {
+        return [
+            {
+                href: Dashboard.getConfigurationPageUrl('TimeMarkEditPage'),
+                name: 'Edit Chapters'
+            },
+            {
+                href: Dashboard.getConfigurationPageUrl('TimeMarkEditSummaryPage'),
+                name: 'Summary'
+            }
+        ];
+    }
 
     function isAllLibraries() { return _view.querySelector('#chkAllLibraries').checked; }
 
@@ -958,5 +971,8 @@ define(['loading', 'toast'], function (loading, toast) {
 
     return function (view, params) {
         init(view);
+        view.addEventListener('viewshow', function () {
+            mainTabsManager.setTabs(this, 0, getTabList);
+        });
     };
 });

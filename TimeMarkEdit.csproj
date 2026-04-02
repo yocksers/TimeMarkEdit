@@ -24,6 +24,12 @@
 		<EmbeddedResource Include="Configuration\TimeMarkEditManager.js">
 			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditManager.js</LogicalName>
 		</EmbeddedResource>
+		<EmbeddedResource Include="Configuration\TimeMarkEditSummary.html">
+			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditSummary.html</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Configuration\TimeMarkEditSummaryManager.js">
+			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditSummaryManager.js</LogicalName>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

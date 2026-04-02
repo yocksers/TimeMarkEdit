@@ -1,3 +1,4 @@
+using MediaBrowser.Controller.Net;
 using MediaBrowser.Model.Services;
 using System.Collections.Generic;
 using TimeMarkEdit.Api;
@@ -5,6 +6,7 @@ using TimeMarkEdit.Api;
 namespace TimeMarkEdit
 {
     [Route(Routes.GetEpisodeChapters, "GET", Summary = "Gets all chapter markers for a specific episode.")]
+    [Authenticated]
     public class GetEpisodeChaptersRequest : IReturn<object>
     {
         public string EpisodeId { get; set; } = string.Empty;
@@ -18,6 +20,7 @@ namespace TimeMarkEdit
     }
 
     [Route(Routes.SaveEpisodeChapters, "POST", Summary = "Saves the full chapter list for a specific episode.")]
+    [Authenticated]
     public class SaveEpisodeChaptersRequest : IReturn<object>
     {
         public string EpisodeId { get; set; } = string.Empty;
@@ -25,12 +28,14 @@ namespace TimeMarkEdit
     }
 
     [Route(Routes.ApplySeasonMarks, "POST", Summary = "Applies special chapter markers from one episode to all other episodes in the same season.")]
+    [Authenticated]
     public class ApplySeasonMarksRequest : IReturn<object>
     {
         public string EpisodeId { get; set; } = string.Empty;
     }
 
     [Route(Routes.FilterEpisodes, "GET", Summary = "Returns episodes/movies matching the given chapter filter criteria.")]
+    [Authenticated]
     public class FilterEpisodesRequest : IReturn<object>
     {
         public string? ParentId { get; set; }
@@ -40,5 +45,11 @@ namespace TimeMarkEdit
         public int MinGapSeconds { get; set; } = -1;
         public string? IntroFilter { get; set; }
         public string? CreditsFilter { get; set; }
+    }
+
+    [Route(Routes.GetSummary, "GET", Summary = "Returns intro and credits coverage statistics for all TV series.")]
+    [Authenticated]
+    public class GetSummaryRequest : IReturn<object>
+    {
     }
 }

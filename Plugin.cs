@@ -54,6 +54,19 @@ namespace TimeMarkEdit
                 {
                     Name = "TimeMarkEditManager",
                     EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditManager.js"
+                },
+                new PluginPageInfo
+                {
+                    Name = "TimeMarkEditSummaryPage",
+                    EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditSummary.html",
+                    EnableInMainMenu = true,
+                    MenuIcon = "bar_chart",
+                    DisplayName = "TimeMarkEdit - Summary"
+                },
+                new PluginPageInfo
+                {
+                    Name = "TimeMarkEditSummaryManager",
+                    EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditSummaryManager.js"
                 }
             };
         }

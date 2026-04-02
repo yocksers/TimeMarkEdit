@@ -1,0 +1,106 @@
+<div is="emby-scroller" data-controller="configurationpage?name=TimeMarkEditSummaryManager" class="view flex flex-direction-column scrollFrameY flex-grow" data-horizontal="false" data-forcescrollbar="true" data-centerfocus="true" data-bindheader="true" data-title="TimeMarkEdit - Summary">
+    <div class="scrollSlider flex-direction-column padded-left padded-left-page padded-right padded-top-page padded-bottom-page">
+        <div class="readOnlyContent auto-center" style="max-width: 900px;">
+            <h1 class="pageTitle">TimeMarkEdit &mdash; Library Summary</h1>
+
+            <style>
+                .tme-summary-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 0.9em;
+                }
+
+                .tme-summary-table th {
+                    text-align: left;
+                    padding: 0.5em 0.8em;
+                    font-weight: 600;
+                    opacity: 0.6;
+                    font-size: 0.82em;
+                    border-bottom: 1px solid rgba(255,255,255,0.14);
+                }
+
+                .tme-summary-series-row td {
+                    padding: 0.55em 0.8em 0.3em;
+                    font-weight: 700;
+                    font-size: 0.95em;
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                    padding-top: 1.1em;
+                }
+
+                .tme-summary-series-row:first-of-type td {
+                    border-top: none;
+                }
+
+                .tme-summary-season-row td {
+                    padding: 0.32em 0.8em;
+                    font-size: 0.88em;
+                    border-bottom: 1px solid rgba(255,255,255,0.05);
+                }
+
+                .tme-summary-season-row:last-child td {
+                    border-bottom: none;
+                }
+
+                .tme-pct-bar-wrap {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5em;
+                }
+
+                .tme-pct-bar {
+                    display: inline-block;
+                    height: 6px;
+                    border-radius: 3px;
+                    width: 60px;
+                    background: rgba(255,255,255,0.1);
+                    vertical-align: middle;
+                    overflow: hidden;
+                }
+
+                .tme-pct-fill-intro {
+                    display: block;
+                    height: 100%;
+                    background: rgba(41, 128, 185, 0.85);
+                    border-radius: 3px;
+                }
+
+                .tme-pct-fill-credits {
+                    display: block;
+                    height: 100%;
+                    background: rgba(230, 126, 34, 0.85);
+                    border-radius: 3px;
+                }
+
+                .tme-avg {
+                    opacity: 0.55;
+                    font-size: 0.88em;
+                    margin-left: 0.3em;
+                }
+
+                .tme-series-badge {
+                    display: inline-block;
+                    margin-left: 0.6em;
+                    font-size: 0.75em;
+                    font-weight: 400;
+                    opacity: 0.6;
+                    vertical-align: middle;
+                }
+            </style>
+
+            <div id="tmeSummaryStatus" style="padding:1.5em 0;opacity:0.45;font-size:0.9em;">Loading&hellip;</div>
+
+            <table class="tme-summary-table" id="tmeSummaryTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th style="width:35%;">Series / Season</th>
+                        <th style="width:10%;text-align:center;">Episodes</th>
+                        <th style="width:25%;">Intro</th>
+                        <th style="width:10%;text-align:center;">Avg Intro</th>
+                        <th style="width:20%;">Credits</th>
+                    </tr>
+                </thead>
+                <tbody id="tmeSummaryBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
