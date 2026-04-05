@@ -330,7 +330,7 @@ namespace TimeMarkEdit.Services
                 var introFilter = request.IntroFilter ?? string.Empty;
                 var creditsFilter = request.CreditsFilter ?? string.Empty;
 
-                var matchingItems = new List<(int? season, int? episode, string seriesName, object dto)>();
+                var matchingItems = new List<(int? season, int? episode, string seriesName, string itemType, object dto)>();
 
                 foreach (var item in queryResult.Items)
                 {
@@ -363,25 +363,35 @@ namespace TimeMarkEdit.Services
                         if (!hasLargeGap) continue;
                     }
 
+                    if (request.MinRuntimeSeconds > 0)
+                    {
+                        var minRuntimeTicks = (long)request.MinRuntimeSeconds * TimeSpan.TicksPerSecond;
+                        if (!item.RunTimeTicks.HasValue || item.RunTimeTicks.Value < minRuntimeTicks) continue;
+                    }
+
                     var ep = item as Episode;
+                    var typeName = item.GetType().Name;
                     matchingItems.Add((
                         ep?.ParentIndexNumber,
                         ep?.IndexNumber,
                         ep?.SeriesName ?? item.Name ?? string.Empty,
+                        typeName,
                         new
                         {
                             Id = item.Id.ToString("N"),
                             Name = item.Name,
-                            Type = item.GetType().Name,
+                            Type = typeName,
                             IndexNumber = ep?.IndexNumber,
                             ParentIndexNumber = ep?.ParentIndexNumber,
-                            SeriesName = ep?.SeriesName
+                            SeriesName = ep?.SeriesName,
+                            RunTimeTicks = item.RunTimeTicks
                         }
                     ));
                 }
 
                 var results = matchingItems
-                    .OrderBy(x => x.seriesName, StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(x => x.itemType == "Movie" ? 0 : 1)
+                    .ThenBy(x => x.seriesName, StringComparer.OrdinalIgnoreCase)
                     .ThenBy(x => x.season ?? 9999)
                     .ThenBy(x => x.episode ?? 9999)
                     .Select(x => x.dto)

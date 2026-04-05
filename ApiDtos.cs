@@ -43,6 +43,7 @@ namespace TimeMarkEdit
         public bool NoChaptersOnly { get; set; }
         public int MaxChapterCount { get; set; } = -1;
         public int MinGapSeconds { get; set; } = -1;
+        public int MinRuntimeSeconds { get; set; } = -1;
         public string? IntroFilter { get; set; }
         public string? CreditsFilter { get; set; }
     }

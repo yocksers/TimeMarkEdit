@@ -425,6 +425,16 @@
                     .chapter-row.drag-over-bottom {
                         border-bottom: 2px solid rgba(82,181,75,0.75);
                     }
+
+                    .chapter-browser-group-header {
+                        font-size: 0.72em;
+                        font-weight: 700;
+                        letter-spacing: 0.08em;
+                        text-transform: uppercase;
+                        opacity: 0.45;
+                        padding: 0.6em 0.55em 0.25em;
+                        pointer-events: none;
+                    }
                 </style>
 
                 <div class="chapter-edit-layout">
@@ -481,6 +491,13 @@
                                         <option value="has">Has</option>
                                         <option value="missing">Missing</option>
                                     </select>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:0.4em;">
+                                    <span style="opacity:0.75;">Min runtime</span>
+                                    <input type="number" id="chapterFilterMinRuntime" min="1" max="999" placeholder="—"
+                                        style="width:3.5em;padding:0.15em 0.3em;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:4px;color:inherit;font-size:1em;text-align:center;" />
+                                    <button id="chapterFilterMinRuntimeClear" title="Clear filter" style="display:none;background:none;border:none;color:inherit;opacity:0.45;cursor:pointer;font-size:1.1em;line-height:1;padding:0 0.1em;">&times;</button>
+                                    <span style="opacity:0.75;">min</span>
                                 </label>
                             </div>
                         </div>

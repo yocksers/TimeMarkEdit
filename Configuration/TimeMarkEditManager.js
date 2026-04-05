@@ -126,8 +126,21 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
             return;
         }
 
+        var hasMovies = items.some(function (i) { return i.Type === 'Movie'; });
+        var hasEpisodes = items.some(function (i) { return i.Type === 'Episode'; });
+        var needsGroupHeaders = hasMovies && hasEpisodes;
+        var lastGroupType = null;
+
         items.forEach(function (item) {
             var isLeaf = item.Type === 'Episode' || item.Type === 'Movie';
+
+            if (needsGroupHeaders && isLeaf && item.Type !== lastGroupType) {
+                var header = document.createElement('div');
+                header.className = 'chapter-browser-group-header';
+                header.textContent = item.Type === 'Movie' ? 'Movies' : 'Episodes';
+                listEl.appendChild(header);
+                lastGroupType = item.Type;
+            }
             var div = document.createElement('div');
             div.className = 'chapter-browser-item ' + (isLeaf ? 'is-episode' : 'is-folder');
 
@@ -174,19 +187,23 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         var noChaptersOnly = q('chapterFilterNoChapters').checked;
         var maxCountRaw = q('chapterFilterMaxCount').value.trim();
         var minGapRaw = q('chapterFilterMinGap').value.trim();
+        var minRuntimeRaw = q('chapterFilterMinRuntime').value.trim();
         var introFilter = q('chapterFilterIntro').value;
         var creditsFilter = q('chapterFilterCredits').value;
         var hasMaxCount = maxCountRaw !== '' && !isNaN(parseInt(maxCountRaw, 10));
         var hasMinGap = minGapRaw !== '' && !isNaN(parseInt(minGapRaw, 10));
+        var hasMinRuntime = minRuntimeRaw !== '' && !isNaN(parseInt(minRuntimeRaw, 10));
         return {
             noChaptersOnly: noChaptersOnly,
             hasMaxCount: hasMaxCount,
             maxCount: hasMaxCount ? parseInt(maxCountRaw, 10) : -1,
             hasMinGap: hasMinGap,
             minGapSeconds: hasMinGap ? parseInt(minGapRaw, 10) : -1,
+            hasMinRuntime: hasMinRuntime,
+            minRuntimeSeconds: hasMinRuntime ? parseInt(minRuntimeRaw, 10) * 60 : -1,
             introFilter: introFilter,
             creditsFilter: creditsFilter,
-            isActive: noChaptersOnly || hasMaxCount || hasMinGap || introFilter !== '' || creditsFilter !== ''
+            isActive: noChaptersOnly || hasMaxCount || hasMinGap || hasMinRuntime || introFilter !== '' || creditsFilter !== ''
         };
     }
 
@@ -250,7 +267,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
             Recursive: isMixedLeafLevel,
             SortBy: sortBy,
             SortOrder: 'Ascending',
-            Fields: (isEpisodeLevel || isMixedLeafLevel) ? 'ParentIndexNumber,IndexNumber,Chapters' : 'ParentIndexNumber,IndexNumber'
+            Fields: (isEpisodeLevel || isMixedLeafLevel) ? 'ParentIndexNumber,IndexNumber,Chapters,RunTimeTicks' : 'ParentIndexNumber,IndexNumber'
         };
 
         fetchAllItems(params, function (err, items) {
@@ -287,6 +304,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
             NoChaptersOnly: f.noChaptersOnly,
             MaxChapterCount: f.maxCount,
             MinGapSeconds: f.minGapSeconds,
+            MinRuntimeSeconds: f.minRuntimeSeconds,
             IntroFilter: f.introFilter,
             CreditsFilter: f.creditsFilter
         };
@@ -309,6 +327,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         var f = readFilterState();
         var maxCount = f.hasMaxCount ? f.maxCount : null;
         var minGapTicks = f.hasMinGap ? f.minGapSeconds * 10000000 : null;
+        var minRuntimeTicks = f.hasMinRuntime ? f.minRuntimeSeconds * 10000000 : null;
 
         if (!f.isActive) {
             renderBrowserList((prependItems || []).concat(_allEpisodeItems.slice().sort(sortEpisodes)));
@@ -321,6 +340,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
 
             if (f.noChaptersOnly && count !== 0) return false;
             if (f.hasMaxCount && count >= maxCount) return false;
+            if (f.hasMinRuntime && (item.RunTimeTicks || 0) < minRuntimeTicks) return false;
             if (f.introFilter === 'has' && !chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'IntroStart'; })) return false;
             if (f.introFilter === 'missing' && chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'IntroStart'; })) return false;
             if (f.creditsFilter === 'has' && !chapters.some(function (c) { return (c.MarkerType || 'Chapter') === 'CreditsStart'; })) return false;
@@ -940,6 +960,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         }
         setupNumberFilter('chapterFilterMaxCount', 'chapterFilterMaxCountClear');
         setupNumberFilter('chapterFilterMinGap', 'chapterFilterMinGapClear');
+        setupNumberFilter('chapterFilterMinRuntime', 'chapterFilterMinRuntimeClear');
 
         var filterIntro = q('chapterFilterIntro');
         if (filterIntro) filterIntro.addEventListener('change', loadCurrentLevel);
