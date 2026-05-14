@@ -253,9 +253,26 @@
                         text-align: center;
                     }
 
+                    .chapter-preview-btn {
+                        background: none;
+                        border: none;
+                        color: #80cbc4;
+                        cursor: pointer;
+                        font-size: 1.1em;
+                        padding: 0.15em 0.2em;
+                        border-radius: 4px;
+                        line-height: 1;
+                        transition: background 0.12s, color 0.12s;
+                    }
+
+                    .chapter-preview-btn:hover {
+                        background: rgba(128, 203, 196, 0.18);
+                        color: #4db6ac;
+                    }
+
                     .chapter-table-header {
                         display: grid;
-                        grid-template-columns: 20px 28px 1fr 128px 245px 46px;
+                        grid-template-columns: 20px 28px 1fr 128px 245px 34px 46px;
                         gap: 0.4em;
                         padding: 0.3em 0.5em;
                         font-size: 0.78em;
@@ -267,7 +284,7 @@
 
                     .chapter-row {
                         display: grid;
-                        grid-template-columns: 20px 28px 1fr 128px 245px 46px;
+                        grid-template-columns: 20px 28px 1fr 128px 245px 34px 46px;
                         align-items: center;
                         gap: 0.4em;
                         padding: 0.28em 0.5em;
@@ -552,6 +569,7 @@
                                     </div>
                                 </div>
                                 <button is="emby-button" type="button" id="btnAddChapter" class="raised button-submit" style="padding:0.3em 1em;font-size:0.88em;">Add</button>
+                                <button type="button" id="btnPreviewNewChapter" class="chapter-preview-btn" title="Preview at this timestamp">&#x25B6;</button>
                             </div>
 
                             <div class="chapter-add-row" style="margin-top:0.4em;">
@@ -578,6 +596,7 @@
                                     <span style="width:8px;text-align:center;opacity:0.45;">.</span>
                                     <span style="width:52px;text-align:center;">ms</span>
                                 </div>
+                                <span></span>
                                 <span></span>
                             </div>
 

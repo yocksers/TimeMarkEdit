@@ -67,6 +67,11 @@ namespace TimeMarkEdit
                 {
                     Name = "TimeMarkEditSummaryManager",
                     EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditSummaryManager.js"
+                },
+                new PluginPageInfo
+                {
+                    Name = "TimeMarkEditVideoPlayer",
+                    EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditVideoPlayer.js"
                 }
             };
         }

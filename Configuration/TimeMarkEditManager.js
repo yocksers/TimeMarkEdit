@@ -21,6 +21,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
     let _view = null;
     let _navStack = [];
     let _currentEpisodeId = null;
+    let _currentEpisodeDisplayName = '';
     let _currentEpisodeRuntimeTicks = 0;
     let _isDirty = false;
     let _isSearchMode = false;
@@ -492,6 +493,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
 
     function loadEpisodeChapters(episodeId, displayName) {
         _currentEpisodeId = episodeId;
+        _currentEpisodeDisplayName = displayName || '';
         _currentItemIsEpisode = false;
         _isDirty = false;
 
@@ -619,6 +621,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
                     '<span class="chapter-time-unit">ms</span>' +
                 '</div>' +
             '</div>' +
+            '<button type="button" class="chapter-preview-btn" title="Preview at this timestamp">&#x25B6;</button>' +
             '<button type="button" class="chapter-del-btn" title="Delete this chapter">⊗</button>';
 
         row.querySelector('.chapter-row-type').addEventListener('change', function () {
@@ -628,6 +631,34 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         row.querySelectorAll('input, select').forEach(function (el) {
             el.addEventListener('change', markDirty);
             el.addEventListener('input', markDirty);
+        });
+
+        row.querySelector('.chapter-preview-btn').addEventListener('click', function () {
+            if (!_currentEpisodeId) return;
+            var hhVal = Math.max(0, parseInt(row.querySelector('.chapter-hh').value) || 0);
+            var mmVal = Math.max(0, Math.min(59, parseInt(row.querySelector('.chapter-mm').value) || 0));
+            var ssVal = Math.max(0, Math.min(59, parseInt(row.querySelector('.chapter-ss').value) || 0));
+            var msVal = Math.max(0, Math.min(999, parseInt(row.querySelector('.chapter-ms').value) || 0));
+            var startSeconds = hmsmsToTicks(hhVal, mmVal, ssVal, msVal) / 10000000;
+            require(['configurationpage?name=TimeMarkEditVideoPlayer'], function (videoPlayer) {
+                videoPlayer.openVideoDialog(_currentEpisodeId, startSeconds, {
+                    title: 'Preview' + (_currentEpisodeDisplayName ? ' — ' + _currentEpisodeDisplayName : ''),
+                    onTimestampSelected: function (chosenSeconds) {
+                        var totalMs = Math.round(chosenSeconds * 1000);
+                        var newMs = totalMs % 1000;
+                        var totalSecs = Math.floor(totalMs / 1000);
+                        var newSs = totalSecs % 60;
+                        var newMm = Math.floor(totalSecs / 60) % 60;
+                        var newHh = Math.floor(totalSecs / 3600);
+                        row.querySelector('.chapter-hh').value = newHh;
+                        row.querySelector('.chapter-mm').value = newMm;
+                        row.querySelector('.chapter-ss').value = newSs;
+                        row.querySelector('.chapter-ms').value = newMs;
+                        markDirty();
+                        refreshTimeline();
+                    }
+                });
+            });
         });
 
         row.querySelector('.chapter-del-btn').addEventListener('click', function () {
@@ -988,6 +1019,33 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
 
         var btnApply = q('btnApplyToSeason');
         if (btnApply) btnApply.addEventListener('click', applyToSeason);
+
+        var btnPreviewNew = q('btnPreviewNewChapter');
+        if (btnPreviewNew) btnPreviewNew.addEventListener('click', function () {
+            if (!_currentEpisodeId) return;
+            var hh = Math.max(0, parseInt(q('chapterNewHH').value) || 0);
+            var mm = Math.max(0, Math.min(59, parseInt(q('chapterNewMM').value) || 0));
+            var ss = Math.max(0, Math.min(59, parseInt(q('chapterNewSS').value) || 0));
+            var ms = Math.max(0, Math.min(999, parseInt(q('chapterNewMS').value) || 0));
+            var startSeconds = hmsmsToTicks(hh, mm, ss, ms) / 10000000;
+            require(['configurationpage?name=TimeMarkEditVideoPlayer'], function (videoPlayer) {
+                videoPlayer.openVideoDialog(_currentEpisodeId, startSeconds, {
+                    title: 'Preview' + (_currentEpisodeDisplayName ? ' — ' + _currentEpisodeDisplayName : ''),
+                    onTimestampSelected: function (chosenSeconds) {
+                        var totalMs = Math.round(chosenSeconds * 1000);
+                        var newMs = totalMs % 1000;
+                        var totalSecs = Math.floor(totalMs / 1000);
+                        var newSs = totalSecs % 60;
+                        var newMm = Math.floor(totalSecs / 60) % 60;
+                        var newHh = Math.floor(totalSecs / 3600);
+                        q('chapterNewHH').value = newHh;
+                        q('chapterNewMM').value = newMm;
+                        q('chapterNewSS').value = newSs;
+                        q('chapterNewMS').value = newMs;
+                    }
+                });
+            });
+        });
     }
 
     return function (view, params) {
