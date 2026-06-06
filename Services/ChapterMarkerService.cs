@@ -33,9 +33,15 @@ namespace TimeMarkEdit.Services
         {
             try
             {
+                var runtimeTicks = item.RunTimeTicks;
                 var chapters = new List<ChapterInfo>();
                 foreach (var (name, ticks, markerType) in entries)
                 {
+                    if (runtimeTicks.HasValue && ticks >= runtimeTicks.Value)
+                    {
+                        _logger.Warn($"TimeMarkEdit: skipping chapter '{name}' at {ticks} ticks — at or beyond runtime ({runtimeTicks.Value} ticks) for '{item.Name}'");
+                        continue;
+                    }
                     var chapter = new ChapterInfo
                     {
                         Name = name ?? string.Empty,
