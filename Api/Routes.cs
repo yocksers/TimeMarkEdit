@@ -7,5 +7,8 @@ namespace TimeMarkEdit.Api
         public const string FilterEpisodes = "/TimeMarkEdit/FilterEpisodes";
         public const string ApplySeasonMarks = "/TimeMarkEdit/ApplySeasonMarks";
         public const string GetSummary = "/TimeMarkEdit/GetSummary";
+        public const string GetMkvChapters = "/TimeMarkEdit/GetMkvChapters";
+        public const string ImportMkvChapters = "/TimeMarkEdit/ImportMkvChapters";
+        public const string ImportMkvChaptersBulk = "/TimeMarkEdit/ImportMkvChaptersBulk";
     }
 }

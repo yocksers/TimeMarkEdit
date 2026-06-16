@@ -53,4 +53,26 @@ namespace TimeMarkEdit
     public class GetSummaryRequest : IReturn<object>
     {
     }
+
+    [Route(Routes.GetMkvChapters, "GET", Summary = "Returns embedded chapter markers read directly from an MKV file.")]
+    [Authenticated]
+    public class GetMkvChaptersRequest : IReturn<object>
+    {
+        public string ItemId { get; set; } = string.Empty;
+    }
+
+    [Route(Routes.ImportMkvChapters, "POST", Summary = "Imports embedded MKV chapter markers into Emby for a single item.")]
+    [Authenticated]
+    public class ImportMkvChaptersRequest : IReturn<object>
+    {
+        public string ItemId { get; set; } = string.Empty;
+    }
+
+    [Route(Routes.ImportMkvChaptersBulk, "POST", Summary = "Imports embedded MKV chapter markers into Emby for all episodes in a season or series.")]
+    [Authenticated]
+    public class ImportMkvChaptersBulkRequest : IReturn<object>
+    {
+        public string EpisodeId { get; set; } = string.Empty;
+        public string Scope { get; set; } = "Season";
+    }
 }

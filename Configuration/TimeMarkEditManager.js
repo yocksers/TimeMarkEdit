@@ -30,6 +30,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
     let _fetchGeneration = 0;
     let _dragSrcRow = null;
     let _currentItemIsEpisode = false;
+    let _mkvMode = false;
 
     function q(id) { return _view.querySelector('#' + id); }
 
@@ -544,14 +545,20 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
                 _currentEpisodeRuntimeTicks = 0;
                 q('chapterEpisodeRuntime').textContent = '';
             }
-            var chapters = (response.Chapters || []).map(function (c) {
-                return {
-                    Name: c.Name || '',
-                    MarkerType: c.MarkerType || 'Chapter',
-                    StartPositionTicks: c.StartPositionTicks || 0
-                };
-            });
-            renderChapters(chapters);
+
+            if (_mkvMode) {
+                setMkvMode(true);
+                loadMkvChapters();
+            } else {
+                var chapters = (response.Chapters || []).map(function (c) {
+                    return {
+                        Name: c.Name || '',
+                        MarkerType: c.MarkerType || 'Chapter',
+                        StartPositionTicks: c.StartPositionTicks || 0
+                    };
+                });
+                renderChapters(chapters);
+            }
         })
         .catch(function (err) {
             console.error('Error loading chapters:', err);
@@ -924,14 +931,318 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         });
     }
 
+    function setMkvMode(enabled) {
+        _mkvMode = enabled;
+
+        var addRows = _view.querySelectorAll('.chapter-add-row');
+        var tableHeader = _view.querySelector('.chapter-table-header');
+        var embyActionBar = q('embyActionBar');
+        var mkvImportBar = q('mkvImportBar');
+        var mkvModeBar = q('mkvModeBar');
+        var toggleBtn = q('btnToggleMkvMode');
+        var toggleLabel = q('btnToggleMkvModeLabel');
+
+        addRows.forEach(function (el) { el.style.display = enabled ? 'none' : ''; });
+        if (tableHeader) tableHeader.style.display = enabled ? 'none' : '';
+        if (embyActionBar) embyActionBar.style.display = enabled ? 'none' : '';
+        if (mkvImportBar) mkvImportBar.style.display = enabled ? 'flex' : 'none';
+        if (mkvModeBar) mkvModeBar.style.display = enabled ? 'flex' : 'none';
+
+        if (toggleBtn) {
+            if (enabled) toggleBtn.classList.add('active');
+            else toggleBtn.classList.remove('active');
+        }
+        if (toggleLabel) toggleLabel.textContent = enabled ? 'View Emby Chapters' : 'View MKV Chapters';
+
+        var importSeasonBtn = q('btnImportMkvSeason');
+        var importSeriesBtn = q('btnImportMkvSeries');
+        if (importSeasonBtn) importSeasonBtn.style.display = (enabled && _currentItemIsEpisode) ? '' : 'none';
+        if (importSeriesBtn) importSeriesBtn.style.display = (enabled && _currentItemIsEpisode) ? '' : 'none';
+    }
+
+    function toggleMkvMode() {
+        if (!_currentEpisodeId) return;
+        var nextMode = !_mkvMode;
+        if (nextMode) {
+            loadMkvChapters();
+        } else {
+            setMkvMode(false);
+            reloadEmbyChapters();
+        }
+    }
+
+    function reloadEmbyChapters() {
+        var userId = ApiClient.getCurrentUserId();
+        var capturedId = _currentEpisodeId;
+        q('chapterTableBody').innerHTML =
+            '<div style="text-align:center;padding:1.5em;opacity:0.4;font-size:0.85em;">Loading chapters...</div>';
+
+        ApiClient.getJSON(ApiClient.getUrl('Users/' + userId + '/Items/' + capturedId, { Fields: 'Chapters' }))
+            .then(function (response) {
+                if (_currentEpisodeId !== capturedId) return;
+                var chapters = (response.Chapters || []).map(function (c) {
+                    return {
+                        Name: c.Name || '',
+                        MarkerType: c.MarkerType || 'Chapter',
+                        StartPositionTicks: c.StartPositionTicks || 0
+                    };
+                });
+                renderChapters(chapters);
+            })
+            .catch(function () {
+                q('chapterTableBody').innerHTML =
+                    '<div style="text-align:center;padding:1.5em;color:#ef9a9a;opacity:0.8;font-size:0.85em;">Failed to reload chapters</div>';
+            });
+    }
+
+    function loadMkvChapters() {
+        if (!_currentEpisodeId) return;
+        var capturedId = _currentEpisodeId;
+
+        q('chapterTableBody').innerHTML =
+            '<div style="text-align:center;padding:1.5em;opacity:0.4;font-size:0.85em;">Reading MKV chapters...</div>';
+
+        var mkvBarNote = q('mkvModeBarNote');
+        if (mkvBarNote) mkvBarNote.textContent = 'Reading...';
+
+        setMkvMode(true);
+
+        ApiClient.getJSON(ApiClient.getUrl('TimeMarkEdit/GetMkvChapters', { ItemId: capturedId }))
+            .then(function (result) {
+                if (_currentEpisodeId !== capturedId) return;
+
+                if (!result.Success) {
+                    q('chapterTableBody').innerHTML =
+                        '<div style="text-align:center;padding:1.5em;color:#ef9a9a;opacity:0.8;font-size:0.85em;">' +
+                        (result.Message || 'Failed to read MKV chapters') + '</div>';
+                    if (mkvBarNote) mkvBarNote.textContent = result.Message || 'Error';
+                    return;
+                }
+
+                if (!result.IsMkv) {
+                    q('chapterTableBody').innerHTML =
+                        '<div style="text-align:center;padding:1.5em;opacity:0.5;font-size:0.85em;">This file is not an MKV (' + (result.FileExtension || 'unknown type') + '). Embedded chapter reading is only supported for MKV files.</div>';
+                    if (mkvBarNote) mkvBarNote.textContent = 'Not an MKV file';
+                    return;
+                }
+
+                var chapters = result.Chapters || [];
+                if (mkvBarNote) mkvBarNote.textContent = chapters.length + ' chapter' + (chapters.length === 1 ? '' : 's') + ' found';
+
+                renderMkvChapters(chapters, capturedId);
+            })
+            .catch(function () {
+                if (_currentEpisodeId !== capturedId) return;
+                q('chapterTableBody').innerHTML =
+                    '<div style="text-align:center;padding:1.5em;color:#ef9a9a;opacity:0.8;font-size:0.85em;">Failed to read MKV chapters</div>';
+                if (mkvBarNote) mkvBarNote.textContent = 'Error';
+            });
+    }
+
+    function renderMkvChapters(chapters, itemId) {
+        var body = q('chapterTableBody');
+        body.innerHTML = '';
+
+        if (!chapters || chapters.length === 0) {
+            body.innerHTML = '<div style="text-align:center;padding:1.5em;opacity:0.38;font-size:0.85em;">No embedded chapters found in this MKV file.</div>';
+            return;
+        }
+
+        var headerDiv = document.createElement('div');
+        headerDiv.style.cssText = 'display:grid;grid-template-columns:1fr 120px 160px 34px 34px;gap:0.4em;padding:0.3em 0.5em;font-size:0.78em;font-weight:600;opacity:0.55;border-bottom:1px solid rgba(255,255,255,0.14);margin-bottom:3px;';
+        headerDiv.innerHTML = '<span>Name</span><span>Type</span><span style="text-align:right;">Timestamp</span><span></span><span></span>';
+        body.appendChild(headerDiv);
+
+        chapters.forEach(function (c) {
+            var row = document.createElement('div');
+            row.className = 'mkv-chapter-row';
+            row.style.gridTemplateColumns = '1fr 120px 160px 34px 34px';
+
+            var name = c.Name || '';
+            var markerType = c.MarkerType || 'Chapter';
+
+            var nameSpan = document.createElement('span');
+            nameSpan.className = 'mkv-chapter-name';
+            nameSpan.textContent = name || '(unnamed)';
+            nameSpan.title = name;
+
+            var typeColors = {
+                'IntroStart':   'rgba(41,128,185,0.22)',
+                'IntroEnd':     'rgba(142,68,173,0.22)',
+                'CreditsStart': 'rgba(230,126,34,0.22)',
+                'Chapter':      'transparent'
+            };
+            var typeSpan = document.createElement('span');
+            typeSpan.style.cssText = 'font-size:0.8em;padding:0.15em 0.4em;border-radius:3px;white-space:nowrap;background:' +
+                (typeColors[markerType] || 'transparent') + ';';
+            typeSpan.textContent = markerType;
+
+            var timeSpan = document.createElement('span');
+            timeSpan.className = 'mkv-chapter-time';
+            timeSpan.textContent = c.StartTime || ticksToTime(c.StartPositionTicks || 0);
+
+            var previewBtn = document.createElement('button');
+            previewBtn.type = 'button';
+            previewBtn.className = 'chapter-preview-btn';
+            previewBtn.title = 'Preview at this timestamp';
+            previewBtn.innerHTML = '&#x25B6;';
+            previewBtn.addEventListener('click', function () {
+                if (!itemId) return;
+                var startSeconds = (c.StartPositionTicks || 0) / 10000000;
+                require(['configurationpage?name=TimeMarkEditVideoPlayer'], function (videoPlayer) {
+                    videoPlayer.openVideoDialog(itemId, startSeconds, {
+                        title: 'Preview' + (_currentEpisodeDisplayName ? ' \u2014 ' + _currentEpisodeDisplayName : '')
+                    });
+                });
+            });
+
+            var importBtn = document.createElement('button');
+            importBtn.type = 'button';
+            importBtn.style.cssText = 'background:none;border:none;color:#81c784;cursor:pointer;font-size:1.15em;padding:0.15em 0.25em;border-radius:4px;line-height:1;transition:background 0.12s,color 0.12s;';
+            importBtn.title = 'Add this chapter to Emby';
+            importBtn.innerHTML = '&#x2B;';
+            importBtn.addEventListener('mouseover', function () {
+                importBtn.style.background = 'rgba(129,199,132,0.18)';
+                importBtn.style.color = '#66bb6a';
+            });
+            importBtn.addEventListener('mouseout', function () {
+                importBtn.style.background = 'none';
+                importBtn.style.color = '#81c784';
+            });
+            importBtn.addEventListener('click', function () {
+                importSingleMkvChapter(itemId, c.Name || '', c.StartPositionTicks || 0, markerType, importBtn);
+            });
+
+            row.appendChild(nameSpan);
+            row.appendChild(typeSpan);
+            row.appendChild(timeSpan);
+            row.appendChild(previewBtn);
+            row.appendChild(importBtn);
+            body.appendChild(row);
+        });
+    }
+
+    function importSingleMkvChapter(itemId, name, ticks, markerType, btn) {
+        if (!itemId) return;
+        var origHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '&#x23F3;';
+
+        var userId = ApiClient.getCurrentUserId();
+        ApiClient.getJSON(ApiClient.getUrl('Users/' + userId + '/Items/' + itemId, { Fields: 'Chapters' }))
+            .then(function (response) {
+                var existing = (response.Chapters || []).map(function (c) {
+                    return {
+                        Name: c.Name || '',
+                        MarkerType: c.MarkerType || 'Chapter',
+                        StartPositionTicks: c.StartPositionTicks || 0
+                    };
+                });
+
+                existing.push({ Name: name, MarkerType: markerType, StartPositionTicks: ticks });
+                existing.sort(function (a, b) { return a.StartPositionTicks - b.StartPositionTicks; });
+
+                return fetch(ApiClient.getUrl('TimeMarkEdit/SaveEpisodeChapters', { EpisodeId: itemId }), {
+                    method: 'POST',
+                    headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ EpisodeId: itemId, Chapters: existing })
+                })
+                .then(function (r) { return r.json(); })
+                .then(function (result) {
+                    btn.disabled = false;
+                    if (result.Success) {
+                        btn.innerHTML = '&#x2713;';
+                        btn.style.color = '#a5d6a7';
+                        toast({ type: 'success', text: '"' + (name || 'Chapter') + '" added to Emby' });
+                    } else {
+                        btn.innerHTML = origHtml;
+                        toast({ type: 'error', text: result.Message || 'Import failed' });
+                    }
+                });
+            })
+            .catch(function () {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+                toast({ type: 'error', text: 'Failed to import chapter' });
+            });
+    }
+
+    function importMkvChaptersForItem() {
+        if (!_currentEpisodeId) return;
+        var capturedId = _currentEpisodeId;
+        loading.show();
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/ImportMkvChapters', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ItemId: capturedId })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            loading.hide();
+            if (result.Success) {
+                toast({ type: 'success', text: result.Message || 'Imported MKV chapters' });
+            } else {
+                toast({ type: 'error', text: result.Message || 'Import failed' });
+            }
+        })
+        .catch(function () {
+            loading.hide();
+            toast({ type: 'error', text: 'Failed to import MKV chapters' });
+        });
+    }
+
+    function importMkvChaptersBulk(scope) {
+        if (!_currentEpisodeId || !_currentItemIsEpisode) return;
+        var label = scope === 'Series' ? 'series' : 'season';
+        if (!confirm('Import MKV embedded chapters for all episodes in this ' + label + '?\n\nThis will replace Emby chapters with the embedded MKV chapters for every episode that has them.')) return;
+
+        loading.show();
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/ImportMkvChaptersBulk', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ EpisodeId: _currentEpisodeId, Scope: scope })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            loading.hide();
+            if (result.Success) {
+                toast({ type: 'success', text: result.Message || ('Imported MKV chapters for ' + label) });
+            } else {
+                toast({ type: 'error', text: result.Message || 'Bulk import failed' });
+            }
+        })
+        .catch(function () {
+            loading.hide();
+            toast({ type: 'error', text: 'Failed to bulk import MKV chapters' });
+        });
+    }
+
+    function importMkvChaptersForSeason() { importMkvChaptersBulk('Season'); }
+    function importMkvChaptersForSeries() { importMkvChaptersBulk('Series'); }
+
     function init(view) {
         _view = view;
         _navStack = [];
         _currentEpisodeId = null;
         _isDirty = false;
         _isSearchMode = false;
+        _mkvMode = false;
 
         loadCurrentLevel();
+
+        var btnMkvToggle = q('btnToggleMkvMode');
+        if (btnMkvToggle) btnMkvToggle.addEventListener('click', toggleMkvMode);
+
+        var btnImportItem = q('btnImportMkvItem');
+        if (btnImportItem) btnImportItem.addEventListener('click', importMkvChaptersForItem);
+
+        var btnImportSeason = q('btnImportMkvSeason');
+        if (btnImportSeason) btnImportSeason.addEventListener('click', importMkvChaptersForSeason);
+
+        var btnImportSeries = q('btnImportMkvSeries');
+        if (btnImportSeries) btnImportSeries.addEventListener('click', importMkvChaptersForSeries);
 
         var searchEl = q('chapterBrowserSearch');
         searchEl.addEventListener('input', function () {
