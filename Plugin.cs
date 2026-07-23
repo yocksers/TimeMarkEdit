@@ -22,6 +22,7 @@ namespace TimeMarkEdit
         public static Plugin? Instance { get; private set; }
         public static ChapterMarkerService? ChapterMarkerService { get; private set; }
         public static MkvChapterService? MkvChapterService { get; private set; }
+        public static TheIntroDbService? TheIntroDbService { get; private set; }
 
         public override string Name => "TimeMarkEdit";
         public override string Description => "A chapter and timemark editor for Emby media items.";
@@ -89,6 +90,7 @@ namespace TimeMarkEdit
         {
             ChapterMarkerService = new ChapterMarkerService(_logger, _itemRepository);
             MkvChapterService = new MkvChapterService(_logger);
+            TheIntroDbService = new TheIntroDbService(_logger);
             _logger.Info("TimeMarkEdit plugin started");
         }
 

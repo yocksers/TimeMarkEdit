@@ -10,5 +10,11 @@ namespace TimeMarkEdit.Api
         public const string GetMkvChapters = "/TimeMarkEdit/GetMkvChapters";
         public const string ImportMkvChapters = "/TimeMarkEdit/ImportMkvChapters";
         public const string ImportMkvChaptersBulk = "/TimeMarkEdit/ImportMkvChaptersBulk";
+        public const string DownloadIntroDbTimestamps = "/TimeMarkEdit/DownloadIntroDbTimestamps";
+        public const string DownloadIntroDbTimestampsBulk = "/TimeMarkEdit/DownloadIntroDbTimestampsBulk";
+        public const string TestIntroDbConnection = "/TimeMarkEdit/TestIntroDbConnection";
+        public const string GetIntroDbConfig = "/TimeMarkEdit/GetIntroDbConfig";
+        public const string SetIntroDbConfig = "/TimeMarkEdit/SetIntroDbConfig";
+        public const string UploadIntroDbTimestamps = "/TimeMarkEdit/UploadIntroDbTimestamps";
     }
 }

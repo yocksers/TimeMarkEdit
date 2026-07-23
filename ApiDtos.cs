@@ -75,4 +75,101 @@ namespace TimeMarkEdit
         public string EpisodeId { get; set; } = string.Empty;
         public string Scope { get; set; } = "Season";
     }
+
+    [Route(Routes.DownloadIntroDbTimestamps, "POST", Summary = "Downloads timestamps from TheIntroDB for a single item.")]
+    [Authenticated]
+    public class DownloadIntroDbRequest : IReturn<object>
+    {
+        public string ItemId { get; set; } = "";
+    }
+
+    [Route(Routes.DownloadIntroDbTimestampsBulk, "POST", Summary = "Downloads timestamps from TheIntroDB for all episodes in a season or series.")]
+    [Authenticated]
+    public class DownloadIntroDbBulkRequest : IReturn<object>
+    {
+        public string EpisodeId { get; set; } = "";
+        public string Scope { get; set; } = "Season";
+    }
+
+    [Route(Routes.TestIntroDbConnection, "POST", Summary = "Tests the TheIntroDB API connection.")]
+    [Authenticated]
+    public class TestIntroDbConnectionRequest : IReturn<object> { }
+
+    [Route(Routes.GetIntroDbConfig, "GET", Summary = "Gets the current TheIntroDB configuration.")]
+    [Authenticated]
+    public class GetIntroDbConfigRequest : IReturn<object> { }
+
+    [Route(Routes.SetIntroDbConfig, "POST", Summary = "Saves TheIntroDB configuration.")]
+    [Authenticated]
+    public class SetIntroDbConfigRequest : IReturn<object>
+    {
+        public string ApiKey { get; set; } = "";
+        public bool OverwriteExisting { get; set; } = true;
+        public List<string> EnabledSegments { get; set; } = new() { "intro", "credits" };
+    }
+
+    public class DownloadIntroDbResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = "";
+        public string ItemName { get; set; } = "";
+        public int ChapterCount { get; set; }
+        public List<ChapterItemDto> Chapters { get; set; } = new();
+        public bool ApiKeyConfigured { get; set; }
+        public bool ConnectionSuccessful { get; set; }
+    }
+
+    public class TestIntroDbConnectionResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = "";
+        public bool ApiKeyConfigured { get; set; }
+    }
+
+    public class SetIntroDbConfigResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = "";
+    }
+
+    public class GetIntroDbConfigResponse
+    {
+        public string ApiKey { get; set; } = "";
+        public bool ApiKeyConfigured { get; set; }
+        public bool OverwriteExisting { get; set; }
+        public List<string> EnabledSegments { get; set; } = new();
+    }
+
+    public class TheIntroDbMediaResponse
+    {
+        public int TmdbId { get; set; }
+        public string Type { get; set; } = "";
+        public List<TimeSegment> Intro { get; set; } = new();
+        public List<TimeSegment> Recap { get; set; } = new();
+        public List<TimeSegment> Credits { get; set; } = new();
+        public List<TimeSegment> Preview { get; set; } = new();
+    }
+
+    public class TimeSegment
+    {
+        public int? StartMs { get; set; }
+        public int? EndMs { get; set; }
+    }
+
+    [Route(Routes.UploadIntroDbTimestamps, "POST", Summary = "Uploads existing time marks from an item to TheIntroDB.")]
+    [Authenticated]
+    public class UploadIntroDbRequest : IReturn<object>
+    {
+        public string ItemId { get; set; } = "";
+    }
+
+    public class UploadIntroDbResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = "";
+        public string ItemName { get; set; } = "";
+        public int IntroCount { get; set; }
+        public int RecapCount { get; set; }
+        public int CreditsCount { get; set; }
+    }
 }

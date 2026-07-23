@@ -1,7 +1,7 @@
 define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTabsManager) {
     'use strict';
 
-    const CHAPTER_TYPES = ['Chapter', 'IntroStart', 'IntroEnd', 'CreditsStart'];
+    const CHAPTER_TYPES = ['Chapter', 'IntroStart', 'IntroEnd', 'CreditsStart', 'CreditsEnd'];
 
     function getTabList() {
         return [
@@ -31,6 +31,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
     let _dragSrcRow = null;
     let _currentItemIsEpisode = false;
     let _mkvMode = false;
+    let _introDbConfigured = false;
 
     function q(id) { return _view.querySelector('#' + id); }
 
@@ -510,6 +511,11 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         if (applyBtn) applyBtn.style.display = 'none';
         _currentEpisodeRuntimeTicks = 0;
 
+        var introDbBar = q('introDbBar');
+        if (introDbBar) introDbBar.style.display = 'flex';
+        var introDbStatusEl = q('introDbDownloadStatus');
+        if (introDbStatusEl) introDbStatusEl.textContent = '';
+
         var userId = ApiClient.getCurrentUserId();
         var capturedId = episodeId;
         ApiClient.getJSON(ApiClient.getUrl('Users/' + userId + '/Items/' + episodeId, {
@@ -524,6 +530,10 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
                 q('chapterEpisodeSubtitle').textContent = sub;
                 _currentItemIsEpisode = true;
                 if (applyBtn) applyBtn.style.display = '';
+                var introDbSeasonBtn = q('btnDownloadIntroDbSeason');
+                var introDbSeriesBtn = q('btnDownloadIntroDbSeries');
+                if (introDbSeasonBtn) introDbSeasonBtn.style.display = '';
+                if (introDbSeriesBtn) introDbSeriesBtn.style.display = '';
             } else if (response.Type === 'Movie') {
                 q('chapterEpisodeSubtitle').textContent = 'Movie';
                 ApiClient.getJSON(ApiClient.getUrl('Items/' + capturedId + '/Ancestors', { UserId: userId }))
@@ -948,6 +958,9 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         if (mkvImportBar) mkvImportBar.style.display = enabled ? 'flex' : 'none';
         if (mkvModeBar) mkvModeBar.style.display = enabled ? 'flex' : 'none';
 
+        var introDbBar = q('introDbBar');
+        if (introDbBar) introDbBar.style.display = (!enabled && _currentEpisodeId) ? 'flex' : 'none';
+
         if (toggleBtn) {
             if (enabled) toggleBtn.classList.add('active');
             else toggleBtn.classList.remove('active');
@@ -1222,6 +1235,175 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
     function importMkvChaptersForSeason() { importMkvChaptersBulk('Season'); }
     function importMkvChaptersForSeries() { importMkvChaptersBulk('Series'); }
 
+    function loadIntroDbConfig() {
+        ApiClient.getJSON(ApiClient.getUrl('TimeMarkEdit/GetIntroDbConfig', {}))
+            .then(function (result) {
+                _introDbConfigured = result.ApiKeyConfigured || false;
+                var badge = q('introDbStatusBadge');
+                if (badge) {
+                    badge.textContent = _introDbConfigured ? 'Upload key set' : 'No upload key';
+                    badge.style.background = _introDbConfigured ? 'rgba(82,181,75,0.2)' : 'rgba(255,255,255,0.1)';
+                    badge.style.color = _introDbConfigured ? '#7cce76' : '';
+                }
+                var segIntro = q('introDbSegIntro');
+                var segRecap = q('introDbSegRecap');
+                var segCredits = q('introDbSegCredits');
+                var segPreview = q('introDbSegPreview');
+                var overwriteChk = q('introDbOverwrite');
+                var segs = result.EnabledSegments || ['intro', 'credits'];
+                if (segIntro) segIntro.checked = segs.indexOf('intro') !== -1;
+                if (segRecap) segRecap.checked = segs.indexOf('recap') !== -1;
+                if (segCredits) segCredits.checked = segs.indexOf('credits') !== -1;
+                if (segPreview) segPreview.checked = segs.indexOf('preview') !== -1;
+                if (overwriteChk) overwriteChk.checked = result.OverwriteExisting !== false;
+            })
+            .catch(function () {});
+    }
+
+    function saveIntroDbConfig() {
+        var apiKey = (q('introDbApiKey').value || '').trim();
+        var overwriteExisting = q('introDbOverwrite') ? q('introDbOverwrite').checked : true;
+        var enabledSegments = [];
+        if (q('introDbSegIntro') && q('introDbSegIntro').checked) enabledSegments.push('intro');
+        if (q('introDbSegRecap') && q('introDbSegRecap').checked) enabledSegments.push('recap');
+        if (q('introDbSegCredits') && q('introDbSegCredits').checked) enabledSegments.push('credits');
+        if (q('introDbSegPreview') && q('introDbSegPreview').checked) enabledSegments.push('preview');
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/SetIntroDbConfig', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ApiKey: apiKey, OverwriteExisting: overwriteExisting, EnabledSegments: enabledSegments })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            if (result.Success) {
+                q('introDbApiKey').value = '';
+                toast({ type: 'success', text: 'TheIntroDB configuration saved' });
+                loadIntroDbConfig();
+            } else {
+                toast({ type: 'error', text: result.Message || 'Failed to save configuration' });
+            }
+        })
+        .catch(function () { toast({ type: 'error', text: 'Failed to save configuration' }); });
+    }
+
+    function testIntroDbConnection() {
+        var statusEl = q('introDbTestStatus');
+        if (statusEl) statusEl.textContent = 'Testing...';
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/TestIntroDbConnection', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: '{}'
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            if (statusEl) {
+                statusEl.textContent = result.Success ? '✓ ' + (result.Message || 'OK') : '✗ ' + (result.Message || 'Failed');
+                statusEl.style.color = result.Success ? '#7cce76' : '#ef9a9a';
+            }
+            if (result.Success) loadIntroDbConfig();
+        })
+        .catch(function () {
+            if (statusEl) { statusEl.textContent = '✗ Connection error'; statusEl.style.color = '#ef9a9a'; }
+        });
+    }
+
+    function downloadIntroDb() {
+        if (!_currentEpisodeId) return;
+        var statusEl = q('introDbDownloadStatus');
+        if (statusEl) statusEl.textContent = 'Downloading...';
+        loading.show();
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/DownloadIntroDbTimestamps', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ItemId: _currentEpisodeId })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            loading.hide();
+            if (statusEl) statusEl.textContent = '';
+            if (result.Success) {
+                toast({ type: 'success', text: result.Message || 'Timestamps downloaded' });
+                reloadEmbyChapters();
+            } else {
+                toast({ type: 'error', text: result.Message || 'Download failed' });
+                if (!result.ApiKeyConfigured) {
+                    if (statusEl) { statusEl.textContent = 'API key not configured'; statusEl.style.color = '#ef9a9a'; }
+                }
+            }
+        })
+        .catch(function () {
+            loading.hide();
+            if (statusEl) statusEl.textContent = '';
+            toast({ type: 'error', text: 'Failed to download timestamps' });
+        });
+    }
+
+    function downloadIntroDbBulk(scope) {
+        if (!_currentEpisodeId || !_currentItemIsEpisode) return;
+        var label = scope === 'Series' ? 'series' : 'season';
+        if (!confirm('Download timestamps from TheIntroDB for all episodes in this ' + label + '?\n\nThis will overwrite existing Emby chapter markers for each episode.')) return;
+
+        var statusEl = q('introDbDownloadStatus');
+        if (statusEl) statusEl.textContent = 'Downloading...';
+        loading.show();
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/DownloadIntroDbTimestampsBulk', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ EpisodeId: _currentEpisodeId, Scope: scope })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            loading.hide();
+            if (statusEl) statusEl.textContent = '';
+            if (result.Success) {
+                toast({ type: 'success', text: result.Message || ('Downloaded timestamps for ' + label) });
+                reloadEmbyChapters();
+            } else {
+                toast({ type: 'error', text: result.Message || 'Bulk download failed' });
+            }
+        })
+        .catch(function () {
+            loading.hide();
+            if (statusEl) statusEl.textContent = '';
+            toast({ type: 'error', text: 'Failed to bulk download timestamps' });
+        });
+    }
+
+    function downloadIntroDbSeason() { downloadIntroDbBulk('Season'); }
+    function downloadIntroDbSeries() { downloadIntroDbBulk('Series'); }
+
+    function uploadIntroDb() {
+        if (!_currentEpisodeId) return;
+        var statusEl = q('introDbDownloadStatus');
+        if (statusEl) statusEl.textContent = 'Uploading...';
+        loading.show();
+
+        fetch(ApiClient.getUrl('TimeMarkEdit/UploadIntroDbTimestamps', {}), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ItemId: _currentEpisodeId })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            loading.hide();
+            if (statusEl) statusEl.textContent = '';
+            if (result.Success) {
+                toast({ type: 'success', text: result.Message || 'Uploaded to TheIntroDB' });
+            } else {
+                toast({ type: 'error', text: result.Message || 'Upload failed' });
+            }
+        })
+        .catch(function () {
+            loading.hide();
+            if (statusEl) statusEl.textContent = '';
+            toast({ type: 'error', text: 'Failed to upload timestamps' });
+        });
+    }
+
     function init(view) {
         _view = view;
         _navStack = [];
@@ -1231,6 +1413,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         _mkvMode = false;
 
         loadCurrentLevel();
+        loadIntroDbConfig();
 
         var btnMkvToggle = q('btnToggleMkvMode');
         if (btnMkvToggle) btnMkvToggle.addEventListener('click', toggleMkvMode);
@@ -1243,6 +1426,24 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
 
         var btnImportSeries = q('btnImportMkvSeries');
         if (btnImportSeries) btnImportSeries.addEventListener('click', importMkvChaptersForSeries);
+
+        var btnDownloadIntroDb = q('btnDownloadIntroDb');
+        if (btnDownloadIntroDb) btnDownloadIntroDb.addEventListener('click', downloadIntroDb);
+
+        var btnDownloadIntroDbSeason = q('btnDownloadIntroDbSeason');
+        if (btnDownloadIntroDbSeason) btnDownloadIntroDbSeason.addEventListener('click', downloadIntroDbSeason);
+
+        var btnDownloadIntroDbSeries = q('btnDownloadIntroDbSeries');
+        if (btnDownloadIntroDbSeries) btnDownloadIntroDbSeries.addEventListener('click', downloadIntroDbSeries);
+
+        var btnSaveIntroDbConfig = q('btnSaveIntroDbConfig');
+        if (btnSaveIntroDbConfig) btnSaveIntroDbConfig.addEventListener('click', saveIntroDbConfig);
+
+        var btnTestIntroDb = q('btnTestIntroDbConnection');
+        if (btnTestIntroDb) btnTestIntroDb.addEventListener('click', testIntroDbConnection);
+
+        var btnUploadIntroDb = q('btnUploadIntroDb');
+        if (btnUploadIntroDb) btnUploadIntroDb.addEventListener('click', uploadIntroDb);
 
         var searchEl = q('chapterBrowserSearch');
         searchEl.addEventListener('input', function () {

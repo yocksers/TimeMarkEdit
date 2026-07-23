@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.Http;
 
 namespace TimeMarkEdit.Services
 {
@@ -409,6 +410,27 @@ namespace TimeMarkEdit.Services
         private bool TryGetMkvService([System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out MkvChapterService? svc)
             => (svc = Plugin.MkvChapterService) != null;
 
+        private bool TryGetIntroDbService([NotNullWhen(true)] out TheIntroDbService? svc)
+            => (svc = Plugin.TheIntroDbService) != null;
+
+        private static List<(string Name, long StartPositionTicks, string MarkerType)> MergeWithExisting(
+            BaseItem item,
+            List<(string Name, long StartPositionTicks, string MarkerType)> newChapters,
+            ChapterMarkerService chapterService)
+        {
+            var incomingTypes = new HashSet<string>(newChapters.Select(c => c.MarkerType));
+            var newPositions = newChapters.Select(c => c.StartPositionTicks).ToList();
+            const long tenSecondsTicks = 100_000_000L;
+
+            var retained = chapterService.GetChapters(item)
+                .Where(c => !incomingTypes.Contains(chapterService.GetChapterMarkerType(c)))
+                .Where(c => !newPositions.Any(p => Math.Abs(c.StartPositionTicks - p) <= tenSecondsTicks))
+                .Select(c => (c.Name ?? string.Empty, c.StartPositionTicks, chapterService.GetChapterMarkerType(c)))
+                .ToList();
+            retained.AddRange(newChapters);
+            return retained;
+        }
+
         private static string DetectMarkerType(string name)
         {
             if (string.IsNullOrWhiteSpace(name)) return "Chapter";
@@ -634,6 +656,422 @@ namespace TimeMarkEdit.Services
                 _logger?.ErrorException("Error bulk-importing MKV chapters", ex);
                 return new { Success = false, Message = ex.Message };
             }
+        }
+
+        public object Post(DownloadIntroDbRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.ItemId))
+                    return new { Success = false, Message = "ItemId is required" };
+
+                if (!TryGetIntroDbService(out var introDbService))
+                    return new { Success = false, Message = "TheIntroDB service not available" };
+
+                var item = ResolveItem(request.ItemId);
+                if (item == null)
+                    return new { Success = false, Message = "Item not found" };
+
+                if (!TryGetService(out var chapterService))
+                    return new { Success = false, Message = "Chapter service not available" };
+
+                var enabledSegments = Plugin.Instance?.Configuration?.EnabledSegmentTypes ?? new List<string> { "intro", "credits" };
+
+                string? tmdbId = null;
+                int? season = null;
+                int? episode = null;
+                long? durationMs = item.RunTimeTicks.HasValue ? item.RunTimeTicks.Value / 10000 : (long?)null;
+
+                var ep = item as Episode;
+                if (ep != null)
+                {
+                    var parentSeason = _libraryManager.GetItemById(ep.ParentId);
+                    var series = parentSeason != null ? _libraryManager.GetItemById(parentSeason.ParentId) : null;
+                    if (series?.ProviderIds != null && series.ProviderIds.TryGetValue("Tmdb", out var st))
+                        tmdbId = st;
+                    season = ep.ParentIndexNumber;
+                    episode = ep.IndexNumber;
+                }
+                else
+                {
+                    if (item.ProviderIds != null && item.ProviderIds.TryGetValue("Tmdb", out var mt))
+                        tmdbId = mt;
+                }
+
+                if (string.IsNullOrEmpty(tmdbId))
+                    return new DownloadIntroDbResponse { Success = false, Message = "Item has no TMDB ID — cannot look up timestamps", ApiKeyConfigured = true, ItemName = item.Name ?? string.Empty };
+
+                TheIntroDbMediaResponse? timestamps;
+                try
+                {
+                    timestamps = introDbService.GetMediaTimestampsAsync(tmdbId, season, episode, durationMs).GetAwaiter().GetResult();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return new DownloadIntroDbResponse { Success = false, Message = "API key invalid — check your TheIntroDB configuration", ApiKeyConfigured = true };
+                }
+                catch (InvalidOperationException ex) when (ex.Message.Contains("rate limit"))
+                {
+                    return new DownloadIntroDbResponse { Success = false, Message = "Rate limit exceeded — try again later", ApiKeyConfigured = true, ConnectionSuccessful = true };
+                }
+                catch (HttpRequestException ex)
+                {
+                    return new DownloadIntroDbResponse { Success = false, Message = "Connection failed: " + ex.Message, ApiKeyConfigured = true };
+                }
+
+                if (timestamps == null)
+                    return new DownloadIntroDbResponse { Success = false, Message = "No timestamps found for this item in TheIntroDB", ApiKeyConfigured = true, ConnectionSuccessful = true, ItemName = item.Name ?? string.Empty };
+
+                var chapters = introDbService.ParseTimestamps(timestamps, enabledSegments, item.RunTimeTicks);
+                var overwrite = Plugin.Instance?.Configuration?.OverwriteExisting ?? true;
+                if (!overwrite)
+                    chapters = MergeWithExisting(item, chapters, chapterService);
+                chapterService.SaveChapterList(item, chapters);
+
+                return new DownloadIntroDbResponse
+                {
+                    Success = true,
+                    Message = $"Downloaded {chapters.Count} timestamp(s) for '{item.Name}'",
+                    ItemName = item.Name ?? string.Empty,
+                    ChapterCount = chapters.Count,
+                    Chapters = chapters.Select(c => new ChapterItemDto { Name = c.Name, StartPositionTicks = c.StartPositionTicks, MarkerType = c.MarkerType }).ToList(),
+                    ApiKeyConfigured = true,
+                    ConnectionSuccessful = true
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error downloading TheIntroDB timestamps", ex);
+                return new { Success = false, Message = ex.Message };
+            }
+        }
+
+        public object Post(DownloadIntroDbBulkRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.EpisodeId))
+                    return new { Success = false, Message = "EpisodeId is required" };
+
+                if (!TryGetIntroDbService(out var introDbService))
+                    return new { Success = false, Message = "TheIntroDB service not available" };
+
+                var sourceItem = ResolveItem(request.EpisodeId);
+                if (sourceItem == null)
+                    return new { Success = false, Message = "Item not found" };
+
+                var sourceEp = sourceItem as Episode;
+                if (sourceEp == null)
+                    return new { Success = false, Message = "Item is not an episode" };
+
+                if (!TryGetService(out var chapterService))
+                    return new { Success = false, Message = "Chapter service not available" };
+
+                var scope = (request.Scope ?? "Season").Trim();
+                BaseItem? scopeItem;
+                if (string.Equals(scope, "Series", StringComparison.OrdinalIgnoreCase))
+                {
+                    var parentSeason2 = _libraryManager.GetItemById(sourceEp.ParentId);
+                    scopeItem = parentSeason2 != null ? _libraryManager.GetItemById(parentSeason2.ParentId) : null;
+                }
+                else
+                {
+                    scopeItem = _libraryManager.GetItemById(sourceEp.ParentId);
+                }
+
+                if (scopeItem == null)
+                    return new { Success = false, Message = $"Could not resolve parent {scope}" };
+
+                var query = new InternalItemsQuery
+                {
+                    IncludeItemTypes = new[] { "Episode" },
+                    IsVirtualItem = false,
+                    AncestorIds = new long[] { scopeItem.InternalId },
+                    Recursive = true
+                };
+
+                var episodeItems = _libraryManager.GetItemsResult(query).Items;
+                var enabledSegments = Plugin.Instance?.Configuration?.EnabledSegmentTypes ?? new List<string> { "intro", "credits" };
+                int processed = 0, succeeded = 0, skipped = 0, notFound = 0, failed = 0;
+
+                foreach (var ep in episodeItems)
+                {
+                    processed++;
+                    var epCast = ep as Episode;
+                    if (epCast == null) { skipped++; continue; }
+
+                    var parentSeason = _libraryManager.GetItemById(epCast.ParentId);
+                    var series = parentSeason != null ? _libraryManager.GetItemById(parentSeason.ParentId) : null;
+
+                    string? tmdbId = null;
+                    if (series?.ProviderIds != null && series.ProviderIds.TryGetValue("Tmdb", out var st))
+                        tmdbId = st;
+
+                    if (string.IsNullOrEmpty(tmdbId)) { skipped++; continue; }
+
+                    long? durationMs = ep.RunTimeTicks.HasValue ? ep.RunTimeTicks.Value / 10000 : (long?)null;
+
+                    try
+                    {
+                        var timestamps = introDbService.GetMediaTimestampsAsync(tmdbId, epCast.ParentIndexNumber, epCast.IndexNumber, durationMs).GetAwaiter().GetResult();
+                        if (timestamps == null) { notFound++; continue; }
+
+                        var chapters = introDbService.ParseTimestamps(timestamps, enabledSegments, ep.RunTimeTicks);
+                        var overwrite = Plugin.Instance?.Configuration?.OverwriteExisting ?? true;
+                        if (!overwrite)
+                            chapters = MergeWithExisting(ep, chapters, chapterService);
+                        chapterService.SaveChapterList(ep, chapters);
+                        succeeded++;
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        return new { Success = false, Message = "API key invalid — bulk download aborted", Processed = processed, Succeeded = succeeded };
+                    }
+                    catch (InvalidOperationException ex) when (ex.Message.Contains("rate limit"))
+                    {
+                        return new { Success = false, Message = $"Rate limit exceeded after {processed} item(s) — try again later", Processed = processed, Succeeded = succeeded };
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Warn($"TimeMarkEdit: Failed to download timestamps for '{ep.Name}': {ex.Message}");
+                        failed++;
+                    }
+                }
+
+                return new
+                {
+                    Success = true,
+                    Message = $"Processed {processed} episode(s): {succeeded} updated, {notFound} not found in TheIntroDB, {skipped} missing TMDB ID, {failed} failed",
+                    Processed = processed,
+                    Succeeded = succeeded,
+                    NotFound = notFound,
+                    Skipped = skipped,
+                    Failed = failed
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error bulk-downloading TheIntroDB timestamps", ex);
+                return new { Success = false, Message = ex.Message };
+            }
+        }
+
+        public object Post(TestIntroDbConnectionRequest request)
+        {
+            try
+            {
+                if (!TryGetIntroDbService(out var introDbService))
+                    return new TestIntroDbConnectionResponse { Success = false, Message = "TheIntroDB service not available" };
+
+                try
+                {
+                    introDbService.GetMediaTimestampsAsync("1396", season: 1, episode: 1).GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    return new TestIntroDbConnectionResponse { Success = false, Message = "Connection failed: " + ex.Message, ApiKeyConfigured = introDbService.IsConfigured };
+                }
+
+                return new TestIntroDbConnectionResponse { Success = true, Message = "Connection successful", ApiKeyConfigured = introDbService.IsConfigured };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error testing TheIntroDB connection", ex);
+                return new TestIntroDbConnectionResponse { Success = false, Message = ex.Message };
+            }
+        }
+
+        public object Get(GetIntroDbConfigRequest request)
+        {
+            try
+            {
+                var config = Plugin.Instance?.Configuration;
+                var apiKey = config?.ApiKey ?? string.Empty;
+                return new GetIntroDbConfigResponse
+                {
+                    ApiKey = "",
+                    ApiKeyConfigured = !string.IsNullOrWhiteSpace(apiKey),
+                    OverwriteExisting = config?.OverwriteExisting ?? true,
+                    EnabledSegments = config?.EnabledSegmentTypes?.ToList() ?? new List<string> { "intro", "credits" }
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error getting TheIntroDB config", ex);
+                return new { Success = false, Message = ex.Message };
+            }
+        }
+
+        public object Post(SetIntroDbConfigRequest request)
+        {
+            try
+            {
+                if (Plugin.Instance == null)
+                    return new SetIntroDbConfigResponse { Success = false, Message = "Plugin not initialized" };
+
+                var config = Plugin.Instance.Configuration;
+                if (!string.IsNullOrEmpty(request.ApiKey))
+                    config.ApiKey = CredentialProtection.Protect(request.ApiKey);
+
+                config.OverwriteExisting = request.OverwriteExisting;
+                config.EnabledSegmentTypes = request.EnabledSegments ?? new List<string> { "intro", "credits" };
+
+                Plugin.Instance.SaveConfiguration();
+                return new SetIntroDbConfigResponse { Success = true, Message = "Configuration saved" };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error saving TheIntroDB config", ex);
+                return new SetIntroDbConfigResponse { Success = false, Message = ex.Message };
+            }
+        }
+
+        public object Post(UploadIntroDbRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.ItemId))
+                    return new { Success = false, Message = "ItemId is required" };
+
+                if (!TryGetIntroDbService(out var introDbService))
+                    return new { Success = false, Message = "TheIntroDB service not available" };
+
+                if (!introDbService.IsConfigured)
+                    return new UploadIntroDbResponse { Success = false, Message = "TheIntroDB API key is not configured" };
+
+                var item = ResolveItem(request.ItemId);
+                if (item == null)
+                    return new { Success = false, Message = "Item not found" };
+
+                if (!TryGetService(out var chapterService))
+                    return new { Success = false, Message = "Chapter service not available" };
+
+                string? tmdbId = null;
+                int? season = null;
+                int? episode = null;
+
+                var ep = item as Episode;
+                if (ep != null)
+                {
+                    var parentSeason = _libraryManager.GetItemById(ep.ParentId);
+                    var series = parentSeason != null ? _libraryManager.GetItemById(parentSeason.ParentId) : null;
+                    if (series?.ProviderIds != null && series.ProviderIds.TryGetValue("Tmdb", out var st))
+                        tmdbId = st;
+                    season = ep.ParentIndexNumber;
+                    episode = ep.IndexNumber;
+                }
+                else
+                {
+                    if (item.ProviderIds != null && item.ProviderIds.TryGetValue("Tmdb", out var mt))
+                        tmdbId = mt;
+                }
+
+                if (string.IsNullOrEmpty(tmdbId))
+                    return new UploadIntroDbResponse { Success = false, Message = "Item has no TMDB ID — cannot upload timestamps", ItemName = item.Name ?? string.Empty };
+
+                var (intro, recap, credits) = ExtractSegmentsForUpload(item, chapterService);
+
+                if (intro.Count == 0 && recap.Count == 0 && credits.Count == 0)
+                    return new UploadIntroDbResponse { Success = false, Message = "No intro, recap or credits marks found to upload", ItemName = item.Name ?? string.Empty };
+
+                var mediaType = ep != null ? "tv" : "movie";
+                var durationMs = item.RunTimeTicks.HasValue ? item.RunTimeTicks.Value / 10000 : (long?)null;
+
+                try
+                {
+                    introDbService.SubmitTimestampsAsync(tmdbId, mediaType, season, episode, durationMs, intro, recap, credits).GetAwaiter().GetResult();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return new UploadIntroDbResponse { Success = false, Message = "API key invalid — check your TheIntroDB configuration", ItemName = item.Name ?? string.Empty };
+                }
+                catch (InvalidOperationException ex) when (ex.Message.Contains("rate limit"))
+                {
+                    return new UploadIntroDbResponse { Success = false, Message = "Rate limit exceeded — try again later", ItemName = item.Name ?? string.Empty };
+                }
+                catch (System.Net.Http.HttpRequestException ex)
+                {
+                    return new UploadIntroDbResponse { Success = false, Message = "Connection failed: " + ex.Message, ItemName = item.Name ?? string.Empty };
+                }
+
+                return new UploadIntroDbResponse
+                {
+                    Success = true,
+                    Message = $"Uploaded {intro.Count} intro, {recap.Count} recap, {credits.Count} credits segment(s) for '{item.Name}'",
+                    ItemName = item.Name ?? string.Empty,
+                    IntroCount = intro.Count,
+                    RecapCount = recap.Count,
+                    CreditsCount = credits.Count
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error uploading TheIntroDB timestamps", ex);
+                return new { Success = false, Message = ex.Message };
+            }
+        }
+
+        private static (List<TimeSegment> Intro, List<TimeSegment> Recap, List<TimeSegment> Credits)
+            ExtractSegmentsForUpload(BaseItem item, ChapterMarkerService chapterService)
+        {
+            var chapters = chapterService.GetChapters(item);
+            var intro = new List<TimeSegment>();
+            var recap = new List<TimeSegment>();
+            var credits = new List<TimeSegment>();
+
+            long? introStartTicks = null;
+            bool introStartIsRecap = false;
+            long? creditsStartTicks = null;
+
+            foreach (var ch in chapters.OrderBy(c => c.StartPositionTicks))
+            {
+                var markerType = chapterService.GetChapterMarkerType(ch);
+                var name = (ch.Name ?? string.Empty).Trim();
+
+                if (markerType == "IntroStart")
+                {
+                    if (introStartTicks.HasValue)
+                    {
+                        var unclosed = new TimeSegment { StartMs = (int)(introStartTicks.Value / 10000) };
+                        if (introStartIsRecap) recap.Add(unclosed); else intro.Add(unclosed);
+                    }
+                    introStartTicks = ch.StartPositionTicks;
+                    introStartIsRecap = name.IndexOf("recap", StringComparison.OrdinalIgnoreCase) >= 0;
+                }
+                else if (markerType == "IntroEnd")
+                {
+                    if (introStartTicks.HasValue)
+                    {
+                        var seg = new TimeSegment { StartMs = (int)(introStartTicks.Value / 10000), EndMs = (int)(ch.StartPositionTicks / 10000) };
+                        if (introStartIsRecap) recap.Add(seg); else intro.Add(seg);
+                        introStartTicks = null;
+                    }
+                }
+                else if (markerType == "CreditsStart")
+                {
+                    if (creditsStartTicks.HasValue)
+                        credits.Add(new TimeSegment { StartMs = (int)(creditsStartTicks.Value / 10000) });
+                    creditsStartTicks = ch.StartPositionTicks;
+                }
+                else if (markerType == "CreditsEnd")
+                {
+                    if (creditsStartTicks.HasValue)
+                    {
+                        credits.Add(new TimeSegment { StartMs = (int)(creditsStartTicks.Value / 10000), EndMs = (int)(ch.StartPositionTicks / 10000) });
+                        creditsStartTicks = null;
+                    }
+                }
+            }
+
+            if (introStartTicks.HasValue)
+            {
+                var seg = new TimeSegment { StartMs = (int)(introStartTicks.Value / 10000) };
+                if (introStartIsRecap) recap.Add(seg); else intro.Add(seg);
+            }
+            if (creditsStartTicks.HasValue)
+                credits.Add(new TimeSegment { StartMs = (int)(creditsStartTicks.Value / 10000) });
+
+            return (intro, recap, credits);
         }
     }
 }
