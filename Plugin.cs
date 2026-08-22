@@ -72,6 +72,19 @@ namespace TimeMarkEdit
                 },
                 new PluginPageInfo
                 {
+                    Name = "TimeMarkEditDetectionsPage",
+                    EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditDetections.html",
+                    EnableInMainMenu = true,
+                    MenuIcon = "movie_filter",
+                    DisplayName = "TimeMarkEdit - Detections"
+                },
+                new PluginPageInfo
+                {
+                    Name = "TimeMarkEditDetectionsManager",
+                    EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditDetectionsManager.js"
+                },
+                new PluginPageInfo
+                {
                     Name = "TimeMarkEditVideoPlayer",
                     EmbeddedResourcePath = "TimeMarkEdit.Configuration.TimeMarkEditVideoPlayer.js"
                 }

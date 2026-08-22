@@ -1,0 +1,36 @@
+<div is="emby-scroller" data-controller="configurationpage?name=TimeMarkEditDetectionsManager" class="view flex flex-direction-column scrollFrameY flex-grow" data-horizontal="false" data-forcescrollbar="true" data-centerfocus="true" data-bindheader="true" data-title="TimeMarkEdit">
+    <div class="scrollSlider flex-direction-column padded-left padded-left-page padded-right padded-top-page padded-bottom-page">
+        <div class="readOnlyContent auto-center" style="max-width: 900px;">
+            <h1 class="pageTitle">TimeMarkEdit &mdash; Detections</h1>
+
+            <p style="opacity:0.75;font-size:0.9em;line-height:1.5;max-width:640px;">
+                Controls the "Detect Episode / Season / Series" buttons on the Edit Chapters tab, which start
+                end-credits detection runs through the <strong>EmbyCredits</strong> plugin. EmbyCredits must be
+                installed and enabled on this Emby server for detections to run.
+            </p>
+
+            <div style="background:rgba(230,126,34,0.07);border:1px solid rgba(230,126,34,0.25);border-radius:8px;padding:0.9em 1.1em;margin-top:1em;max-width:640px;">
+                <label style="display:flex;align-items:center;gap:0.4em;cursor:pointer;font-size:0.9em;font-weight:600;color:#e59866;margin-bottom:0.9em;">
+                    <input type="checkbox" id="chkCreditsDetectionEnabled" style="cursor:pointer;" />
+                    <span>Enable EmbyCredits detection integration</span>
+                </label>
+
+                <div id="creditsDetectionOptions">
+                    <div style="display:flex;align-items:center;gap:0.6em;flex-wrap:wrap;margin-bottom:0.9em;">
+                        <span style="font-size:0.9em;font-weight:600;color:#e59866;">EmbyCredits connection</span>
+                        <button is="emby-button" type="button" id="btnTestCreditsDetectorConnection" class="raised" style="padding:0.28em 0.9em;font-size:0.85em;background:rgba(230,126,34,0.2);border-color:rgba(230,126,34,0.5);color:#e59866;">Test Connection</button>
+                        <span id="creditsDetectorStatus" style="font-size:0.82em;opacity:0.8;"></span>
+                    </div>
+
+                    <label style="display:flex;align-items:center;gap:0.4em;cursor:pointer;font-size:0.87em;margin-bottom:1em;">
+                        <input type="checkbox" id="chkSkipExistingMarkers" style="cursor:pointer;" />
+                        <span>Skip episodes that already have credits markers</span>
+                    </label>
+                </div>
+
+                <button is="emby-button" type="button" id="btnSaveCreditsDetectionConfig" class="raised button-submit" style="padding:0.3em 1em;font-size:0.87em;">Save</button>
+                <span id="creditsDetectionSaveStatus" style="font-size:0.82em;opacity:0.8;margin-left:0.5em;"></span>
+            </div>
+        </div>
+    </div>
+</div>

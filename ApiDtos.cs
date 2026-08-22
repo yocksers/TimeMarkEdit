@@ -172,4 +172,28 @@ namespace TimeMarkEdit
         public int RecapCount { get; set; }
         public int CreditsCount { get; set; }
     }
+
+    [Route(Routes.GetCreditsDetectionConfig, "GET", Summary = "Gets the current EmbyCredits detection integration settings.")]
+    [Authenticated]
+    public class GetCreditsDetectionConfigRequest : IReturn<object> { }
+
+    [Route(Routes.SetCreditsDetectionConfig, "POST", Summary = "Saves EmbyCredits detection integration settings.")]
+    [Authenticated]
+    public class SetCreditsDetectionConfigRequest : IReturn<object>
+    {
+        public bool Enabled { get; set; } = true;
+        public bool SkipExistingMarkers { get; set; } = true;
+    }
+
+    public class GetCreditsDetectionConfigResponse
+    {
+        public bool Enabled { get; set; }
+        public bool SkipExistingMarkers { get; set; }
+    }
+
+    public class SetCreditsDetectionConfigResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = "";
+    }
 }

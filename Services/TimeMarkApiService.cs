@@ -223,6 +223,7 @@ namespace TimeMarkEdit.Services
 
                     var seasonsData = new List<object>();
                     int totalEpisodes = 0, totalIntro = 0, totalCredits = 0;
+                    long seriesIntroDuration = 0;
 
                     foreach (var season in seasonItems)
                     {
@@ -233,7 +234,11 @@ namespace TimeMarkEdit.Services
                             ParentIds = new long[] { season.InternalId }
                         };
 
-                        var episodeItems = _libraryManager.GetItemsResult(episodeQuery).Items;
+                        var episodeItems = _libraryManager.GetItemsResult(episodeQuery).Items
+                            .OrderBy(e => (e as Episode)?.IndexNumber ?? 9999)
+                            .ToList();
+
+                        var episodesData = new List<object>();
                         int epCount = 0, introCount = 0, creditsCount = 0;
                         long totalIntroDuration = 0;
 
@@ -251,12 +256,24 @@ namespace TimeMarkEdit.Services
                                 else if (credits == -1 && mt == "CreditsStart") credits = c.StartPositionTicks;
                             }
 
-                            if (introStart != -1 && introEnd != -1 && introStart < introEnd)
+                            var hasIntro = introStart != -1 && introEnd != -1 && introStart < introEnd;
+                            var hasCredits = credits != -1;
+
+                            if (hasIntro)
                             {
                                 introCount++;
                                 totalIntroDuration += introEnd - introStart;
                             }
-                            if (credits != -1) creditsCount++;
+                            if (hasCredits) creditsCount++;
+
+                            episodesData.Add(new
+                            {
+                                Id = episode.Id.ToString("N"),
+                                Name = episode.Name,
+                                IndexNumber = (episode as Episode)?.IndexNumber,
+                                HasIntro = hasIntro,
+                                HasCredits = hasCredits
+                            });
                         }
 
                         var avgIntro = introCount > 0
@@ -265,24 +282,34 @@ namespace TimeMarkEdit.Services
 
                         seasonsData.Add(new
                         {
+                            Id = season.Id.ToString("N"),
                             Name = season.Name,
+                            IndexNumber = season.IndexNumber,
                             EpisodeCount = epCount,
                             IntroCount = introCount,
                             CreditsCount = creditsCount,
-                            AvgIntro = avgIntro
+                            AvgIntro = avgIntro,
+                            Episodes = episodesData
                         });
 
                         totalEpisodes += epCount;
                         totalIntro += introCount;
                         totalCredits += creditsCount;
+                        seriesIntroDuration += totalIntroDuration;
                     }
+
+                    var seriesAvgIntro = totalIntro > 0
+                        ? TimeSpan.FromTicks(seriesIntroDuration / totalIntro).ToString(@"mm\:ss")
+                        : "--:--";
 
                     summaryData.Add(new
                     {
+                        Id = series.Id.ToString("N"),
                         Name = series.Name,
                         EpisodeCount = totalEpisodes,
                         IntroCount = totalIntro,
                         CreditsCount = totalCredits,
+                        AvgIntro = seriesAvgIntro,
                         Seasons = seasonsData
                     });
                 }
@@ -923,6 +950,35 @@ namespace TimeMarkEdit.Services
             {
                 _logger?.ErrorException("Error saving TheIntroDB config", ex);
                 return new SetIntroDbConfigResponse { Success = false, Message = ex.Message };
+            }
+        }
+
+        public object Get(GetCreditsDetectionConfigRequest request)
+        {
+            var config = Plugin.Instance?.Configuration;
+            return new GetCreditsDetectionConfigResponse
+            {
+                Enabled = config?.CreditsDetectionEnabled ?? true,
+                SkipExistingMarkers = config?.CreditsDetectionSkipExisting ?? true
+            };
+        }
+
+        public object Post(SetCreditsDetectionConfigRequest request)
+        {
+            try
+            {
+                if (Plugin.Instance == null)
+                    return new SetCreditsDetectionConfigResponse { Success = false, Message = "Plugin not initialized" };
+
+                Plugin.Instance.Configuration.CreditsDetectionEnabled = request.Enabled;
+                Plugin.Instance.Configuration.CreditsDetectionSkipExisting = request.SkipExistingMarkers;
+                Plugin.Instance.SaveConfiguration();
+                return new SetCreditsDetectionConfigResponse { Success = true, Message = "Configuration saved" };
+            }
+            catch (Exception ex)
+            {
+                _logger?.ErrorException("Error saving credits detection config", ex);
+                return new SetCreditsDetectionConfigResponse { Success = false, Message = ex.Message };
             }
         }
 

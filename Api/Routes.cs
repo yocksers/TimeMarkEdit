@@ -16,5 +16,7 @@ namespace TimeMarkEdit.Api
         public const string GetIntroDbConfig = "/TimeMarkEdit/GetIntroDbConfig";
         public const string SetIntroDbConfig = "/TimeMarkEdit/SetIntroDbConfig";
         public const string UploadIntroDbTimestamps = "/TimeMarkEdit/UploadIntroDbTimestamps";
+        public const string GetCreditsDetectionConfig = "/TimeMarkEdit/GetCreditsDetectionConfig";
+        public const string SetCreditsDetectionConfig = "/TimeMarkEdit/SetCreditsDetectionConfig";
     }
 }

@@ -10,15 +10,11 @@
 
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<AssemblyVersion>1.0.6.0</AssemblyVersion>
-		<FileVersion>1.0.6.0</FileVersion>
+		<AssemblyVersion>1.0.8.0</AssemblyVersion>
+		<FileVersion>1.0.8.0</FileVersion>
 		<RootNamespace>TimeMarkEdit</RootNamespace>
 		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Remove="Images\logo.jpg" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<EmbeddedResource Include="Configuration\TimeMarkEdit.html">
@@ -32,6 +28,12 @@
 		</EmbeddedResource>
 		<EmbeddedResource Include="Configuration\TimeMarkEditSummaryManager.js">
 			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditSummaryManager.js</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Configuration\TimeMarkEditDetections.html">
+			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditDetections.html</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Configuration\TimeMarkEditDetectionsManager.js">
+			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditDetectionsManager.js</LogicalName>
 		</EmbeddedResource>
 		<EmbeddedResource Include="Configuration\TimeMarkEditVideoPlayer.js">
 			<LogicalName>TimeMarkEdit.Configuration.TimeMarkEditVideoPlayer.js</LogicalName>

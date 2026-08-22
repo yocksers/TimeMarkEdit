@@ -12,6 +12,10 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
             {
                 href: Dashboard.getConfigurationPageUrl('TimeMarkEditSummaryPage'),
                 name: 'Summary'
+            },
+            {
+                href: Dashboard.getConfigurationPageUrl('TimeMarkEditDetectionsPage'),
+                name: 'Detections'
             }
         ];
     }
@@ -32,6 +36,11 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
     let _currentItemIsEpisode = false;
     let _mkvMode = false;
     let _introDbConfigured = false;
+    let _currentSeriesId = null;
+    let _currentSeasonNumber = null;
+    let _creditsDetectionSkipExisting = true;
+    let _creditsDetectionEnabled = true;
+    let _creditsDetectionPollInterval = null;
 
     function q(id) { return _view.querySelector('#' + id); }
 
@@ -510,6 +519,14 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
         var applyBtn = q('btnApplyToSeason');
         if (applyBtn) applyBtn.style.display = 'none';
         _currentEpisodeRuntimeTicks = 0;
+        _currentSeriesId = null;
+        _currentSeasonNumber = null;
+        var detectEpisodeBtn = q('btnDetectEpisode');
+        var detectSeasonBtn = q('btnDetectSeason');
+        var detectSeriesBtn = q('btnDetectSeries');
+        if (detectEpisodeBtn) detectEpisodeBtn.style.display = 'none';
+        if (detectSeasonBtn) detectSeasonBtn.style.display = 'none';
+        if (detectSeriesBtn) detectSeriesBtn.style.display = 'none';
 
         var introDbBar = q('introDbBar');
         if (introDbBar) introDbBar.style.display = 'flex';
@@ -534,6 +551,22 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
                 var introDbSeriesBtn = q('btnDownloadIntroDbSeries');
                 if (introDbSeasonBtn) introDbSeasonBtn.style.display = '';
                 if (introDbSeriesBtn) introDbSeriesBtn.style.display = '';
+                _currentSeasonNumber = response.ParentIndexNumber != null ? response.ParentIndexNumber : null;
+                _currentSeriesId = response.SeriesId || null;
+                if (_creditsDetectionEnabled) {
+                    if (detectEpisodeBtn) detectEpisodeBtn.style.display = '';
+                    if (detectSeasonBtn) detectSeasonBtn.style.display = '';
+                    if (detectSeriesBtn) detectSeriesBtn.style.display = '';
+                }
+                if (!_currentSeriesId) {
+                    ApiClient.getJSON(ApiClient.getUrl('Items/' + capturedId + '/Ancestors', { UserId: userId }))
+                        .then(function (ancestors) {
+                            if (_currentEpisodeId !== capturedId) return;
+                            var series = (ancestors || []).find(function (a) { return a.Type === 'Series'; });
+                            if (series) _currentSeriesId = series.Id;
+                        })
+                        .catch(function () {});
+                }
             } else if (response.Type === 'Movie') {
                 q('chapterEpisodeSubtitle').textContent = 'Movie';
                 ApiClient.getJSON(ApiClient.getUrl('Items/' + capturedId + '/Ancestors', { UserId: userId }))
@@ -940,6 +973,166 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
             toast({ type: 'error', text: 'Failed to apply to season' });
         });
     }
+
+    function loadCreditsDetectionConfig() {
+        ApiClient.getJSON(ApiClient.getUrl('TimeMarkEdit/GetCreditsDetectionConfig'))
+            .then(function (result) {
+                _creditsDetectionSkipExisting = !!(result && result.SkipExistingMarkers);
+                _creditsDetectionEnabled = !(result && result.Enabled === false);
+                if (!_creditsDetectionEnabled) {
+                    var detectEpisodeBtn = q('btnDetectEpisode');
+                    var detectSeasonBtn = q('btnDetectSeason');
+                    var detectSeriesBtn = q('btnDetectSeries');
+                    if (detectEpisodeBtn) detectEpisodeBtn.style.display = 'none';
+                    if (detectSeasonBtn) detectSeasonBtn.style.display = 'none';
+                    if (detectSeriesBtn) detectSeriesBtn.style.display = 'none';
+                }
+            })
+            .catch(function () {});
+    }
+
+    function runCreditsDetection(scope) {
+        if (!_currentEpisodeId || !_currentItemIsEpisode || !_creditsDetectionEnabled) return;
+
+        var url, payload, confirmText, scopeLabel;
+
+        if (scope === 'Episode') {
+            url = 'CreditsDetector/ProcessEpisode';
+            payload = { ItemId: _currentEpisodeId, SkipExistingMarkers: _creditsDetectionSkipExisting };
+            confirmText = 'Start EmbyCredits detection for this episode?';
+            scopeLabel = 'this episode';
+        } else if (scope === 'Season') {
+            if (!_currentSeriesId || _currentSeasonNumber == null) {
+                toast({ type: 'error', text: 'Could not determine the series/season for this episode' });
+                return;
+            }
+            url = 'CreditsDetector/ProcessSeason';
+            payload = { SeriesId: _currentSeriesId, SeasonNumber: _currentSeasonNumber, SkipExistingMarkers: _creditsDetectionSkipExisting };
+            confirmText = 'Start EmbyCredits detection for the entire season?';
+            scopeLabel = 'the season';
+        } else {
+            if (!_currentSeriesId) {
+                toast({ type: 'error', text: 'Could not determine the series for this episode' });
+                return;
+            }
+            url = 'CreditsDetector/ProcessSeries';
+            payload = { SeriesId: _currentSeriesId, SkipExistingMarkers: _creditsDetectionSkipExisting };
+            confirmText = 'Start EmbyCredits detection for the entire series?';
+            scopeLabel = 'the series';
+        }
+
+        if (!confirm(confirmText)) return;
+
+        loading.show();
+
+        fetch(ApiClient.getUrl(url), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function (r) {
+            if (r.status === 404) throw new Error('not-installed');
+            return r.json();
+        })
+        .then(function (result) {
+            loading.hide();
+            if (result.Success) {
+                startCreditsDetectionPolling(scopeLabel);
+            } else {
+                toast({ type: 'error', text: result.Message || 'Failed to start detection' });
+            }
+        })
+        .catch(function (err) {
+            loading.hide();
+            if (err && err.message === 'not-installed') {
+                toast({ type: 'error', text: 'EmbyCredits plugin was not found on this server — see the Detections tab' });
+            } else {
+                console.error('Error starting credits detection:', err);
+                toast({ type: 'error', text: 'Failed to start detection' });
+            }
+        });
+    }
+
+    function startCreditsDetectionPolling(scopeLabel) {
+        var bar = q('creditsDetectionProgressBar');
+        var statusText = q('creditsDetectionStatusText');
+        var percentText = q('creditsDetectionPercentText');
+        var fill = q('creditsDetectionProgressFill');
+        var countsText = q('creditsDetectionCountsText');
+        var cancelBtn = q('btnCancelCreditsDetection');
+
+        if (_creditsDetectionPollInterval) clearInterval(_creditsDetectionPollInterval);
+
+        if (bar) bar.style.display = 'block';
+        if (statusText) statusText.textContent = 'Starting EmbyCredits detection for ' + scopeLabel + '\u2026';
+        if (percentText) percentText.textContent = '0%';
+        if (fill) fill.style.width = '0%';
+        if (countsText) countsText.textContent = '';
+        if (cancelBtn) cancelBtn.style.display = '';
+
+        var refreshEpisodeId = _currentEpisodeId;
+        var refreshDisplayName = _currentEpisodeDisplayName;
+
+        _creditsDetectionPollInterval = setInterval(function () {
+            ApiClient.getJSON(ApiClient.getUrl('CreditsDetector/GetProgress'))
+                .then(function (progress) {
+                    var percent = Math.round(progress.PercentComplete || 0);
+                    if (fill) fill.style.width = percent + '%';
+                    if (percentText) percentText.textContent = percent + '%';
+                    if (statusText) {
+                        statusText.textContent = progress.IsRunning
+                            ? ('Detecting: ' + (progress.CurrentItem || '\u2026'))
+                            : 'Detection complete';
+                    }
+                    if (countsText) {
+                        countsText.textContent = (progress.ProcessedItems || 0) + '/' + (progress.TotalItems || 0) +
+                            ' processed \u00b7 ' + (progress.SuccessfulItems || 0) + ' succeeded \u00b7 ' +
+                            (progress.FailedItems || 0) + ' failed \u00b7 ' + (progress.SkippedItems || 0) + ' skipped';
+                    }
+
+                    if (!progress.IsRunning) {
+                        clearInterval(_creditsDetectionPollInterval);
+                        _creditsDetectionPollInterval = null;
+                        if (cancelBtn) cancelBtn.style.display = 'none';
+
+                        toast({
+                            type: (progress.FailedItems > 0 && !progress.SuccessfulItems) ? 'error' : 'success',
+                            text: 'EmbyCredits detection finished: ' + (progress.SuccessfulItems || 0) + ' succeeded, ' +
+                                (progress.FailedItems || 0) + ' failed, ' + (progress.SkippedItems || 0) + ' skipped'
+                        });
+
+                        setTimeout(function () {
+                            if (bar) bar.style.display = 'none';
+                        }, 6000);
+
+                        if (_currentEpisodeId === refreshEpisodeId) {
+                            if (_isDirty) {
+                                toast({ type: 'warning', text: 'New timestamps may be available \u2014 this episode has unsaved changes, reload it to see them' });
+                            } else {
+                                loadEpisodeChapters(refreshEpisodeId, refreshDisplayName);
+                            }
+                        }
+                    }
+                })
+                .catch(function (err) {
+                    console.error('Error polling credits detection progress:', err);
+                    clearInterval(_creditsDetectionPollInterval);
+                    _creditsDetectionPollInterval = null;
+                    if (cancelBtn) cancelBtn.style.display = 'none';
+                });
+        }, 1000);
+    }
+
+    function cancelCreditsDetection() {
+        fetch(ApiClient.getUrl('CreditsDetector/CancelDetection'), {
+            method: 'POST',
+            headers: { 'X-Emby-Token': ApiClient.accessToken(), 'Content-Type': 'application/json' }
+        }).catch(function () {});
+    }
+
+    function detectEpisode() { runCreditsDetection('Episode'); }
+    function detectSeason() { runCreditsDetection('Season'); }
+    function detectSeries() { runCreditsDetection('Series'); }
 
     function setMkvMode(enabled) {
         _mkvMode = enabled;
@@ -1414,6 +1607,7 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
 
         loadCurrentLevel();
         loadIntroDbConfig();
+        loadCreditsDetectionConfig();
 
         var btnMkvToggle = q('btnToggleMkvMode');
         if (btnMkvToggle) btnMkvToggle.addEventListener('click', toggleMkvMode);
@@ -1444,6 +1638,18 @@ define(['loading', 'toast', 'mainTabsManager'], function (loading, toast, mainTa
 
         var btnUploadIntroDb = q('btnUploadIntroDb');
         if (btnUploadIntroDb) btnUploadIntroDb.addEventListener('click', uploadIntroDb);
+
+        var btnDetectEpisode = q('btnDetectEpisode');
+        if (btnDetectEpisode) btnDetectEpisode.addEventListener('click', detectEpisode);
+
+        var btnDetectSeason = q('btnDetectSeason');
+        if (btnDetectSeason) btnDetectSeason.addEventListener('click', detectSeason);
+
+        var btnDetectSeries = q('btnDetectSeries');
+        if (btnDetectSeries) btnDetectSeries.addEventListener('click', detectSeries);
+
+        var btnCancelCreditsDetection = q('btnCancelCreditsDetection');
+        if (btnCancelCreditsDetection) btnCancelCreditsDetection.addEventListener('click', cancelCreditsDetection);
 
         var searchEl = q('chapterBrowserSearch');
         searchEl.addEventListener('input', function () {

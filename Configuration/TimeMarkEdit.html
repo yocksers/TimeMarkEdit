@@ -726,12 +726,33 @@
                             <div id="embyActionBar" style="display:flex;align-items:center;gap:0.5em;flex-wrap:wrap;">
                                 <button is="emby-button" type="button" id="btnDeleteSelectedChapters" class="raised" style="background-color:#b71c1c;padding:0.35em 1em;font-size:0.87em;">Delete</button>
                                 <span id="chapterUnsavedNote" class="chapter-unsaved-note">● Unsaved changes</span>
-                                <button is="emby-button" type="button" id="btnApplyToSeason" class="raised" style="display:none;padding:0.35em 1em;font-size:0.87em;margin-left:auto;">
+                                <button is="emby-button" type="button" id="btnDetectEpisode" class="raised" style="display:none;padding:0.35em 1em;font-size:0.87em;margin-left:auto;background:rgba(230,126,34,0.14);border-color:rgba(230,126,34,0.4);color:#f0b27a;">
+                                    <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">movie_filter</i>Detect Episode
+                                </button>
+                                <button is="emby-button" type="button" id="btnDetectSeason" class="raised" style="display:none;padding:0.35em 1em;font-size:0.87em;background:rgba(230,126,34,0.14);border-color:rgba(230,126,34,0.4);color:#f0b27a;">
+                                    <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">filter_none</i>Detect Season
+                                </button>
+                                <button is="emby-button" type="button" id="btnDetectSeries" class="raised" style="display:none;padding:0.35em 1em;font-size:0.87em;background:rgba(230,126,34,0.14);border-color:rgba(230,126,34,0.4);color:#f0b27a;">
+                                    <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">library_add</i>Detect Series
+                                </button>
+                                <button is="emby-button" type="button" id="btnApplyToSeason" class="raised" style="display:none;padding:0.35em 1em;font-size:0.87em;">
                                     <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">filter_none</i>Apply to Season
                                 </button>
                                 <button is="emby-button" type="button" id="btnSaveChapters" class="raised button-submit" style="padding:0.35em 1.2em;font-size:0.87em;">
                                     <i class="md-icon" style="font-size:1em;margin-right:0.3em;vertical-align:middle;">save</i>Save Changes
                                 </button>
+                            </div>
+
+                            <div id="creditsDetectionProgressBar" style="display:none;margin-top:0.6em;background:rgba(230,126,34,0.07);border:1px solid rgba(230,126,34,0.25);border-radius:8px;padding:0.7em 0.9em;">
+                                <div style="display:flex;align-items:center;gap:0.6em;flex-wrap:wrap;margin-bottom:0.5em;">
+                                    <span id="creditsDetectionStatusText" style="font-size:0.87em;font-weight:600;color:#e59866;">Starting EmbyCredits detection…</span>
+                                    <span id="creditsDetectionPercentText" style="font-size:0.82em;opacity:0.75;margin-left:auto;">0%</span>
+                                    <button is="emby-button" type="button" id="btnCancelCreditsDetection" class="raised" style="padding:0.2em 0.8em;font-size:0.8em;background-color:#b71c1c;">Cancel</button>
+                                </div>
+                                <div style="height:8px;border-radius:4px;background:rgba(255,255,255,0.1);overflow:hidden;">
+                                    <div id="creditsDetectionProgressFill" style="height:100%;width:0%;background:rgba(230,126,34,0.85);transition:width 0.3s;"></div>
+                                </div>
+                                <div id="creditsDetectionCountsText" style="font-size:0.8em;opacity:0.65;margin-top:0.4em;"></div>
                             </div>
 
                             <div id="mkvImportBar" style="display:none;align-items:center;gap:0.5em;flex-wrap:wrap;">
